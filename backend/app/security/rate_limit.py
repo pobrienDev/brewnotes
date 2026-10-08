@@ -9,10 +9,13 @@ import time
 from collections import deque
 from collections.abc import Callable
 from http import HTTPStatus
+from typing import Annotated
 
-from fastapi import HTTPException, Request
+from fastapi import Depends, HTTPException, Request
 
 from app.config import Settings
+from app.models import User
+from app.security.sessions import current_user
 
 Clock = Callable[[], float]
 
@@ -53,6 +56,24 @@ def client_ip(request: Request) -> str:
     return request.client.host if request.client else "unknown"
 
 
+def _hit(
+    request: Request, name: str, limit: int | Callable[[Settings], int], window_s: float, key: str
+) -> None:
+    limiters: dict[str, SlidingWindowLimiter] = request.app.state.rate_limiters
+    limiter = limiters.get(name)
+    if limiter is None:
+        settings: Settings = request.app.state.settings
+        resolved = limit(settings) if callable(limit) else limit
+        limiter = limiters[name] = SlidingWindowLimiter(resolved, window_s)
+    allowed, retry_after = limiter.hit(key)
+    if not allowed:
+        raise HTTPException(
+            HTTPStatus.TOO_MANY_REQUESTS,
+            detail="Too many requests. Try again shortly.",
+            headers={"Retry-After": str(retry_after)},
+        )
+
+
 def rate_limit(
     name: str, *, limit: int | Callable[[Settings], int], window_s: float = 60.0
 ) -> Callable[[Request], None]:
@@ -60,18 +81,17 @@ def rate_limit(
     `limit` may be a function of the settings so values stay configurable."""
 
     def dependency(request: Request) -> None:
-        limiters: dict[str, SlidingWindowLimiter] = request.app.state.rate_limiters
-        limiter = limiters.get(name)
-        if limiter is None:
-            settings: Settings = request.app.state.settings
-            resolved = limit(settings) if callable(limit) else limit
-            limiter = limiters[name] = SlidingWindowLimiter(resolved, window_s)
-        allowed, retry_after = limiter.hit(client_ip(request))
-        if not allowed:
-            raise HTTPException(
-                HTTPStatus.TOO_MANY_REQUESTS,
-                detail="Too many requests. Try again shortly.",
-                headers={"Retry-After": str(retry_after)},
-            )
+        _hit(request, name, limit, window_s, client_ip(request))
+
+    return dependency
+
+
+def user_rate_limit(
+    name: str, *, limit: int | Callable[[Settings], int], window_s: float = 60.0
+) -> Callable[..., None]:
+    """Like rate_limit but keyed by the signed-in user (401 problem when anonymous)."""
+
+    def dependency(request: Request, user: Annotated[User, Depends(current_user)]) -> None:
+        _hit(request, name, limit, window_s, str(user.id))
 
     return dependency

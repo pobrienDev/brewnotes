@@ -10,6 +10,7 @@ from sqlalchemy.orm import Session
 from app.models import User
 from app.repositories import identity_repo, session_repo, user_repo
 from app.schemas.account import UserUpdate
+from app.services import catalog_service, recipe_service
 
 
 def update_profile(db: Session, user: User, patch: UserUpdate) -> User:
@@ -27,10 +28,10 @@ def export(
 ) -> dict[str, Any]:
     """Everything the app holds about this user, as plain JSON-serialisable data.
 
-    Later phases append their own sections (recipes, batches, tastings).
+    Later phases append their own sections (batches, tastings).
     """
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "exported_at": now,
         "user": {
             "id": user.id,
@@ -58,6 +59,8 @@ def export(
             }
             for session in session_repo.list_for_user(db, user.id)
         ],
+        "recipes": recipe_service.export_rows(db, user),
+        "custom_ingredients": catalog_service.export_custom(db, user),
     }
 
 
