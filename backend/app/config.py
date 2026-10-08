@@ -56,6 +56,14 @@ class Settings(BaseSettings):
     max_body_bytes: int = 1_048_576
     log_level: str = "INFO"
 
+    # Sessions: idle timeout, absolute lifetime, and how often last_seen_at is written.
+    session_idle_days: int = 14
+    session_absolute_days: int = 30
+    session_touch_interval_s: int = 3600
+    # The signed cookie that carries OAuth state between the redirect and the callback.
+    oauth_state_max_age_s: int = 600
+    login_rate_limit_per_minute: int = 10
+
     @field_validator("allowed_hosts", mode="before")
     @classmethod
     def _split_hosts(cls, value: object) -> object:
@@ -96,6 +104,31 @@ class Settings(BaseSettings):
     @property
     def is_development(self) -> bool:
         return self.app_env == "development"
+
+    @property
+    def secure_cookies(self) -> bool:
+        """Secure + __Host- prefixed cookies everywhere except plain-http development."""
+        return not self.is_development
+
+    @property
+    def session_cookie_name(self) -> str:
+        return "__Host-session" if self.secure_cookies else "session"
+
+    @property
+    def oauth_cookie_name(self) -> str:
+        return "__Host-oauth" if self.secure_cookies else "oauth"
+
+    @property
+    def configured_providers(self) -> list[str]:
+        providers: list[str] = []
+        if self.github_client_id and self.github_client_secret:
+            providers.append("github")
+        if self.google_client_id and self.google_client_secret:
+            providers.append("google")
+        return providers
+
+    def oauth_redirect_uri(self, provider: str) -> str:
+        return f"{self.public_base_url}/api/v1/auth/callback/{provider}"
 
 
 @lru_cache(maxsize=1)
