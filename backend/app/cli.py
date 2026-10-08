@@ -33,5 +33,37 @@ def export_openapi(
     print(f"wrote {out} ({len(document.get('paths', {}))} paths)")
 
 
+# Advisory lock keys so cron never runs two copies of the same job at once.
+LOCK_CLEANUP_SESSIONS = 1_001
+
+
+@cli.command("cleanup-sessions")
+def cleanup_sessions() -> None:
+    """Delete sessions past their idle or absolute limit. Safe to run from cron daily."""
+    from datetime import UTC, datetime
+
+    from sqlalchemy import text
+    from sqlalchemy.orm import Session
+
+    from app.config import get_settings
+    from app.db import create_engine_from_settings
+    from app.services.auth_service import purge_expired_sessions
+
+    settings = get_settings()
+    engine = create_engine_from_settings(settings)
+    try:
+        with Session(engine) as db, db.begin():
+            locked = db.execute(
+                text("SELECT pg_try_advisory_xact_lock(:key)"), {"key": LOCK_CLEANUP_SESSIONS}
+            ).scalar()
+            if not locked:
+                print("another cleanup-sessions run holds the lock; nothing to do")
+                return
+            deleted = purge_expired_sessions(db, settings, datetime.now(UTC))
+        print(f"deleted {deleted} expired sessions")
+    finally:
+        engine.dispose()
+
+
 if __name__ == "__main__":
     cli()
