@@ -17,6 +17,7 @@ dependencies = [
     "authlib>=1.8.0",
     "itsdangerous>=2.2.0",
     "joserfc>=1.7.5",
+    "httpx2>=2.13.1",
 ]
 
 [dependency-groups]
@@ -25,7 +26,6 @@ dev = [
     "hypothesis>=6.112",
     "ruff>=0.7",
     "mypy>=1.13",
-    "httpx2>=2.13.1",
 ]
 
 [build-system]
