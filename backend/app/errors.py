@@ -12,6 +12,7 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel, Field
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
+from app.domain.brewmath import RecipeOutOfRangeError
 from app.logging import request_id_var
 
 PROBLEM_MEDIA_TYPE = "application/problem+json"
@@ -105,6 +106,17 @@ def register_exception_handlers(app: FastAPI) -> None:
             detail="One or more fields are invalid.",
             instance=request.url.path,
             errors=_validation_errors(exc),
+            request_id=_request_id(request),
+        )
+
+    @app.exception_handler(RecipeOutOfRangeError)
+    async def _recipe_out_of_range(request: Request, exc: RecipeOutOfRangeError) -> JSONResponse:
+        return problem_response(
+            HTTPStatus.UNPROCESSABLE_CONTENT,
+            title="Validation failed",
+            detail=exc.message,
+            instance=request.url.path,
+            errors=[FieldError(loc=["body", exc.field], msg=exc.message, type="value_error")],
             request_id=_request_id(request),
         )
 
