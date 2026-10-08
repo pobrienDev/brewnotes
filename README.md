@@ -4,7 +4,7 @@ A craft beer app that follows a beer from recipe to glass: design it, brew it, t
 
 BrewNotes combines a brewing calculator, a brewing and tasting log, and beer discovery into one app built around a single object: a beer. The calculator and style browser work without signing in; saving anything requires an account via GitHub or Google.
 
-**Status:** Phase 1b (brewing math, styles and catalog). Nothing is deployed yet.
+**Status:** Phase 1 complete in development (accounts, recipe designer, styles, catalog). Nothing is deployed yet.
 
 ## Stack
 
