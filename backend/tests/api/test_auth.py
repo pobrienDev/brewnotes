@@ -7,6 +7,7 @@ import uuid
 from datetime import UTC, datetime, timedelta
 from typing import Any
 
+import httpx2
 import pytest
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
@@ -36,13 +37,11 @@ SESSION_COOKIE = "__Host-session"
 OAUTH_COOKIE = "__Host-oauth"
 
 
-def _is_problem(response: object) -> bool:
-
-    r: Any = response
-    return (
-        r.headers["content-type"].startswith(PROBLEM_MEDIA_TYPE)
-        and r.json()["status"] == r.status_code
-    )
+def _is_problem(response: httpx2.Response) -> bool:
+    content_type: str = response.headers["content-type"]
+    status: int = response.json()["status"]
+    status_code: int = response.status_code
+    return content_type.startswith(PROBLEM_MEDIA_TYPE) and status == status_code
 
 
 # -- discovery ---------------------------------------------------------------------------
