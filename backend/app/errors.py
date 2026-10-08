@@ -38,6 +38,18 @@ class Problem(BaseModel):
     request_id: str | None = None
 
 
+class ValidationProblemError(Exception):
+    """Raised by services for input that passed the schema but fails a deeper check, e.g. a
+    reference to a catalog item the caller may not use. Becomes a 422 problem."""
+
+    def __init__(
+        self, errors: list[FieldError], detail: str = "One or more fields are invalid."
+    ) -> None:
+        super().__init__(detail)
+        self.errors = errors
+        self.detail = detail
+
+
 def problem_response(
     status: int,
     *,
@@ -106,6 +118,17 @@ def register_exception_handlers(app: FastAPI) -> None:
             detail="One or more fields are invalid.",
             instance=request.url.path,
             errors=_validation_errors(exc),
+            request_id=_request_id(request),
+        )
+
+    @app.exception_handler(ValidationProblemError)
+    async def _validation_problem(request: Request, exc: ValidationProblemError) -> JSONResponse:
+        return problem_response(
+            HTTPStatus.UNPROCESSABLE_CONTENT,
+            title="Validation failed",
+            detail=exc.detail,
+            instance=request.url.path,
+            errors=exc.errors,
             request_id=_request_id(request),
         )
 

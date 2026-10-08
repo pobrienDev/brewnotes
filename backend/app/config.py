@@ -63,6 +63,10 @@ class Settings(BaseSettings):
     # The signed cookie that carries OAuth state between the redirect and the callback.
     oauth_state_max_age_s: int = 600
     login_rate_limit_per_minute: int = 10
+    write_rate_limit_per_minute: int = 120
+    # Per-account quotas (plan Section 5). Starting values; tune later.
+    quota_recipes: int = 500
+    quota_custom_ingredients: int = 200
 
     @field_validator("allowed_hosts", mode="before")
     @classmethod

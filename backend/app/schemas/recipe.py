@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from typing import Literal
 
 from pydantic import Field, model_validator
@@ -82,11 +83,11 @@ class RecipeInput(Schema):
         default=bm.DEFAULT_BREWHOUSE_EFFICIENCY_PCT, ge=20, le=100
     )
     steep_efficiency_pct: float = Field(default=bm.DEFAULT_STEEP_EFFICIENCY_PCT, ge=20, le=100)
-    fermentables: list[FermentableInput] = Field(
+    fermentables: Sequence[FermentableInput] = Field(
         default_factory=list, max_length=MAX_INGREDIENTS_PER_TYPE
     )
-    hops: list[HopInput] = Field(default_factory=list, max_length=MAX_INGREDIENTS_PER_TYPE)
-    yeasts: list[YeastInput] = Field(default_factory=list, max_length=MAX_INGREDIENTS_PER_TYPE)
+    hops: Sequence[HopInput] = Field(default_factory=list, max_length=MAX_INGREDIENTS_PER_TYPE)
+    yeasts: Sequence[YeastInput] = Field(default_factory=list, max_length=MAX_INGREDIENTS_PER_TYPE)
     target_style: str | None = Field(
         default=None, max_length=120, description="Slug of the style the recipe aims for"
     )
