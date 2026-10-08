@@ -77,7 +77,7 @@ def test_export_contains_everything_about_the_account(
     assert response.status_code == 200
     assert response.headers["content-disposition"] == 'attachment; filename="brewnotes-export.json"'
     data = response.json()
-    assert data["schema_version"] == 1
+    assert data["schema_version"] == 2
     assert data["user"]["id"] == me["id"]
     assert data["user"]["display_name"] == "Octo Cat"
     assert data["identities"] == [
