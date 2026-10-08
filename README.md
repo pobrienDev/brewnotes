@@ -4,7 +4,7 @@ A craft beer app that follows a beer from recipe to glass: design it, brew it, t
 
 BrewNotes combines a brewing calculator, a brewing and tasting log, and beer discovery into one app built around a single object: a beer. The calculator and style browser work without signing in; saving anything requires an account via GitHub or Google.
 
-**Status:** Phase 0 (foundation). Nothing is deployed yet.
+**Status:** Phase 1a (accounts and sessions). Nothing is deployed yet.
 
 ## Stack
 
@@ -26,6 +26,29 @@ make dev       # FastAPI on :8000 and Vite on :5173 (proxies /api)
 ```
 
 Open http://localhost:5173. The API's own docs are at http://localhost:8000/api/v1/docs in development.
+
+### Sign-in providers
+
+Sign-in uses GitHub and Google OAuth; there are no passwords. Register one app per provider
+per environment (development and production use separate apps) and put the client ID and
+secret in `.env`. Without credentials for a provider, its sign-in button is simply absent.
+
+| Provider | Where | Callback / redirect URI (development) |
+|---|---|---|
+| GitHub | Settings → Developer settings → OAuth Apps → New OAuth App | `http://localhost:5173/api/v1/auth/callback/github` |
+| Google | Google Cloud Console → APIs & Services → Credentials → OAuth client ID (Web application) | `http://localhost:5173/api/v1/auth/callback/google` |
+
+The callback URL is always `PUBLIC_BASE_URL` + `/api/v1/auth/callback/<provider>`; in
+production that is your real https origin. GitHub needs no scopes (public profile only);
+Google needs the `openid` and `profile` scopes, which the app requests itself. No email is
+requested or stored.
+
+### Requests that change data
+
+Every POST, PUT, PATCH and DELETE must carry an `Origin` header equal to `PUBLIC_BASE_URL`,
+or it is rejected with 403. Browsers send it automatically; curl does not, so add
+`-H "Origin: http://localhost:5173"` when poking at the API by hand. Swagger UI at
+`/api/v1/docs` runs from the backend's own origin, so its "Try it out" works for reads only.
 
 Other targets:
 
