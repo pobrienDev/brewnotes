@@ -7,6 +7,7 @@ updates:
     groups:
       python-minor-and-patch:
         update-types: ["minor", "patch"]
+
   - package-ecosystem: "npm"
     directory: "/frontend"
     schedule:
@@ -14,11 +15,28 @@ updates:
     groups:
       npm-minor-and-patch:
         update-types: ["minor", "patch"]
+    ignore:
+      # These majors require Node 22.22 or newer; revisit after upgrading Node locally.
+      - dependency-name: "react-router"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "jsdom"
+        update-types: ["version-update:semver-major"]
+      # Keep the Node type definitions on the Node major actually in use.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+
   - package-ecosystem: "docker"
     directory: "/backend"
     schedule:
       interval: "weekly"
+    ignore:
+      # Stay on LTS majors for the base images; bump them deliberately.
+      - dependency-name: "node"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "python"
+        update-types: ["version-update:semver-major", "version-update:semver-minor"]
