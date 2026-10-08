@@ -46,3 +46,5 @@ def configure_logging(level: str) -> None:
         uv_logger.handlers.clear()
         uv_logger.propagate = True
     logging.getLogger("uvicorn.access").disabled = True
+    # Authlib's HTTP client logs every provider call at INFO; keep only problems.
+    logging.getLogger("httpx2").setLevel(logging.WARNING)
