@@ -78,6 +78,16 @@ def engine(settings: Settings, migrated_database: None) -> Iterator[Engine]:
     engine.dispose()
 
 
+@pytest.fixture(scope="session")
+def seeded(engine: Engine) -> None:
+    """Reference data (styles and the built-in catalog) loaded once from the real data files.
+    It is committed, so every test sees it; tests never modify it outside their transaction."""
+    from app.services.seed_service import seed_all
+
+    with Session(engine) as session, session.begin():
+        seed_all(session)
+
+
 @pytest.fixture
 def db_connection(engine: Engine) -> Iterator[Connection]:
     with engine.connect() as connection:
