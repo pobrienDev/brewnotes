@@ -58,7 +58,8 @@ def test_unknown_provider_is_404(client: TestClient) -> None:
         response = client.get(f"{API}{path}")
         assert response.status_code in (401, 404), path
         assert _is_problem(response)
-    assert client.get(f"{API}/auth/login/facebook").status_code == 404
+    login_unknown = client.get(f"{API}/auth/login/facebook")
+    assert login_unknown.status_code == 404
 
 
 # -- starting the flow -------------------------------------------------------------------
@@ -173,7 +174,8 @@ def test_google_rejects_invalid_id_tokens(
     assert response.status_code == 303
     assert response.headers["location"] == "/sign-in?error=provider"
     assert not set_cookie_headers(response, SESSION_COOKIE)
-    assert client.get(f"{API}/me").status_code == 401
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 401
 
 
 def test_display_name_falls_back_to_login_then_default(
@@ -221,7 +223,8 @@ def test_tampered_state_is_rejected(client: TestClient, providers: FakeProviders
     assert response.headers["location"] == "/sign-in?error=state"
     assert not set_cookie_headers(response, SESSION_COOKIE)
     assert providers.token_requests() == []
-    assert client.get(f"{API}/me").status_code == 401
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 401
 
 
 def test_callback_cannot_be_replayed(client: TestClient, providers: FakeProviders) -> None:
@@ -232,7 +235,8 @@ def test_callback_cannot_be_replayed(client: TestClient, providers: FakeProvider
     assert replay.headers["location"] == "/sign-in?error=state"
     assert len(providers.token_requests()) == 1
     # The session from the first, legitimate completion still works.
-    assert client.get(f"{API}/me").status_code == 200
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 200
 
 
 def test_callback_without_the_state_cookie_is_rejected(app: FastAPI, client: TestClient) -> None:
@@ -241,7 +245,8 @@ def test_callback_without_the_state_cookie_is_rejected(app: FastAPI, client: Tes
     with make_client(app) as victim:
         response = finish(victim, "github", query["state"])
         assert response.headers["location"] == "/sign-in?error=state"
-        assert victim.get(f"{API}/me").status_code == 401
+        response_ = victim.get(f"{API}/me")
+        assert response_.status_code == 401
 
 
 def test_provider_denial_is_reported_as_cancelled(client: TestClient) -> None:
@@ -267,7 +272,8 @@ def test_failed_token_exchange(client: TestClient, providers: FakeProviders) -> 
     providers.token_endpoint_fails = True
     response = login(client, providers, "github")
     assert response.headers["location"] == "/sign-in?error=provider"
-    assert client.get(f"{API}/me").status_code == 401
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 401
 
 
 def test_failed_profile_fetch(client: TestClient, providers: FakeProviders) -> None:
@@ -304,13 +310,15 @@ def test_different_subjects_get_different_accounts(
 def test_login_start_is_rate_limited_per_ip(client: TestClient, settings: Settings) -> None:
     limit = settings.login_rate_limit_per_minute
     for _ in range(limit):
-        assert client.get(f"{API}/auth/login/github").status_code == 302
+        allowed = client.get(f"{API}/auth/login/github")
+        assert allowed.status_code == 302
     blocked = client.get(f"{API}/auth/login/github")
     assert blocked.status_code == 429
     assert _is_problem(blocked)
     assert int(blocked.headers["retry-after"]) >= 1
     # Callbacks share the login limiter.
-    assert client.get(f"{API}/auth/callback/github", params={"state": "x"}).status_code == 429
+    callback = client.get(f"{API}/auth/callback/github", params={"state": "x"})
+    assert callback.status_code == 429
 
 
 # -- sessions ----------------------------------------------------------------------------
@@ -339,9 +347,11 @@ def test_session_cookie_is_hashed_in_the_database(
 
 def test_garbage_session_cookie_is_ignored(client: TestClient) -> None:
     client.cookies.set(SESSION_COOKIE, "not-a-real-token")
-    assert client.get(f"{API}/me").status_code == 401
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 401
     client.cookies.set(SESSION_COOKIE, "x" * 500)
-    assert client.get(f"{API}/me").status_code == 401
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 401
 
 
 def test_session_expires_absolutely(
@@ -354,7 +364,8 @@ def test_session_expires_absolutely(
         .where(UserSession.user_id == uuid.UUID(me["id"]))
         .values(created_at=now - timedelta(days=31), expires_at=now - timedelta(seconds=1))
     )
-    assert client.get(f"{API}/me").status_code == 401
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 401
 
 
 def test_session_expires_when_idle(
@@ -368,7 +379,8 @@ def test_session_expires_when_idle(
             last_seen_at=datetime.now(UTC) - timedelta(days=settings.session_idle_days, minutes=1)
         )
     )
-    assert client.get(f"{API}/me").status_code == 401
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 401
 
 
 def test_last_seen_is_written_at_most_hourly(
@@ -380,7 +392,8 @@ def test_last_seen_is_written_at_most_hourly(
     db_connection.execute(
         update(UserSession).where(UserSession.user_id == user_id).values(last_seen_at=two_hours_ago)
     )
-    assert client.get(f"{API}/me").status_code == 200
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 200
     touched = _session_row(db_connection, me["id"]).last_seen_at
     assert touched > two_hours_ago + timedelta(hours=1)
 
@@ -390,7 +403,8 @@ def test_last_seen_is_written_at_most_hourly(
         .where(UserSession.user_id == user_id)
         .values(last_seen_at=ten_minutes_ago)
     )
-    assert client.get(f"{API}/me").status_code == 200
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 200
     assert _session_row(db_connection, me["id"]).last_seen_at == ten_minutes_ago
 
 
@@ -406,7 +420,8 @@ def test_logout_requires_matching_origin(client: TestClient, providers: FakeProv
     assert wrong.status_code == 403
     null_origin = client.post(f"{API}/auth/logout", headers={"Origin": "null"})
     assert null_origin.status_code == 403
-    assert client.get(f"{API}/me").status_code == 200
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 200
 
 
 def test_logout_revokes_the_session_and_clears_the_cookie(
@@ -418,14 +433,17 @@ def test_logout_revokes_the_session_and_clears_the_cookie(
     assert response.status_code == 204
     [header] = set_cookie_headers(response, SESSION_COOKIE)
     assert is_cleared(header)
-    assert client.get(f"{API}/me").status_code == 401
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 401
     # The old token is dead server-side, not just forgotten by the browser.
     client.cookies.set(SESSION_COOKIE, raw)
-    assert client.get(f"{API}/me").status_code == 401
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 401
 
 
 def test_logout_when_not_signed_in_is_fine(client: TestClient) -> None:
-    assert client.post(f"{API}/auth/logout", headers=CSRF).status_code == 204
+    response = client.post(f"{API}/auth/logout", headers=CSRF)
+    assert response.status_code == 204
 
 
 def test_logout_everywhere_revokes_all_sessions_of_this_user_only(
@@ -435,13 +453,16 @@ def test_logout_everywhere_revokes_all_sessions_of_this_user_only(
     with make_client(app) as phone, make_client(app) as someone_else:
         login_as(phone, providers, subject="1001")
         login_as(someone_else, providers, subject="1002")
-        assert phone.get(f"{API}/me").status_code == 200
+        response_ = phone.get(f"{API}/me")
+        assert response_.status_code == 200
 
         response = client.post(f"{API}/auth/logout-all", headers=CSRF)
         assert response.status_code == 200
         assert response.json() == {"sessions_revoked": 2}
-        assert client.get(f"{API}/me").status_code == 401
-        assert phone.get(f"{API}/me").status_code == 401
+        response_ = client.get(f"{API}/me")
+        assert response_.status_code == 401
+        response_ = phone.get(f"{API}/me")
+        assert response_.status_code == 401
         assert someone_else.get(f"{API}/me").status_code == 200
 
 
@@ -501,10 +522,12 @@ def test_link_fails_when_signed_out_midway(client: TestClient, providers: FakePr
     login_as(client, providers, provider="github")
     _, query = start_link(client, "google")
     providers.google_nonce = query["nonce"]
-    assert client.post(f"{API}/auth/logout", headers=CSRF).status_code == 204
+    logged_out = client.post(f"{API}/auth/logout", headers=CSRF)
+    assert logged_out.status_code == 204
     response = finish(client, "google", query["state"])
     assert response.headers["location"] == "/account?link=failed"
-    assert client.get(f"{API}/me").status_code == 401
+    response_ = client.get(f"{API}/me")
+    assert response_.status_code == 401
 
 
 def test_unlink_keeps_at_least_one_identity(client: TestClient, providers: FakeProviders) -> None:
@@ -513,8 +536,10 @@ def test_unlink_keeps_at_least_one_identity(client: TestClient, providers: FakeP
     providers.google_nonce = query["nonce"]
     finish(client, "google", query["state"])
 
-    assert client.delete(f"{API}/me/identities/github").status_code == 403  # CSRF
-    assert client.delete(f"{API}/me/identities/github", headers=CSRF).status_code == 204
+    without_origin = client.delete(f"{API}/me/identities/github")
+    assert without_origin.status_code == 403  # CSRF
+    unlinked = client.delete(f"{API}/me/identities/github", headers=CSRF)
+    assert unlinked.status_code == 204
     assert [i["provider"] for i in client.get(f"{API}/me").json()["identities"]] == ["google"]
 
     last = client.delete(f"{API}/me/identities/google", headers=CSRF)
@@ -523,4 +548,5 @@ def test_unlink_keeps_at_least_one_identity(client: TestClient, providers: FakeP
 
     gone = client.delete(f"{API}/me/identities/github", headers=CSRF)
     assert gone.status_code == 404
-    assert client.delete(f"{API}/me/identities/twitter", headers=CSRF).status_code == 422
+    unknown = client.delete(f"{API}/me/identities/twitter", headers=CSRF)
+    assert unknown.status_code == 422

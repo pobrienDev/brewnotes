@@ -57,14 +57,14 @@ def delete_one(db: Session, session: UserSession) -> None:
 
 def delete_all_for_user(db: Session, user_id: uuid.UUID) -> int:
     result = cast(
-        "CursorResult[Any]", db.execute(delete(UserSession).where(UserSession.user_id == user_id))
+        CursorResult[Any], db.execute(delete(UserSession).where(UserSession.user_id == user_id))
     )
     return int(result.rowcount)
 
 
 def delete_expired(db: Session, *, now: datetime, idle: timedelta) -> int:
     result = cast(
-        "CursorResult[Any]",
+        CursorResult[Any],
         db.execute(
             delete(UserSession).where(
                 or_(UserSession.expires_at <= now, UserSession.last_seen_at <= now - idle)

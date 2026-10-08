@@ -56,19 +56,24 @@ def _settings(request: Request) -> Settings:
     return settings
 
 
-def _client(request: Request, provider: str) -> Any:
+_PROVIDER_NAMES = {"github": "github", "google": "google"}
+
+
+def _client(request: Request, provider: str) -> tuple[Any, str]:
+    """The Authlib client for a configured provider plus its canonical name (one of our own
+    constants, so it is safe to log) or a 404 problem."""
     client = provider_client(request, provider)
-    if client is None:
+    if client is None or provider not in _PROVIDER_NAMES:
         raise HTTPException(
             HTTPStatus.NOT_FOUND, detail="Unknown or unconfigured sign-in provider."
         )
-    return client
+    return client, _PROVIDER_NAMES[provider]
 
 
 async def _start_flow(
     request: Request, provider: str, *, intent: str, next_path: str, user_id: str | None
 ) -> RedirectResponse:
-    client = _client(request, provider)
+    client, provider = _client(request, provider)
     settings = _settings(request)
     state = secrets.token_urlsafe(32)
     # One flow at a time per browser: drop leftovers from abandoned attempts.
@@ -144,7 +149,7 @@ async def callback(
     db: Annotated[Session, Depends(get_db)],
     signed_in: Annotated[User | None, Depends(optional_user)],
 ) -> RedirectResponse:
-    client = _client(request, provider)
+    client, provider = _client(request, provider)
     settings = _settings(request)
     state = request.query_params.get("state", "")
     meta = request.session.pop(META_PREFIX + state, None) if state else None
@@ -164,10 +169,10 @@ async def callback(
     try:
         identity = await fetch_identity(client, provider, request)
     except (AuthlibBaseError, JoseError, httpx2.HTTPError, ValueError, KeyError) as exc:
-        detail = getattr(exc, "error", None) if isinstance(exc, OAuthError) else None
+        denied = isinstance(exc, OAuthError) and getattr(exc, "error", None) == "access_denied"
         logger.warning(
             "oauth callback failed",
-            extra={"data": {"provider": provider, "error": type(exc).__name__, "code": detail}},
+            extra={"data": {"provider": provider, "error": type(exc).__name__, "denied": denied}},
         )
         return _failed(page, "provider")
 
