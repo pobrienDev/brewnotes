@@ -8,6 +8,7 @@ from pydantic import Field
 
 from app.errors import PROBLEM_MEDIA_TYPE
 from app.schemas import Schema
+from tests.conftest import CSRF
 
 
 class Payload(Schema):
@@ -43,7 +44,7 @@ def test_unknown_api_path_is_json_404(client: TestClient) -> None:
 
 
 def test_method_not_allowed_is_problem(client: TestClient) -> None:
-    response = client.post("/api/v1/health/live")
+    response = client.post("/api/v1/health/live", headers=CSRF)
     assert response.status_code == 405
     assert _is_problem(response)
 
@@ -53,7 +54,9 @@ def test_validation_error_is_problem_without_submitted_values(
 ) -> None:
     _add_test_routes(app)
     submitted = "this-value-must-not-leak"
-    response = client.post("/api/v1/_test/validate", json={"name": submitted, "amount": -1})
+    response = client.post(
+        "/api/v1/_test/validate", json={"name": submitted, "amount": -1}, headers=CSRF
+    )
     assert response.status_code == 422
     assert _is_problem(response)
     body = response.json()
@@ -69,7 +72,7 @@ def test_malformed_json_is_problem(app: FastAPI, client: TestClient) -> None:
     response = client.post(
         "/api/v1/_test/validate",
         content=b"{not json",
-        headers={"content-type": "application/json"},
+        headers={"content-type": "application/json", **CSRF},
     )
     assert response.status_code == 422
     assert _is_problem(response)
@@ -79,7 +82,9 @@ def test_nan_and_infinity_are_rejected(app: FastAPI, client: TestClient) -> None
     _add_test_routes(app)
     for raw in (b'{"name": "ok", "amount": NaN}', b'{"name": "ok", "amount": Infinity}'):
         response = client.post(
-            "/api/v1/_test/validate", content=raw, headers={"content-type": "application/json"}
+            "/api/v1/_test/validate",
+            content=raw,
+            headers={"content-type": "application/json", **CSRF},
         )
         assert response.status_code == 422, raw
 
@@ -98,7 +103,7 @@ def test_unhandled_exception_is_generic_500(app: FastAPI, client: TestClient) ->
 def test_unknown_fields_are_rejected(app: FastAPI, client: TestClient) -> None:
     _add_test_routes(app)
     response = client.post(
-        "/api/v1/_test/validate", json={"name": "ok", "amount": 1, "extra": "field"}
+        "/api/v1/_test/validate", json={"name": "ok", "amount": 1, "extra": "field"}, headers=CSRF
     )
     assert response.status_code == 422
     assert ("body", "extra") in {tuple(e["loc"]) for e in response.json()["errors"]}

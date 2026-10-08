@@ -11,7 +11,7 @@ from fastapi.testclient import TestClient
 
 from app.errors import PROBLEM_MEDIA_TYPE
 from app.main import create_app
-from tests.conftest import make_test_settings
+from tests.conftest import CSRF, make_test_settings
 
 
 def test_security_headers_on_api_responses(client: TestClient) -> None:
@@ -114,7 +114,7 @@ def test_body_over_limit_with_content_length_is_413(app: FastAPI, client: TestCl
     response = client.post(
         "/api/v1/_test/upload",
         content=b"x" * (limit + 1),
-        headers={"content-type": "application/octet-stream"},
+        headers={"content-type": "application/octet-stream", **CSRF},
     )
     assert response.status_code == 413
     assert response.headers["content-type"].startswith(PROBLEM_MEDIA_TYPE)
@@ -133,7 +133,7 @@ def test_chunked_body_over_limit_is_413(app: FastAPI, client: TestClient) -> Non
     response = client.post(
         "/api/v1/_test/upload",
         content=chunks(),
-        headers={"content-type": "application/octet-stream"},
+        headers={"content-type": "application/octet-stream", **CSRF},
     )
     assert response.status_code == 413
 
@@ -143,7 +143,7 @@ def test_body_under_limit_passes_through(app: FastAPI, client: TestClient) -> No
     response = client.post(
         "/api/v1/_test/upload",
         content=b"z" * 1024,
-        headers={"content-type": "application/octet-stream"},
+        headers={"content-type": "application/octet-stream", **CSRF},
     )
     assert response.status_code == 200
     assert response.json() == {"size": 1024}
