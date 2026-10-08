@@ -18,6 +18,13 @@ from alembic import command
 from app.config import MIN_SECRET_KEY_LENGTH, Settings
 from app.db import create_engine_from_settings, get_db
 from app.main import create_app
+from app.security.oauth import build_oauth
+from tests.fakes import FakeProviders
+
+# Tests talk to the app over https so Secure, __Host- prefixed cookies behave as in production.
+BASE_URL = "https://testserver"
+# Every unsafe request must carry our own Origin (CSRF check).
+CSRF = {"Origin": BASE_URL}
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
 
@@ -38,9 +45,13 @@ def make_test_settings(**overrides: object) -> Settings:
         "app_env": "test",
         "database_url": _test_database_url(),
         "secret_key": "t" * MIN_SECRET_KEY_LENGTH,
-        "public_base_url": "http://testserver",
+        "public_base_url": BASE_URL,
         "allowed_hosts": ["testserver"],
         "log_level": "WARNING",
+        "github_client_id": "gh-client-id",
+        "github_client_secret": "gh-client-secret",
+        "google_client_id": "google-client-id.apps.googleusercontent.com",
+        "google_client_secret": "google-client-secret",
     }
     values.update(overrides)
     return Settings(_env_file=None, **values)  # type: ignore[arg-type]
@@ -87,11 +98,25 @@ def app(settings: Settings, db_connection: Connection) -> Iterator[FastAPI]:
             yield session
 
     application.dependency_overrides[get_db] = override_get_db
+    fake = FakeProviders(google_client_id=settings.google_client_id or "")
+    application.state.oauth = build_oauth(settings, transport=fake.transport)
+    application.state.fake_providers = fake
     yield application
     application.state.engine.dispose()
 
 
 @pytest.fixture
+def providers(app: FastAPI) -> FakeProviders:
+    fake: FakeProviders = app.state.fake_providers
+    return fake
+
+
+def make_client(app: FastAPI) -> TestClient:
+    """A browser: its own cookie jar, redirects left to the test to inspect."""
+    return TestClient(app, base_url=BASE_URL, raise_server_exceptions=False, follow_redirects=False)
+
+
+@pytest.fixture
 def client(app: FastAPI) -> Iterator[TestClient]:
-    with TestClient(app, raise_server_exceptions=False) as test_client:
+    with make_client(app) as test_client:
         yield test_client

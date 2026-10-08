@@ -5,7 +5,7 @@ from pathlib import Path
 from fastapi.testclient import TestClient
 
 from app.main import create_app
-from tests.conftest import make_test_settings
+from tests.conftest import CSRF, make_test_settings
 
 
 def _build_static(tmp_path: Path) -> Path:
@@ -45,7 +45,7 @@ def test_frontend_serving(tmp_path: Path) -> None:
         assert api_404.status_code == 404
         assert api_404.headers["content-type"].startswith("application/problem+json")
 
-        post_to_page = client.post("/recipes")
+        post_to_page = client.post("/recipes", headers=CSRF)
         assert post_to_page.status_code == 405
 
         head = client.head("/recipes/anything")
