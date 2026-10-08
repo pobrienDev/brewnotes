@@ -3,7 +3,7 @@
 # One image serves the API and the built frontend from one origin.
 
 # ---- Frontend build -------------------------------------------------------------------
-FROM node:22-slim AS frontend
+FROM node:25-slim AS frontend
 WORKDIR /build
 COPY frontend/package.json frontend/package-lock.json ./
 RUN npm ci --no-audit --no-fund
