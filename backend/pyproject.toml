@@ -14,6 +14,9 @@ dependencies = [
     "pydantic>=2.9",
     "pydantic-settings>=2.6",
     "typer>=0.12",
+    "authlib>=1.8.0",
+    "itsdangerous>=2.2.0",
+    "joserfc>=1.7.5",
 ]
 
 [dependency-groups]
@@ -71,6 +74,10 @@ warn_unreachable = true
 [[tool.mypy.overrides]]
 module = ["alembic.versions.*"]
 disallow_untyped_defs = false
+
+[[tool.mypy.overrides]]
+module = ["authlib.*"]
+ignore_missing_imports = true
 
 [tool.pydantic-mypy]
 init_forbid_extra = true
