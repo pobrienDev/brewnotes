@@ -177,7 +177,7 @@ export function RecipeEditorPage() {
   const vol = system === 'imperial' ? 'gal' : 'L'
 
   return (
-    <form onSubmit={onSave} className="grid gap-6 lg:grid-cols-[1fr_22rem]">
+    <div className="grid gap-6 lg:grid-cols-[1fr_22rem]">
       <div className="space-y-6">
         <header className="flex flex-wrap items-center gap-3">
           <h1 className="text-2xl font-bold">{id ? 'Edit recipe' : 'Recipe designer'}</h1>
@@ -196,12 +196,13 @@ export function RecipeEditorPage() {
             system={system}
             onApply={(scaled) => form.reset(applyScaled(form.getValues(), scaled, system))}
           />
-          <button type="submit" disabled={save.isPending || !body} className="rounded bg-amber-600 px-3 py-1 text-white hover:bg-amber-700 disabled:opacity-50">
+          <button type="submit" form="recipe-form" disabled={save.isPending || !body} className="rounded bg-amber-600 px-3 py-1 text-white hover:bg-amber-700 disabled:opacity-50">
             {me.data ? (id ? 'Save changes' : 'Save recipe') : 'Sign in to save'}
           </button>
         </header>
         {save.isError && <p role="alert" className="rounded border border-red-200 bg-red-50 p-2 text-sm text-red-800">{(save.error as Error).message}</p>}
 
+        <form id="recipe-form" onSubmit={onSave} className="space-y-6">
         <section className="grid gap-3 md:grid-cols-2">
           <label className="text-sm md:col-span-2">
             Name
@@ -248,6 +249,7 @@ export function RecipeEditorPage() {
           Notes
           <textarea className={`${input} min-h-24`} {...form.register('notes', { maxLength: 10_000 })} />
         </label>
+        </form>
 
         {id && (
           <button
@@ -270,7 +272,7 @@ export function RecipeEditorPage() {
         />
         <StyleMatchPanel matches={calc.data?.style_matches ?? []} targetSlug={values.target_style || null} />
       </aside>
-    </form>
+    </div>
   )
 }
 
