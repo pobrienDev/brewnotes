@@ -136,6 +136,7 @@ dependencies = [
     { name = "alembic" },
     { name = "authlib" },
     { name = "fastapi" },
+    { name = "httpx2" },
     { name = "itsdangerous" },
     { name = "joserfc" },
     { name = "psycopg", extra = ["binary"] },
@@ -148,7 +149,6 @@ dependencies = [
 
 [package.dev-dependencies]
 dev = [
-    { name = "httpx2" },
     { name = "hypothesis" },
     { name = "mypy" },
     { name = "pytest" },
@@ -160,6 +160,7 @@ requires-dist = [
     { name = "alembic", specifier = ">=1.14" },
     { name = "authlib", specifier = ">=1.8.0" },
     { name = "fastapi", specifier = ">=0.115" },
+    { name = "httpx2", specifier = ">=2.13.1" },
     { name = "itsdangerous", specifier = ">=2.2.0" },
     { name = "joserfc", specifier = ">=1.7.5" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2" },
@@ -172,7 +173,6 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "httpx2", specifier = ">=2.13.1" },
     { name = "hypothesis", specifier = ">=6.112" },
     { name = "mypy", specifier = ">=1.13" },
     { name = "pytest", specifier = ">=8.3" },

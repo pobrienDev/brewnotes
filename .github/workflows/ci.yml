@@ -123,6 +123,7 @@ jobs:
       - run: docker build -f backend/Dockerfile -t brewnotes:ci .
       - name: Smoke test in production mode
         run: |
+          trap 'echo "--- container logs ---"; docker logs brewnotes; docker rm -f brewnotes' EXIT
           docker run -d --name brewnotes -p 8000:8000 \
             -e DATABASE_URL=postgresql+psycopg://nobody:nothing@127.0.0.1:1/none \
             -e SECRET_KEY=ci-only-value-not-a-secret-0123456789abcdef \
@@ -141,5 +142,3 @@ jobs:
           test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/api/v1/health/ready)" = "503"
           test "$(curl -s -o /dev/null -w '%{http_code}' http://localhost:8000/api/v1/nope)" = "404"
           docker exec brewnotes id -u | grep -qv '^0$'
-          docker logs brewnotes
-          docker rm -f brewnotes
