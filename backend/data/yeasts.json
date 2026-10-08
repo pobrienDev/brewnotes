@@ -1,0 +1,432 @@
+{
+ "note": "Hand-curated typical values from manufacturers' published specifications. Figures are planning values, not lot analyses; recipes copy what they use.",
+ "items": [
+  {
+   "name": "SafAle US-05",
+   "lab": "Fermentis",
+   "product_code": "US-05",
+   "attenuation_min_pct": 78,
+   "attenuation_max_pct": 82
+  },
+  {
+   "name": "SafAle S-04",
+   "lab": "Fermentis",
+   "product_code": "S-04",
+   "attenuation_min_pct": 72,
+   "attenuation_max_pct": 78
+  },
+  {
+   "name": "SafAle K-97",
+   "lab": "Fermentis",
+   "product_code": "K-97",
+   "attenuation_min_pct": 78,
+   "attenuation_max_pct": 82
+  },
+  {
+   "name": "SafAle S-33",
+   "lab": "Fermentis",
+   "product_code": "S-33",
+   "attenuation_min_pct": 68,
+   "attenuation_max_pct": 72
+  },
+  {
+   "name": "SafAle T-58",
+   "lab": "Fermentis",
+   "product_code": "T-58",
+   "attenuation_min_pct": 70,
+   "attenuation_max_pct": 75
+  },
+  {
+   "name": "SafAle BE-256",
+   "lab": "Fermentis",
+   "product_code": "BE-256",
+   "attenuation_min_pct": 82,
+   "attenuation_max_pct": 86
+  },
+  {
+   "name": "SafAle BE-134",
+   "lab": "Fermentis",
+   "product_code": "BE-134",
+   "attenuation_min_pct": 89,
+   "attenuation_max_pct": 93
+  },
+  {
+   "name": "SafAle WB-06",
+   "lab": "Fermentis",
+   "product_code": "WB-06",
+   "attenuation_min_pct": 86,
+   "attenuation_max_pct": 90
+  },
+  {
+   "name": "SafLager W-34/70",
+   "lab": "Fermentis",
+   "product_code": "W-34/70",
+   "attenuation_min_pct": 80,
+   "attenuation_max_pct": 84
+  },
+  {
+   "name": "SafLager S-23",
+   "lab": "Fermentis",
+   "product_code": "S-23",
+   "attenuation_min_pct": 82,
+   "attenuation_max_pct": 86
+  },
+  {
+   "name": "SafLager S-189",
+   "lab": "Fermentis",
+   "product_code": "S-189",
+   "attenuation_min_pct": 80,
+   "attenuation_max_pct": 84
+  },
+  {
+   "name": "Nottingham Ale",
+   "lab": "Lallemand",
+   "product_code": "Nottingham",
+   "attenuation_min_pct": 77,
+   "attenuation_max_pct": 82
+  },
+  {
+   "name": "Windsor Ale",
+   "lab": "Lallemand",
+   "product_code": "Windsor",
+   "attenuation_min_pct": 65,
+   "attenuation_max_pct": 72
+  },
+  {
+   "name": "BRY-97 American West Coast Ale",
+   "lab": "Lallemand",
+   "product_code": "BRY-97",
+   "attenuation_min_pct": 77,
+   "attenuation_max_pct": 82
+  },
+  {
+   "name": "Verdant IPA",
+   "lab": "Lallemand",
+   "product_code": "Verdant IPA",
+   "attenuation_min_pct": 75,
+   "attenuation_max_pct": 80
+  },
+  {
+   "name": "New England East Coast Ale",
+   "lab": "Lallemand",
+   "product_code": "New England",
+   "attenuation_min_pct": 75,
+   "attenuation_max_pct": 82
+  },
+  {
+   "name": "Voss Kveik Ale",
+   "lab": "Lallemand",
+   "product_code": "Voss",
+   "attenuation_min_pct": 75,
+   "attenuation_max_pct": 82
+  },
+  {
+   "name": "Belle Saison",
+   "lab": "Lallemand",
+   "product_code": "Belle Saison",
+   "attenuation_min_pct": 88,
+   "attenuation_max_pct": 95
+  },
+  {
+   "name": "Abbaye Belgian Ale",
+   "lab": "Lallemand",
+   "product_code": "Abbaye",
+   "attenuation_min_pct": 80,
+   "attenuation_max_pct": 86
+  },
+  {
+   "name": "Munich Classic Wheat",
+   "lab": "Lallemand",
+   "product_code": "Munich Classic",
+   "attenuation_min_pct": 76,
+   "attenuation_max_pct": 83
+  },
+  {
+   "name": "Diamond Lager",
+   "lab": "Lallemand",
+   "product_code": "Diamond",
+   "attenuation_min_pct": 77,
+   "attenuation_max_pct": 82
+  },
+  {
+   "name": "London ESB Ale",
+   "lab": "Lallemand",
+   "product_code": "London ESB",
+   "attenuation_min_pct": 65,
+   "attenuation_max_pct": 70
+  },
+  {
+   "name": "American Ale",
+   "lab": "Wyeast",
+   "product_code": "1056",
+   "attenuation_min_pct": 73,
+   "attenuation_max_pct": 77
+  },
+  {
+   "name": "American Ale II",
+   "lab": "Wyeast",
+   "product_code": "1272",
+   "attenuation_min_pct": 72,
+   "attenuation_max_pct": 76
+  },
+  {
+   "name": "Irish Ale",
+   "lab": "Wyeast",
+   "product_code": "1084",
+   "attenuation_min_pct": 71,
+   "attenuation_max_pct": 75
+  },
+  {
+   "name": "British Ale",
+   "lab": "Wyeast",
+   "product_code": "1098",
+   "attenuation_min_pct": 73,
+   "attenuation_max_pct": 75
+  },
+  {
+   "name": "London Ale",
+   "lab": "Wyeast",
+   "product_code": "1028",
+   "attenuation_min_pct": 73,
+   "attenuation_max_pct": 77
+  },
+  {
+   "name": "London ESB Ale",
+   "lab": "Wyeast",
+   "product_code": "1968",
+   "attenuation_min_pct": 67,
+   "attenuation_max_pct": 71
+  },
+  {
+   "name": "London Ale III",
+   "lab": "Wyeast",
+   "product_code": "1318",
+   "attenuation_min_pct": 71,
+   "attenuation_max_pct": 75
+  },
+  {
+   "name": "German Ale",
+   "lab": "Wyeast",
+   "product_code": "1007",
+   "attenuation_min_pct": 73,
+   "attenuation_max_pct": 77
+  },
+  {
+   "name": "American Wheat",
+   "lab": "Wyeast",
+   "product_code": "1010",
+   "attenuation_min_pct": 74,
+   "attenuation_max_pct": 78
+  },
+  {
+   "name": "Belgian Abbey",
+   "lab": "Wyeast",
+   "product_code": "1214",
+   "attenuation_min_pct": 74,
+   "attenuation_max_pct": 78
+  },
+  {
+   "name": "Denny's Favorite 50",
+   "lab": "Wyeast",
+   "product_code": "1450",
+   "attenuation_min_pct": 74,
+   "attenuation_max_pct": 76
+  },
+  {
+   "name": "Bohemian Lager",
+   "lab": "Wyeast",
+   "product_code": "2124",
+   "attenuation_min_pct": 73,
+   "attenuation_max_pct": 77
+  },
+  {
+   "name": "Bavarian Lager",
+   "lab": "Wyeast",
+   "product_code": "2206",
+   "attenuation_min_pct": 73,
+   "attenuation_max_pct": 77
+  },
+  {
+   "name": "Czech Pils",
+   "lab": "Wyeast",
+   "product_code": "2278",
+   "attenuation_min_pct": 70,
+   "attenuation_max_pct": 74
+  },
+  {
+   "name": "Weihenstephan Weizen",
+   "lab": "Wyeast",
+   "product_code": "3068",
+   "attenuation_min_pct": 73,
+   "attenuation_max_pct": 77
+  },
+  {
+   "name": "Belgian Ardennes",
+   "lab": "Wyeast",
+   "product_code": "3522",
+   "attenuation_min_pct": 72,
+   "attenuation_max_pct": 76
+  },
+  {
+   "name": "French Saison",
+   "lab": "Wyeast",
+   "product_code": "3711",
+   "attenuation_min_pct": 77,
+   "attenuation_max_pct": 83
+  },
+  {
+   "name": "Belgian Saison",
+   "lab": "Wyeast",
+   "product_code": "3724",
+   "attenuation_min_pct": 76,
+   "attenuation_max_pct": 80
+  },
+  {
+   "name": "Trappist High Gravity",
+   "lab": "Wyeast",
+   "product_code": "3787",
+   "attenuation_min_pct": 74,
+   "attenuation_max_pct": 78
+  },
+  {
+   "name": "California Ale",
+   "lab": "White Labs",
+   "product_code": "WLP001",
+   "attenuation_min_pct": 73,
+   "attenuation_max_pct": 80
+  },
+  {
+   "name": "English Ale",
+   "lab": "White Labs",
+   "product_code": "WLP002",
+   "attenuation_min_pct": 63,
+   "attenuation_max_pct": 70
+  },
+  {
+   "name": "Irish Ale",
+   "lab": "White Labs",
+   "product_code": "WLP004",
+   "attenuation_min_pct": 69,
+   "attenuation_max_pct": 74
+  },
+  {
+   "name": "British Ale",
+   "lab": "White Labs",
+   "product_code": "WLP005",
+   "attenuation_min_pct": 67,
+   "attenuation_max_pct": 74
+  },
+  {
+   "name": "Dry English Ale",
+   "lab": "White Labs",
+   "product_code": "WLP007",
+   "attenuation_min_pct": 70,
+   "attenuation_max_pct": 80
+  },
+  {
+   "name": "London Ale",
+   "lab": "White Labs",
+   "product_code": "WLP013",
+   "attenuation_min_pct": 67,
+   "attenuation_max_pct": 75
+  },
+  {
+   "name": "German Ale / Kölsch",
+   "lab": "White Labs",
+   "product_code": "WLP029",
+   "attenuation_min_pct": 72,
+   "attenuation_max_pct": 78
+  },
+  {
+   "name": "San Diego Super Yeast",
+   "lab": "White Labs",
+   "product_code": "WLP090",
+   "attenuation_min_pct": 76,
+   "attenuation_max_pct": 83
+  },
+  {
+   "name": "Hefeweizen Ale",
+   "lab": "White Labs",
+   "product_code": "WLP300",
+   "attenuation_min_pct": 72,
+   "attenuation_max_pct": 76
+  },
+  {
+   "name": "Monastery Ale",
+   "lab": "White Labs",
+   "product_code": "WLP500",
+   "attenuation_min_pct": 75,
+   "attenuation_max_pct": 80
+  },
+  {
+   "name": "Abbey Ale",
+   "lab": "White Labs",
+   "product_code": "WLP530",
+   "attenuation_min_pct": 75,
+   "attenuation_max_pct": 80
+  },
+  {
+   "name": "Belgian Saison I",
+   "lab": "White Labs",
+   "product_code": "WLP565",
+   "attenuation_min_pct": 65,
+   "attenuation_max_pct": 75
+  },
+  {
+   "name": "Belgian Saison II",
+   "lab": "White Labs",
+   "product_code": "WLP566",
+   "attenuation_min_pct": 78,
+   "attenuation_max_pct": 85
+  },
+  {
+   "name": "San Francisco Lager",
+   "lab": "White Labs",
+   "product_code": "WLP810",
+   "attenuation_min_pct": 65,
+   "attenuation_max_pct": 70
+  },
+  {
+   "name": "German Lager",
+   "lab": "White Labs",
+   "product_code": "WLP830",
+   "attenuation_min_pct": 74,
+   "attenuation_max_pct": 79
+  },
+  {
+   "name": "German Bock Lager",
+   "lab": "White Labs",
+   "product_code": "WLP833",
+   "attenuation_min_pct": 70,
+   "attenuation_max_pct": 76
+  },
+  {
+   "name": "American Lager",
+   "lab": "White Labs",
+   "product_code": "WLP840",
+   "attenuation_min_pct": 75,
+   "attenuation_max_pct": 80
+  },
+  {
+   "name": "West Coast Ale I",
+   "lab": "Omega Yeast",
+   "product_code": "OYL-004",
+   "attenuation_min_pct": 73,
+   "attenuation_max_pct": 80
+  },
+  {
+   "name": "British Ale I",
+   "lab": "Omega Yeast",
+   "product_code": "OYL-006",
+   "attenuation_min_pct": 72,
+   "attenuation_max_pct": 77
+  },
+  {
+   "name": "Voss Kveik",
+   "lab": "Omega Yeast",
+   "product_code": "OYL-061",
+   "attenuation_min_pct": 75,
+   "attenuation_max_pct": 82
+  }
+ ]
+}

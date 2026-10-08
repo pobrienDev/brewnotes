@@ -1,0 +1,376 @@
+{
+ "note": "Hand-curated typical values from manufacturers' published specifications. Figures are planning values, not lot analyses; recipes copy what they use.",
+ "items": [
+  {
+   "name": "2-Row Pale Malt (US)",
+   "type": "grain",
+   "ppg": 37,
+   "color_lovibond": 1.8,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Pale Ale Malt (UK)",
+   "type": "grain",
+   "ppg": 38,
+   "color_lovibond": 3,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Maris Otter Pale Malt",
+   "type": "grain",
+   "ppg": 38,
+   "color_lovibond": 3,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Golden Promise Pale Malt",
+   "type": "grain",
+   "ppg": 37,
+   "color_lovibond": 2.4,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Pilsner Malt",
+   "type": "grain",
+   "ppg": 37,
+   "color_lovibond": 1.6,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Vienna Malt",
+   "type": "grain",
+   "ppg": 36,
+   "color_lovibond": 3.5,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Munich Malt (Light)",
+   "type": "grain",
+   "ppg": 35,
+   "color_lovibond": 9,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Munich Malt (Dark)",
+   "type": "grain",
+   "ppg": 35,
+   "color_lovibond": 20,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Wheat Malt (White)",
+   "type": "grain",
+   "ppg": 38,
+   "color_lovibond": 2.5,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Rye Malt",
+   "type": "grain",
+   "ppg": 36,
+   "color_lovibond": 3.7,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Smoked Malt (Beech)",
+   "type": "grain",
+   "ppg": 37,
+   "color_lovibond": 2.5,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Acidulated Malt",
+   "type": "grain",
+   "ppg": 27,
+   "color_lovibond": 2,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Carapils / Dextrine Malt",
+   "type": "grain",
+   "ppg": 33,
+   "color_lovibond": 1.5,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Biscuit Malt",
+   "type": "grain",
+   "ppg": 35,
+   "color_lovibond": 23,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Victory Malt",
+   "type": "grain",
+   "ppg": 34,
+   "color_lovibond": 28,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Aromatic Malt",
+   "type": "grain",
+   "ppg": 35,
+   "color_lovibond": 20,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Honey Malt",
+   "type": "grain",
+   "ppg": 37,
+   "color_lovibond": 25,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Melanoidin Malt",
+   "type": "grain",
+   "ppg": 37,
+   "color_lovibond": 28,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Crystal 10L",
+   "type": "grain",
+   "ppg": 35,
+   "color_lovibond": 10,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Crystal 20L",
+   "type": "grain",
+   "ppg": 35,
+   "color_lovibond": 20,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Crystal 40L",
+   "type": "grain",
+   "ppg": 34,
+   "color_lovibond": 40,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Crystal 60L",
+   "type": "grain",
+   "ppg": 34,
+   "color_lovibond": 60,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Crystal 80L",
+   "type": "grain",
+   "ppg": 34,
+   "color_lovibond": 80,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Crystal 120L",
+   "type": "grain",
+   "ppg": 33,
+   "color_lovibond": 120,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Caramunich Malt",
+   "type": "grain",
+   "ppg": 34,
+   "color_lovibond": 35,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Special B",
+   "type": "grain",
+   "ppg": 31,
+   "color_lovibond": 140,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Pale Chocolate Malt",
+   "type": "grain",
+   "ppg": 33,
+   "color_lovibond": 200,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Chocolate Malt",
+   "type": "grain",
+   "ppg": 34,
+   "color_lovibond": 350,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Carafa Special II (Dehusked)",
+   "type": "grain",
+   "ppg": 32,
+   "color_lovibond": 430,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Roasted Barley",
+   "type": "grain",
+   "ppg": 25,
+   "color_lovibond": 300,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Black Patent Malt",
+   "type": "grain",
+   "ppg": 25,
+   "color_lovibond": 500,
+   "default_addition": "steep"
+  },
+  {
+   "name": "Flaked Oats",
+   "type": "adjunct",
+   "ppg": 33,
+   "color_lovibond": 1.5,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Flaked Wheat",
+   "type": "adjunct",
+   "ppg": 36,
+   "color_lovibond": 2,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Flaked Barley",
+   "type": "adjunct",
+   "ppg": 32,
+   "color_lovibond": 2,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Flaked Maize",
+   "type": "adjunct",
+   "ppg": 37,
+   "color_lovibond": 0.5,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Flaked Rice",
+   "type": "adjunct",
+   "ppg": 38,
+   "color_lovibond": 1,
+   "default_addition": "mash"
+  },
+  {
+   "name": "Light Dry Malt Extract",
+   "type": "extract",
+   "ppg": 44,
+   "color_lovibond": 3,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Amber Dry Malt Extract",
+   "type": "extract",
+   "ppg": 44,
+   "color_lovibond": 10,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Dark Dry Malt Extract",
+   "type": "extract",
+   "ppg": 44,
+   "color_lovibond": 30,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Wheat Dry Malt Extract",
+   "type": "extract",
+   "ppg": 44,
+   "color_lovibond": 3,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Light Liquid Malt Extract",
+   "type": "extract",
+   "ppg": 36,
+   "color_lovibond": 3,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Amber Liquid Malt Extract",
+   "type": "extract",
+   "ppg": 36,
+   "color_lovibond": 10,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Dark Liquid Malt Extract",
+   "type": "extract",
+   "ppg": 36,
+   "color_lovibond": 30,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Wheat Liquid Malt Extract",
+   "type": "extract",
+   "ppg": 36,
+   "color_lovibond": 3,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Corn Sugar (Dextrose)",
+   "type": "sugar",
+   "ppg": 42,
+   "color_lovibond": 0,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Table Sugar (Sucrose)",
+   "type": "sugar",
+   "ppg": 46,
+   "color_lovibond": 0,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Brown Sugar",
+   "type": "sugar",
+   "ppg": 46,
+   "color_lovibond": 15,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Honey",
+   "type": "sugar",
+   "ppg": 35,
+   "color_lovibond": 1,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Molasses",
+   "type": "sugar",
+   "ppg": 36,
+   "color_lovibond": 80,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Lactose",
+   "type": "sugar",
+   "ppg": 35,
+   "color_lovibond": 0,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Maltodextrin",
+   "type": "sugar",
+   "ppg": 40,
+   "color_lovibond": 0,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Belgian Candi Sugar (Clear)",
+   "type": "sugar",
+   "ppg": 36,
+   "color_lovibond": 1,
+   "default_addition": "boil"
+  },
+  {
+   "name": "Belgian Candi Syrup (Dark)",
+   "type": "sugar",
+   "ppg": 32,
+   "color_lovibond": 90,
+   "default_addition": "boil"
+  }
+ ]
+}
