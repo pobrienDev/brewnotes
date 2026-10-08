@@ -39,6 +39,7 @@ export function ScaleDialog({
     },
   })
   const currentVolume = body ? volume(body.batch_volume_l, system).value.toFixed(2) : ''
+  const canApply = !scale.isPending && (newVolume !== '' || newEfficiency !== '')
   return (
     <>
       <button
@@ -50,15 +51,20 @@ export function ScaleDialog({
         Scale…
       </button>
       <dialog ref={ref} className="rounded border border-stone-300 p-0 backdrop:bg-black/30">
-        <form
-          method="dialog"
+        <div
+          role="group"
+          aria-labelledby="scale-title"
           className="w-80 space-y-3 p-4"
-          onSubmit={(e) => {
-            e.preventDefault()
-            scale.mutate()
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' && canApply) {
+              e.preventDefault()
+              scale.mutate()
+            }
           }}
         >
-          <h2 className="text-lg font-semibold">Scale recipe</h2>
+          <h2 id="scale-title" className="text-lg font-semibold">
+            Scale recipe
+          </h2>
           <label className="block text-sm">
             New batch volume ({unit}) <span className="text-stone-500">now {currentVolume}</span>
             <input
@@ -92,14 +98,15 @@ export function ScaleDialog({
               Cancel
             </button>
             <button
-              type="submit"
+              type="button"
               className="rounded bg-amber-600 px-3 py-1 text-sm text-white disabled:opacity-50"
-              disabled={scale.isPending || (newVolume === '' && newEfficiency === '')}
+              disabled={!canApply}
+              onClick={() => scale.mutate()}
             >
               Apply
             </button>
           </div>
-        </form>
+        </div>
       </dialog>
     </>
   )
