@@ -140,6 +140,111 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/catalog/fermentables": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add a custom fermentable */
+        post: operations["create_fermentable_api_v1_catalog_fermentables_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog/fermentables/{item_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a custom fermentable */
+        delete: operations["delete_fermentable_api_v1_catalog_fermentables__item_id__delete"];
+        options?: never;
+        head?: never;
+        /** Edit a custom fermentable */
+        patch: operations["update_fermentable_api_v1_catalog_fermentables__item_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/catalog/hops": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add a custom hop */
+        post: operations["create_hop_api_v1_catalog_hops_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog/hops/{item_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a custom hop */
+        delete: operations["delete_hop_api_v1_catalog_hops__item_id__delete"];
+        options?: never;
+        head?: never;
+        /** Edit a custom hop */
+        patch: operations["update_hop_api_v1_catalog_hops__item_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/catalog/yeasts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Add a custom yeast */
+        post: operations["create_yeast_api_v1_catalog_yeasts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog/yeasts/{item_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Delete a custom yeast */
+        delete: operations["delete_yeast_api_v1_catalog_yeasts__item_id__delete"];
+        options?: never;
+        head?: never;
+        /** Edit a custom yeast */
+        patch: operations["update_yeast_api_v1_catalog_yeasts__item_id__patch"];
+        trace?: never;
+    };
     "/api/v1/catalog/{kind}": {
         parameters: {
             query?: never;
@@ -244,6 +349,43 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/recipes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List my recipes, most recently updated first */
+        get: operations["list_recipes_api_v1_recipes_get"];
+        put?: never;
+        /** Save a new recipe */
+        post: operations["create_recipe_api_v1_recipes_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/recipes/{recipe_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A recipe with its statistics and style matches */
+        get: operations["read_recipe_api_v1_recipes__recipe_id__get"];
+        /** Replace a recipe */
+        put: operations["replace_recipe_api_v1_recipes__recipe_id__put"];
+        post?: never;
+        /** Delete a recipe */
+        delete: operations["delete_recipe_api_v1_recipes__recipe_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/styles": {
         parameters: {
             query?: never;
@@ -343,6 +485,38 @@ export interface components {
              */
             type: "grain" | "extract" | "sugar" | "adjunct";
         };
+        /** FermentableUpdate */
+        FermentableUpdate: {
+            /** Color Lovibond */
+            color_lovibond?: number | null;
+            /** Default Addition */
+            default_addition?: ("mash" | "steep" | "boil" | "fermenter") | null;
+            /** Name */
+            name?: string | null;
+            /** Ppg */
+            ppg?: number | null;
+            /** Type */
+            type?: ("grain" | "extract" | "sugar" | "adjunct") | null;
+        };
+        /** FermentableWrite */
+        FermentableWrite: {
+            /** Color Lovibond */
+            color_lovibond: number;
+            /**
+             * Default Addition
+             * @enum {string}
+             */
+            default_addition: "mash" | "steep" | "boil" | "fermenter";
+            /** Name */
+            name: string;
+            /** Ppg */
+            ppg: number;
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "grain" | "extract" | "sugar" | "adjunct";
+        };
         /** FieldError */
         FieldError: {
             /**
@@ -421,6 +595,24 @@ export interface components {
             /** Origin */
             origin: string | null;
         };
+        /** HopUpdate */
+        HopUpdate: {
+            /** Alpha Typical Pct */
+            alpha_typical_pct?: number | null;
+            /** Name */
+            name?: string | null;
+            /** Origin */
+            origin?: string | null;
+        };
+        /** HopWrite */
+        HopWrite: {
+            /** Alpha Typical Pct */
+            alpha_typical_pct: number;
+            /** Name */
+            name: string;
+            /** Origin */
+            origin?: string | null;
+        };
         /** IdentityOut */
         IdentityOut: {
             /**
@@ -477,6 +669,16 @@ export interface components {
         Page_HopOut_: {
             /** Items */
             items: components["schemas"]["HopOut"][];
+            /**
+             * Next Cursor
+             * @description Pass as ?cursor= to fetch the next page; null on the last page
+             */
+            next_cursor: string | null;
+        };
+        /** Page[RecipeSummary] */
+        Page_RecipeSummary_: {
+            /** Items */
+            items: components["schemas"]["RecipeSummary"][];
             /**
              * Next Cursor
              * @description Pass as ?cursor= to fetch the next page; null on the last page
@@ -545,6 +747,108 @@ export interface components {
             /** Min */
             min: number;
         };
+        /** RecipeFermentableInput */
+        RecipeFermentableInput: {
+            /**
+             * Addition
+             * @enum {string}
+             */
+            addition: "mash" | "steep" | "boil" | "fermenter";
+            /** Amount Kg */
+            amount_kg: number;
+            /** Color Lovibond */
+            color_lovibond: number;
+            /**
+             * Fermentable Id
+             * @description Catalog row this was taken from; values are snapshots
+             */
+            fermentable_id?: string | null;
+            /** Name */
+            name: string;
+            /** Ppg */
+            ppg: number;
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "grain" | "extract" | "sugar" | "adjunct";
+        };
+        /** RecipeFermentableOut */
+        RecipeFermentableOut: {
+            /**
+             * Addition
+             * @enum {string}
+             */
+            addition: "mash" | "steep" | "boil" | "fermenter";
+            /** Amount Kg */
+            amount_kg: number;
+            /** Color Lovibond */
+            color_lovibond: number;
+            /**
+             * Fermentable Id
+             * @description Catalog row this was taken from; values are snapshots
+             */
+            fermentable_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Ppg */
+            ppg: number;
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "grain" | "extract" | "sugar" | "adjunct";
+        };
+        /** RecipeHopInput */
+        RecipeHopInput: {
+            /** Alpha Pct */
+            alpha_pct: number;
+            /** Amount G */
+            amount_g: number;
+            /** Dry Hop Days */
+            dry_hop_days?: number | null;
+            /** Hop Id */
+            hop_id?: string | null;
+            /** Name */
+            name: string;
+            /** Time Min */
+            time_min?: number | null;
+            /**
+             * Use
+             * @enum {string}
+             */
+            use: "boil" | "first_wort" | "whirlpool" | "dry_hop";
+        };
+        /** RecipeHopOut */
+        RecipeHopOut: {
+            /** Alpha Pct */
+            alpha_pct: number;
+            /** Amount G */
+            amount_g: number;
+            /** Dry Hop Days */
+            dry_hop_days?: number | null;
+            /** Hop Id */
+            hop_id?: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Time Min */
+            time_min?: number | null;
+            /**
+             * Use
+             * @enum {string}
+             */
+            use: "boil" | "first_wort" | "whirlpool" | "dry_hop";
+        };
         /** RecipeInput */
         RecipeInput: {
             /**
@@ -580,6 +884,50 @@ export interface components {
             target_style?: string | null;
             /** Yeasts */
             yeasts?: components["schemas"]["YeastInput"][];
+        };
+        /** RecipeOut */
+        RecipeOut: {
+            /** Batch Volume L */
+            batch_volume_l: number;
+            /** Boil Time Min */
+            boil_time_min: number;
+            /** Brewhouse Efficiency Pct */
+            brewhouse_efficiency_pct: number;
+            /** Calc Notes */
+            calc_notes: string[];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Fermentables */
+            fermentables: components["schemas"]["RecipeFermentableOut"][];
+            /** Hops */
+            hops: components["schemas"]["RecipeHopOut"][];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Notes */
+            notes: string;
+            /** Pre Boil Volume L */
+            pre_boil_volume_l: number | null;
+            stats: components["schemas"]["RecipeStatsOut"];
+            /** Steep Efficiency Pct */
+            steep_efficiency_pct: number;
+            /** Style Matches */
+            style_matches: components["schemas"]["StyleMatchOut"][];
+            target_style: components["schemas"]["StyleSummary"] | null;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Yeasts */
+            yeasts: components["schemas"]["RecipeYeastOut"][];
         };
         /** RecipeStatsOut */
         RecipeStatsOut: {
@@ -617,6 +965,101 @@ export interface components {
             og: number;
             /** Srm */
             srm: number;
+        };
+        /** RecipeSummary */
+        RecipeSummary: {
+            /** Abv */
+            abv: number;
+            /** Fg */
+            fg: number;
+            /** Ibu */
+            ibu: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Og */
+            og: number;
+            /** Srm */
+            srm: number;
+            target_style: components["schemas"]["StyleSummary"] | null;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /**
+         * RecipeWrite
+         * @description Body for creating or replacing a recipe.
+         */
+        RecipeWrite: {
+            /**
+             * Batch Volume L
+             * @description Volume into the fermenter
+             */
+            batch_volume_l: number;
+            /** Boil Time Min */
+            boil_time_min: number;
+            /**
+             * Brewhouse Efficiency Pct
+             * @default 72
+             */
+            brewhouse_efficiency_pct: number;
+            /** Fermentables */
+            fermentables?: components["schemas"]["RecipeFermentableInput"][];
+            /** Hops */
+            hops?: components["schemas"]["RecipeHopInput"][];
+            /** Name */
+            name: string;
+            /**
+             * Notes
+             * @default
+             */
+            notes: string;
+            /**
+             * Pre Boil Volume L
+             * @description Optional; only used to estimate boil gravity
+             */
+            pre_boil_volume_l?: number | null;
+            /**
+             * Steep Efficiency Pct
+             * @default 50
+             */
+            steep_efficiency_pct: number;
+            /**
+             * Target Style
+             * @description Slug of the style the recipe aims for
+             */
+            target_style?: string | null;
+            /** Yeasts */
+            yeasts?: components["schemas"]["RecipeYeastInput"][];
+        };
+        /** RecipeYeastInput */
+        RecipeYeastInput: {
+            /** Attenuation Pct */
+            attenuation_pct: number;
+            /** Name */
+            name: string;
+            /** Yeast Id */
+            yeast_id?: string | null;
+        };
+        /** RecipeYeastOut */
+        RecipeYeastOut: {
+            /** Attenuation Pct */
+            attenuation_pct: number;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Yeast Id */
+            yeast_id?: string | null;
         };
         /** ScaleRequest */
         ScaleRequest: {
@@ -783,6 +1226,32 @@ export interface components {
             name: string;
             /** Product Code */
             product_code: string | null;
+        };
+        /** YeastUpdate */
+        YeastUpdate: {
+            /** Attenuation Max Pct */
+            attenuation_max_pct?: number | null;
+            /** Attenuation Min Pct */
+            attenuation_min_pct?: number | null;
+            /** Lab */
+            lab?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Product Code */
+            product_code?: string | null;
+        };
+        /** YeastWrite */
+        YeastWrite: {
+            /** Attenuation Max Pct */
+            attenuation_max_pct: number;
+            /** Attenuation Min Pct */
+            attenuation_min_pct: number;
+            /** Lab */
+            lab: string;
+            /** Name */
+            name: string;
+            /** Product Code */
+            product_code?: string | null;
         };
     };
     responses: never;
@@ -1105,6 +1574,378 @@ export interface operations {
             };
         };
     };
+    create_fermentable_api_v1_catalog_fermentables_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FermentableWrite"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FermentableOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_fermentable_api_v1_catalog_fermentables__item_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    update_fermentable_api_v1_catalog_fermentables__item_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FermentableUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FermentableOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    create_hop_api_v1_catalog_hops_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HopWrite"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HopOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_hop_api_v1_catalog_hops__item_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    update_hop_api_v1_catalog_hops__item_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["HopUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HopOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    create_yeast_api_v1_catalog_yeasts_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["YeastWrite"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YeastOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_yeast_api_v1_catalog_yeasts__item_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    update_yeast_api_v1_catalog_yeasts__item_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                item_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["YeastUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["YeastOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
     list_catalog_api_v1_catalog__kind__get: {
         parameters: {
             query?: {
@@ -1388,6 +2229,213 @@ export interface operations {
             header?: never;
             path: {
                 provider: components["schemas"]["Provider"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    list_recipes_api_v1_recipes_get: {
+        parameters: {
+            query?: {
+                /** @description Opaque cursor from a previous page */
+                cursor?: string | null;
+                /** @description Page size */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_RecipeSummary_"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    create_recipe_api_v1_recipes_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeWrite"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    read_recipe_api_v1_recipes__recipe_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                recipe_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    replace_recipe_api_v1_recipes__recipe_id__put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                recipe_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeWrite"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecipeOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_recipe_api_v1_recipes__recipe_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                recipe_id: string;
             };
             cookie?: never;
         };

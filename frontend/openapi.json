@@ -147,6 +147,138 @@
         "title": "FermentableOut",
         "type": "object"
       },
+      "FermentableUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "color_lovibond": {
+            "anyOf": [
+              {
+                "maximum": 700.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color Lovibond"
+          },
+          "default_addition": {
+            "anyOf": [
+              {
+                "enum": [
+                  "mash",
+                  "steep",
+                  "boil",
+                  "fermenter"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Default Addition"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "ppg": {
+            "anyOf": [
+              {
+                "maximum": 50.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ppg"
+          },
+          "type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "grain",
+                  "extract",
+                  "sugar",
+                  "adjunct"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Type"
+          }
+        },
+        "title": "FermentableUpdate",
+        "type": "object"
+      },
+      "FermentableWrite": {
+        "additionalProperties": false,
+        "properties": {
+          "color_lovibond": {
+            "maximum": 700.0,
+            "minimum": 0.0,
+            "title": "Color Lovibond",
+            "type": "number"
+          },
+          "default_addition": {
+            "enum": [
+              "mash",
+              "steep",
+              "boil",
+              "fermenter"
+            ],
+            "title": "Default Addition",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "ppg": {
+            "maximum": 50.0,
+            "minimum": 0.0,
+            "title": "Ppg",
+            "type": "number"
+          },
+          "type": {
+            "enum": [
+              "grain",
+              "extract",
+              "sugar",
+              "adjunct"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "type",
+          "ppg",
+          "color_lovibond",
+          "default_addition"
+        ],
+        "title": "FermentableWrite",
+        "type": "object"
+      },
       "FieldError": {
         "properties": {
           "loc": {
@@ -352,6 +484,86 @@
         "title": "HopOut",
         "type": "object"
       },
+      "HopUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "alpha_typical_pct": {
+            "anyOf": [
+              {
+                "maximum": 25.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alpha Typical Pct"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "origin": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Origin"
+          }
+        },
+        "title": "HopUpdate",
+        "type": "object"
+      },
+      "HopWrite": {
+        "additionalProperties": false,
+        "properties": {
+          "alpha_typical_pct": {
+            "maximum": 25.0,
+            "minimum": 0.0,
+            "title": "Alpha Typical Pct",
+            "type": "number"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "origin": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Origin"
+          }
+        },
+        "required": [
+          "name",
+          "alpha_typical_pct"
+        ],
+        "title": "HopWrite",
+        "type": "object"
+      },
       "IdentityOut": {
         "additionalProperties": false,
         "properties": {
@@ -495,6 +707,36 @@
           "next_cursor"
         ],
         "title": "Page[HopOut]",
+        "type": "object"
+      },
+      "Page_RecipeSummary_": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeSummary"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pass as ?cursor= to fetch the next page; null on the last page",
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "Page[RecipeSummary]",
         "type": "object"
       },
       "Page_StyleSummary_": {
@@ -688,6 +930,320 @@
         "title": "RangeOut",
         "type": "object"
       },
+      "RecipeFermentableInput": {
+        "additionalProperties": false,
+        "properties": {
+          "addition": {
+            "enum": [
+              "mash",
+              "steep",
+              "boil",
+              "fermenter"
+            ],
+            "title": "Addition",
+            "type": "string"
+          },
+          "amount_kg": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 1000.0,
+            "title": "Amount Kg",
+            "type": "number"
+          },
+          "color_lovibond": {
+            "maximum": 700.0,
+            "minimum": 0.0,
+            "title": "Color Lovibond",
+            "type": "number"
+          },
+          "fermentable_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Catalog row this was taken from; values are snapshots",
+            "title": "Fermentable Id"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "ppg": {
+            "maximum": 50.0,
+            "minimum": 0.0,
+            "title": "Ppg",
+            "type": "number"
+          },
+          "type": {
+            "enum": [
+              "grain",
+              "extract",
+              "sugar",
+              "adjunct"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "amount_kg",
+          "ppg",
+          "color_lovibond",
+          "addition",
+          "type"
+        ],
+        "title": "RecipeFermentableInput",
+        "type": "object"
+      },
+      "RecipeFermentableOut": {
+        "additionalProperties": false,
+        "properties": {
+          "addition": {
+            "enum": [
+              "mash",
+              "steep",
+              "boil",
+              "fermenter"
+            ],
+            "title": "Addition",
+            "type": "string"
+          },
+          "amount_kg": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 1000.0,
+            "title": "Amount Kg",
+            "type": "number"
+          },
+          "color_lovibond": {
+            "maximum": 700.0,
+            "minimum": 0.0,
+            "title": "Color Lovibond",
+            "type": "number"
+          },
+          "fermentable_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Catalog row this was taken from; values are snapshots",
+            "title": "Fermentable Id"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "ppg": {
+            "maximum": 50.0,
+            "minimum": 0.0,
+            "title": "Ppg",
+            "type": "number"
+          },
+          "type": {
+            "enum": [
+              "grain",
+              "extract",
+              "sugar",
+              "adjunct"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "amount_kg",
+          "ppg",
+          "color_lovibond",
+          "addition",
+          "type",
+          "id"
+        ],
+        "title": "RecipeFermentableOut",
+        "type": "object"
+      },
+      "RecipeHopInput": {
+        "additionalProperties": false,
+        "properties": {
+          "alpha_pct": {
+            "maximum": 25.0,
+            "minimum": 0.0,
+            "title": "Alpha Pct",
+            "type": "number"
+          },
+          "amount_g": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 10000.0,
+            "title": "Amount G",
+            "type": "number"
+          },
+          "dry_hop_days": {
+            "anyOf": [
+              {
+                "maximum": 30.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dry Hop Days"
+          },
+          "hop_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hop Id"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "time_min": {
+            "anyOf": [
+              {
+                "maximum": 360.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Time Min"
+          },
+          "use": {
+            "enum": [
+              "boil",
+              "first_wort",
+              "whirlpool",
+              "dry_hop"
+            ],
+            "title": "Use",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "amount_g",
+          "alpha_pct",
+          "use"
+        ],
+        "title": "RecipeHopInput",
+        "type": "object"
+      },
+      "RecipeHopOut": {
+        "additionalProperties": false,
+        "properties": {
+          "alpha_pct": {
+            "maximum": 25.0,
+            "minimum": 0.0,
+            "title": "Alpha Pct",
+            "type": "number"
+          },
+          "amount_g": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 10000.0,
+            "title": "Amount G",
+            "type": "number"
+          },
+          "dry_hop_days": {
+            "anyOf": [
+              {
+                "maximum": 30.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dry Hop Days"
+          },
+          "hop_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hop Id"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "time_min": {
+            "anyOf": [
+              {
+                "maximum": 360.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Time Min"
+          },
+          "use": {
+            "enum": [
+              "boil",
+              "first_wort",
+              "whirlpool",
+              "dry_hop"
+            ],
+            "title": "Use",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "amount_g",
+          "alpha_pct",
+          "use",
+          "id"
+        ],
+        "title": "RecipeHopOut",
+        "type": "object"
+      },
       "RecipeInput": {
         "additionalProperties": false,
         "properties": {
@@ -774,6 +1330,130 @@
           "boil_time_min"
         ],
         "title": "RecipeInput",
+        "type": "object"
+      },
+      "RecipeOut": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_volume_l": {
+            "title": "Batch Volume L",
+            "type": "number"
+          },
+          "boil_time_min": {
+            "title": "Boil Time Min",
+            "type": "number"
+          },
+          "brewhouse_efficiency_pct": {
+            "title": "Brewhouse Efficiency Pct",
+            "type": "number"
+          },
+          "calc_notes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Calc Notes",
+            "type": "array"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "fermentables": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeFermentableOut"
+            },
+            "title": "Fermentables",
+            "type": "array"
+          },
+          "hops": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeHopOut"
+            },
+            "title": "Hops",
+            "type": "array"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "title": "Notes",
+            "type": "string"
+          },
+          "pre_boil_volume_l": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pre Boil Volume L"
+          },
+          "stats": {
+            "$ref": "#/components/schemas/RecipeStatsOut"
+          },
+          "steep_efficiency_pct": {
+            "title": "Steep Efficiency Pct",
+            "type": "number"
+          },
+          "style_matches": {
+            "items": {
+              "$ref": "#/components/schemas/StyleMatchOut"
+            },
+            "title": "Style Matches",
+            "type": "array"
+          },
+          "target_style": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StyleSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "yeasts": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeYeastOut"
+            },
+            "title": "Yeasts",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "notes",
+          "target_style",
+          "batch_volume_l",
+          "pre_boil_volume_l",
+          "boil_time_min",
+          "brewhouse_efficiency_pct",
+          "steep_efficiency_pct",
+          "fermentables",
+          "hops",
+          "yeasts",
+          "created_at",
+          "updated_at",
+          "stats",
+          "style_matches",
+          "calc_notes"
+        ],
+        "title": "RecipeOut",
         "type": "object"
       },
       "RecipeStatsOut": {
@@ -868,6 +1548,246 @@
           "hop_contributions"
         ],
         "title": "RecipeStatsOut",
+        "type": "object"
+      },
+      "RecipeSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "abv": {
+            "title": "Abv",
+            "type": "number"
+          },
+          "fg": {
+            "title": "Fg",
+            "type": "number"
+          },
+          "ibu": {
+            "title": "Ibu",
+            "type": "number"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "og": {
+            "title": "Og",
+            "type": "number"
+          },
+          "srm": {
+            "title": "Srm",
+            "type": "number"
+          },
+          "target_style": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StyleSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "target_style",
+          "og",
+          "fg",
+          "abv",
+          "ibu",
+          "srm",
+          "updated_at"
+        ],
+        "title": "RecipeSummary",
+        "type": "object"
+      },
+      "RecipeWrite": {
+        "additionalProperties": false,
+        "description": "Body for creating or replacing a recipe.",
+        "properties": {
+          "batch_volume_l": {
+            "description": "Volume into the fermenter",
+            "maximum": 2000.0,
+            "minimum": 0.5,
+            "title": "Batch Volume L",
+            "type": "number"
+          },
+          "boil_time_min": {
+            "maximum": 360.0,
+            "minimum": 0.0,
+            "title": "Boil Time Min",
+            "type": "number"
+          },
+          "brewhouse_efficiency_pct": {
+            "default": 72.0,
+            "maximum": 100.0,
+            "minimum": 20.0,
+            "title": "Brewhouse Efficiency Pct",
+            "type": "number"
+          },
+          "fermentables": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeFermentableInput"
+            },
+            "maxItems": 50,
+            "title": "Fermentables",
+            "type": "array"
+          },
+          "hops": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeHopInput"
+            },
+            "maxItems": 50,
+            "title": "Hops",
+            "type": "array"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "maxLength": 10000,
+            "title": "Notes",
+            "type": "string"
+          },
+          "pre_boil_volume_l": {
+            "anyOf": [
+              {
+                "maximum": 2500.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional; only used to estimate boil gravity",
+            "title": "Pre Boil Volume L"
+          },
+          "steep_efficiency_pct": {
+            "default": 50.0,
+            "maximum": 100.0,
+            "minimum": 20.0,
+            "title": "Steep Efficiency Pct",
+            "type": "number"
+          },
+          "target_style": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Slug of the style the recipe aims for",
+            "title": "Target Style"
+          },
+          "yeasts": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeYeastInput"
+            },
+            "maxItems": 50,
+            "title": "Yeasts",
+            "type": "array"
+          }
+        },
+        "required": [
+          "batch_volume_l",
+          "boil_time_min",
+          "name"
+        ],
+        "title": "RecipeWrite",
+        "type": "object"
+      },
+      "RecipeYeastInput": {
+        "additionalProperties": false,
+        "properties": {
+          "attenuation_pct": {
+            "maximum": 100.0,
+            "minimum": 40.0,
+            "title": "Attenuation Pct",
+            "type": "number"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "yeast_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Yeast Id"
+          }
+        },
+        "required": [
+          "name",
+          "attenuation_pct"
+        ],
+        "title": "RecipeYeastInput",
+        "type": "object"
+      },
+      "RecipeYeastOut": {
+        "additionalProperties": false,
+        "properties": {
+          "attenuation_pct": {
+            "maximum": 100.0,
+            "minimum": 40.0,
+            "title": "Attenuation Pct",
+            "type": "number"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "yeast_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Yeast Id"
+          }
+        },
+        "required": [
+          "name",
+          "attenuation_pct",
+          "id"
+        ],
+        "title": "RecipeYeastOut",
         "type": "object"
       },
       "ScaleRequest": {
@@ -1392,6 +2312,126 @@
         ],
         "title": "YeastOut",
         "type": "object"
+      },
+      "YeastUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "attenuation_max_pct": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 40.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attenuation Max Pct"
+          },
+          "attenuation_min_pct": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 40.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Attenuation Min Pct"
+          },
+          "lab": {
+            "anyOf": [
+              {
+                "maxLength": 100,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lab"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "product_code": {
+            "anyOf": [
+              {
+                "maxLength": 50,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Code"
+          }
+        },
+        "title": "YeastUpdate",
+        "type": "object"
+      },
+      "YeastWrite": {
+        "additionalProperties": false,
+        "properties": {
+          "attenuation_max_pct": {
+            "maximum": 100.0,
+            "minimum": 40.0,
+            "title": "Attenuation Max Pct",
+            "type": "number"
+          },
+          "attenuation_min_pct": {
+            "maximum": 100.0,
+            "minimum": 40.0,
+            "title": "Attenuation Min Pct",
+            "type": "number"
+          },
+          "lab": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Lab",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "product_code": {
+            "anyOf": [
+              {
+                "maxLength": 50,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Code"
+          }
+        },
+        "required": [
+          "name",
+          "lab",
+          "attenuation_min_pct",
+          "attenuation_max_pct"
+        ],
+        "title": "YeastWrite",
+        "type": "object"
       }
     }
   },
@@ -1769,6 +2809,480 @@
         "summary": "Scale a recipe to a new batch volume and/or brewhouse efficiency",
         "tags": [
           "calc"
+        ]
+      }
+    },
+    "/api/v1/catalog/fermentables": {
+      "post": {
+        "operationId": "create_fermentable_api_v1_catalog_fermentables_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FermentableWrite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FermentableOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Add a custom fermentable",
+        "tags": [
+          "catalog"
+        ]
+      }
+    },
+    "/api/v1/catalog/fermentables/{item_id}": {
+      "delete": {
+        "operationId": "delete_fermentable_api_v1_catalog_fermentables__item_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "item_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Item Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Delete a custom fermentable",
+        "tags": [
+          "catalog"
+        ]
+      },
+      "patch": {
+        "operationId": "update_fermentable_api_v1_catalog_fermentables__item_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "item_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Item Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FermentableUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FermentableOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Edit a custom fermentable",
+        "tags": [
+          "catalog"
+        ]
+      }
+    },
+    "/api/v1/catalog/hops": {
+      "post": {
+        "operationId": "create_hop_api_v1_catalog_hops_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HopWrite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HopOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Add a custom hop",
+        "tags": [
+          "catalog"
+        ]
+      }
+    },
+    "/api/v1/catalog/hops/{item_id}": {
+      "delete": {
+        "operationId": "delete_hop_api_v1_catalog_hops__item_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "item_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Item Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Delete a custom hop",
+        "tags": [
+          "catalog"
+        ]
+      },
+      "patch": {
+        "operationId": "update_hop_api_v1_catalog_hops__item_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "item_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Item Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HopUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HopOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Edit a custom hop",
+        "tags": [
+          "catalog"
+        ]
+      }
+    },
+    "/api/v1/catalog/yeasts": {
+      "post": {
+        "operationId": "create_yeast_api_v1_catalog_yeasts_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/YeastWrite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/YeastOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Add a custom yeast",
+        "tags": [
+          "catalog"
+        ]
+      }
+    },
+    "/api/v1/catalog/yeasts/{item_id}": {
+      "delete": {
+        "operationId": "delete_yeast_api_v1_catalog_yeasts__item_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "item_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Item Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Delete a custom yeast",
+        "tags": [
+          "catalog"
+        ]
+      },
+      "patch": {
+        "operationId": "update_yeast_api_v1_catalog_yeasts__item_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "item_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Item Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/YeastUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/YeastOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Edit a custom yeast",
+        "tags": [
+          "catalog"
         ]
       }
     },
@@ -2172,6 +3686,289 @@
         "summary": "Unlink a sign-in provider",
         "tags": [
           "account"
+        ]
+      }
+    },
+    "/api/v1/recipes": {
+      "get": {
+        "operationId": "list_recipes_api_v1_recipes_get",
+        "parameters": [
+          {
+            "description": "Opaque cursor from a previous page",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 400,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Opaque cursor from a previous page",
+              "title": "Cursor"
+            }
+          },
+          {
+            "description": "Page size",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "description": "Page size",
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_RecipeSummary_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "List my recipes, most recently updated first",
+        "tags": [
+          "recipes"
+        ]
+      },
+      "post": {
+        "operationId": "create_recipe_api_v1_recipes_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeWrite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Save a new recipe",
+        "tags": [
+          "recipes"
+        ]
+      }
+    },
+    "/api/v1/recipes/{recipe_id}": {
+      "delete": {
+        "operationId": "delete_recipe_api_v1_recipes__recipe_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "recipe_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Recipe Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Delete a recipe",
+        "tags": [
+          "recipes"
+        ]
+      },
+      "get": {
+        "operationId": "read_recipe_api_v1_recipes__recipe_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "recipe_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Recipe Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "A recipe with its statistics and style matches",
+        "tags": [
+          "recipes"
+        ]
+      },
+      "put": {
+        "operationId": "replace_recipe_api_v1_recipes__recipe_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "recipe_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Recipe Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeWrite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Replace a recipe",
+        "tags": [
+          "recipes"
         ]
       }
     },
