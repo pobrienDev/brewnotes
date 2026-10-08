@@ -91,7 +91,8 @@ def test_style_detail_with_ranges_variants_and_parent(seeded: None, client: Test
         "ibu": (30, 50),
         "srm": (5, 10),
     }
-    assert body["summary"] and "bjcp.org" in body["source_url"]
+    assert body["summary"]
+    assert body["source_url"].startswith("https://www.bjcp.org/style/2021/18/18B/")
 
     specialty = client.get(f"{API}/styles/specialty-ipa").json()
     assert specialty["ranges"] == []
