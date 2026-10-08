@@ -1,6 +1,152 @@
 {
   "components": {
     "schemas": {
+      "CalcResult": {
+        "additionalProperties": false,
+        "properties": {
+          "notes": {
+            "description": "Assumptions and estimates the user should know about",
+            "items": {
+              "type": "string"
+            },
+            "title": "Notes",
+            "type": "array"
+          },
+          "stats": {
+            "$ref": "#/components/schemas/RecipeStatsOut"
+          },
+          "style_matches": {
+            "items": {
+              "$ref": "#/components/schemas/StyleMatchOut"
+            },
+            "title": "Style Matches",
+            "type": "array"
+          }
+        },
+        "required": [
+          "stats",
+          "style_matches",
+          "notes"
+        ],
+        "title": "CalcResult",
+        "type": "object"
+      },
+      "CatalogType": {
+        "enum": [
+          "fermentables",
+          "hops",
+          "yeasts"
+        ],
+        "title": "CatalogType",
+        "type": "string"
+      },
+      "FermentableInput": {
+        "additionalProperties": false,
+        "properties": {
+          "addition": {
+            "enum": [
+              "mash",
+              "steep",
+              "boil",
+              "fermenter"
+            ],
+            "title": "Addition",
+            "type": "string"
+          },
+          "amount_kg": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 1000.0,
+            "title": "Amount Kg",
+            "type": "number"
+          },
+          "color_lovibond": {
+            "maximum": 700.0,
+            "minimum": 0.0,
+            "title": "Color Lovibond",
+            "type": "number"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "ppg": {
+            "maximum": 50.0,
+            "minimum": 0.0,
+            "title": "Ppg",
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "amount_kg",
+          "ppg",
+          "color_lovibond",
+          "addition"
+        ],
+        "title": "FermentableInput",
+        "type": "object"
+      },
+      "FermentableOut": {
+        "additionalProperties": false,
+        "properties": {
+          "color_lovibond": {
+            "title": "Color Lovibond",
+            "type": "number"
+          },
+          "custom": {
+            "description": "True for the signed-in user's own entries, False for built-ins.",
+            "readOnly": true,
+            "title": "Custom",
+            "type": "boolean"
+          },
+          "default_addition": {
+            "enum": [
+              "mash",
+              "steep",
+              "boil",
+              "fermenter"
+            ],
+            "title": "Default Addition",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "ppg": {
+            "title": "Ppg",
+            "type": "number"
+          },
+          "type": {
+            "enum": [
+              "grain",
+              "extract",
+              "sugar",
+              "adjunct"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "type",
+          "ppg",
+          "color_lovibond",
+          "default_addition",
+          "custom"
+        ],
+        "title": "FermentableOut",
+        "type": "object"
+      },
       "FieldError": {
         "properties": {
           "loc": {
@@ -49,6 +195,163 @@
         "title": "HealthStatus",
         "type": "object"
       },
+      "HopContributionOut": {
+        "additionalProperties": false,
+        "properties": {
+          "estimated": {
+            "description": "True for whirlpool additions, which have no consensus formula",
+            "title": "Estimated",
+            "type": "boolean"
+          },
+          "ibu": {
+            "title": "Ibu",
+            "type": "number"
+          },
+          "minutes": {
+            "title": "Minutes",
+            "type": "number"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "use": {
+            "enum": [
+              "boil",
+              "first_wort",
+              "whirlpool",
+              "dry_hop"
+            ],
+            "title": "Use",
+            "type": "string"
+          },
+          "utilization": {
+            "title": "Utilization",
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "use",
+          "minutes",
+          "utilization",
+          "ibu",
+          "estimated"
+        ],
+        "title": "HopContributionOut",
+        "type": "object"
+      },
+      "HopInput": {
+        "additionalProperties": false,
+        "properties": {
+          "alpha_pct": {
+            "maximum": 25.0,
+            "minimum": 0.0,
+            "title": "Alpha Pct",
+            "type": "number"
+          },
+          "amount_g": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 10000.0,
+            "title": "Amount G",
+            "type": "number"
+          },
+          "dry_hop_days": {
+            "anyOf": [
+              {
+                "maximum": 30.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dry Hop Days"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "time_min": {
+            "anyOf": [
+              {
+                "maximum": 360.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Time Min"
+          },
+          "use": {
+            "enum": [
+              "boil",
+              "first_wort",
+              "whirlpool",
+              "dry_hop"
+            ],
+            "title": "Use",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "amount_g",
+          "alpha_pct",
+          "use"
+        ],
+        "title": "HopInput",
+        "type": "object"
+      },
+      "HopOut": {
+        "additionalProperties": false,
+        "properties": {
+          "alpha_typical_pct": {
+            "title": "Alpha Typical Pct",
+            "type": "number"
+          },
+          "custom": {
+            "description": "True for the signed-in user's own entries, False for built-ins.",
+            "readOnly": true,
+            "title": "Custom",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "origin": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Origin"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "alpha_typical_pct",
+          "origin",
+          "custom"
+        ],
+        "title": "HopOut",
+        "type": "object"
+      },
       "IdentityOut": {
         "additionalProperties": false,
         "properties": {
@@ -77,6 +380,181 @@
           "last_login_at"
         ],
         "title": "IdentityOut",
+        "type": "object"
+      },
+      "MetricMatchOut": {
+        "additionalProperties": false,
+        "properties": {
+          "delta": {
+            "description": "Signed distance from the nearest range edge; 0 when in",
+            "title": "Delta",
+            "type": "number"
+          },
+          "metric": {
+            "enum": [
+              "og",
+              "fg",
+              "abv",
+              "ibu",
+              "srm"
+            ],
+            "title": "Metric",
+            "type": "string"
+          },
+          "penalty": {
+            "title": "Penalty",
+            "type": "number"
+          },
+          "ranges": {
+            "items": {
+              "$ref": "#/components/schemas/RangeOut"
+            },
+            "title": "Ranges",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "in",
+              "low",
+              "high"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "metric",
+          "value",
+          "ranges",
+          "status",
+          "delta",
+          "penalty"
+        ],
+        "title": "MetricMatchOut",
+        "type": "object"
+      },
+      "Page_FermentableOut_": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/FermentableOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pass as ?cursor= to fetch the next page; null on the last page",
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "Page[FermentableOut]",
+        "type": "object"
+      },
+      "Page_HopOut_": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/HopOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pass as ?cursor= to fetch the next page; null on the last page",
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "Page[HopOut]",
+        "type": "object"
+      },
+      "Page_StyleSummary_": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/StyleSummary"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pass as ?cursor= to fetch the next page; null on the last page",
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "Page[StyleSummary]",
+        "type": "object"
+      },
+      "Page_YeastOut_": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/YeastOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pass as ?cursor= to fetch the next page; null on the last page",
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "Page[YeastOut]",
         "type": "object"
       },
       "Problem": {
@@ -179,6 +657,275 @@
         "title": "ProvidersOut",
         "type": "object"
       },
+      "RangeOut": {
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "max": {
+            "title": "Max",
+            "type": "number"
+          },
+          "min": {
+            "title": "Min",
+            "type": "number"
+          }
+        },
+        "required": [
+          "min",
+          "max",
+          "label"
+        ],
+        "title": "RangeOut",
+        "type": "object"
+      },
+      "RecipeInput": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_volume_l": {
+            "description": "Volume into the fermenter",
+            "maximum": 2000.0,
+            "minimum": 0.5,
+            "title": "Batch Volume L",
+            "type": "number"
+          },
+          "boil_time_min": {
+            "maximum": 360.0,
+            "minimum": 0.0,
+            "title": "Boil Time Min",
+            "type": "number"
+          },
+          "brewhouse_efficiency_pct": {
+            "default": 72.0,
+            "maximum": 100.0,
+            "minimum": 20.0,
+            "title": "Brewhouse Efficiency Pct",
+            "type": "number"
+          },
+          "fermentables": {
+            "items": {
+              "$ref": "#/components/schemas/FermentableInput"
+            },
+            "maxItems": 50,
+            "title": "Fermentables",
+            "type": "array"
+          },
+          "hops": {
+            "items": {
+              "$ref": "#/components/schemas/HopInput"
+            },
+            "maxItems": 50,
+            "title": "Hops",
+            "type": "array"
+          },
+          "pre_boil_volume_l": {
+            "anyOf": [
+              {
+                "maximum": 2500.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional; only used to estimate boil gravity",
+            "title": "Pre Boil Volume L"
+          },
+          "steep_efficiency_pct": {
+            "default": 50.0,
+            "maximum": 100.0,
+            "minimum": 20.0,
+            "title": "Steep Efficiency Pct",
+            "type": "number"
+          },
+          "target_style": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Slug of the style the recipe aims for",
+            "title": "Target Style"
+          },
+          "yeasts": {
+            "items": {
+              "$ref": "#/components/schemas/YeastInput"
+            },
+            "maxItems": 50,
+            "title": "Yeasts",
+            "type": "array"
+          }
+        },
+        "required": [
+          "batch_volume_l",
+          "boil_time_min"
+        ],
+        "title": "RecipeInput",
+        "type": "object"
+      },
+      "RecipeStatsOut": {
+        "additionalProperties": false,
+        "properties": {
+          "abv": {
+            "title": "Abv",
+            "type": "number"
+          },
+          "abv_alternate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Reported when OG > 1.070",
+            "title": "Abv Alternate"
+          },
+          "attenuation_assumed": {
+            "title": "Attenuation Assumed",
+            "type": "boolean"
+          },
+          "attenuation_pct": {
+            "title": "Attenuation Pct",
+            "type": "number"
+          },
+          "boil_gravity": {
+            "title": "Boil Gravity",
+            "type": "number"
+          },
+          "boil_gravity_mode": {
+            "enum": [
+              "og",
+              "average_of_pre_boil_and_og"
+            ],
+            "title": "Boil Gravity Mode",
+            "type": "string"
+          },
+          "ebc": {
+            "title": "Ebc",
+            "type": "number"
+          },
+          "fg": {
+            "title": "Fg",
+            "type": "number"
+          },
+          "gravity_units": {
+            "title": "Gravity Units",
+            "type": "number"
+          },
+          "hop_contributions": {
+            "items": {
+              "$ref": "#/components/schemas/HopContributionOut"
+            },
+            "title": "Hop Contributions",
+            "type": "array"
+          },
+          "ibu": {
+            "title": "Ibu",
+            "type": "number"
+          },
+          "mcu": {
+            "title": "Mcu",
+            "type": "number"
+          },
+          "og": {
+            "title": "Og",
+            "type": "number"
+          },
+          "srm": {
+            "title": "Srm",
+            "type": "number"
+          }
+        },
+        "required": [
+          "gravity_units",
+          "og",
+          "fg",
+          "abv",
+          "abv_alternate",
+          "attenuation_pct",
+          "attenuation_assumed",
+          "mcu",
+          "srm",
+          "ebc",
+          "ibu",
+          "boil_gravity",
+          "boil_gravity_mode",
+          "hop_contributions"
+        ],
+        "title": "RecipeStatsOut",
+        "type": "object"
+      },
+      "ScaleRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_volume_l": {
+            "anyOf": [
+              {
+                "maximum": 2000.0,
+                "minimum": 0.5,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Batch Volume L"
+          },
+          "brewhouse_efficiency_pct": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 20.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brewhouse Efficiency Pct"
+          },
+          "recipe": {
+            "$ref": "#/components/schemas/RecipeInput"
+          }
+        },
+        "required": [
+          "recipe"
+        ],
+        "title": "ScaleRequest",
+        "type": "object"
+      },
+      "ScaleResult": {
+        "additionalProperties": false,
+        "properties": {
+          "recipe": {
+            "$ref": "#/components/schemas/RecipeInput"
+          },
+          "stats": {
+            "$ref": "#/components/schemas/RecipeStatsOut"
+          }
+        },
+        "required": [
+          "recipe",
+          "stats"
+        ],
+        "title": "ScaleResult",
+        "type": "object"
+      },
       "SignedOutEverywhere": {
         "additionalProperties": false,
         "properties": {
@@ -191,6 +938,286 @@
           "sessions_revoked"
         ],
         "title": "SignedOutEverywhere",
+        "type": "object"
+      },
+      "StyleDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "category_code": {
+            "title": "Category Code",
+            "type": "string"
+          },
+          "category_name": {
+            "title": "Category Name",
+            "type": "string"
+          },
+          "code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code"
+          },
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "guideline": {
+            "title": "Guideline",
+            "type": "string"
+          },
+          "guideline_version": {
+            "title": "Guideline Version",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "parent": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StyleSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "parent_slug": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Slug"
+          },
+          "ranges": {
+            "items": {
+              "$ref": "#/components/schemas/StyleRangeOut"
+            },
+            "title": "Ranges",
+            "type": "array"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "source_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Url"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "variants": {
+            "items": {
+              "$ref": "#/components/schemas/StyleSummary"
+            },
+            "title": "Variants",
+            "type": "array"
+          }
+        },
+        "required": [
+          "slug",
+          "code",
+          "name",
+          "display_name",
+          "category_code",
+          "category_name",
+          "parent_slug",
+          "ranges",
+          "guideline",
+          "guideline_version",
+          "summary",
+          "source_url",
+          "parent",
+          "variants"
+        ],
+        "title": "StyleDetail",
+        "type": "object"
+      },
+      "StyleMatchOut": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code"
+          },
+          "compared": {
+            "title": "Compared",
+            "type": "integer"
+          },
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "fits": {
+            "title": "Fits",
+            "type": "boolean"
+          },
+          "metrics": {
+            "items": {
+              "$ref": "#/components/schemas/MetricMatchOut"
+            },
+            "title": "Metrics",
+            "type": "array"
+          },
+          "score": {
+            "title": "Score",
+            "type": "number"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "tiebreak": {
+            "title": "Tiebreak",
+            "type": "number"
+          }
+        },
+        "required": [
+          "slug",
+          "code",
+          "display_name",
+          "fits",
+          "compared",
+          "score",
+          "tiebreak",
+          "metrics"
+        ],
+        "title": "StyleMatchOut",
+        "type": "object"
+      },
+      "StyleRangeOut": {
+        "additionalProperties": false,
+        "properties": {
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          },
+          "max": {
+            "title": "Max",
+            "type": "number"
+          },
+          "metric": {
+            "enum": [
+              "og",
+              "fg",
+              "abv",
+              "ibu",
+              "srm"
+            ],
+            "title": "Metric",
+            "type": "string"
+          },
+          "min": {
+            "title": "Min",
+            "type": "number"
+          }
+        },
+        "required": [
+          "metric",
+          "min",
+          "max",
+          "label"
+        ],
+        "title": "StyleRangeOut",
+        "type": "object"
+      },
+      "StyleSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "category_code": {
+            "title": "Category Code",
+            "type": "string"
+          },
+          "category_name": {
+            "title": "Category Name",
+            "type": "string"
+          },
+          "code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code"
+          },
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "parent_slug": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Slug"
+          },
+          "ranges": {
+            "items": {
+              "$ref": "#/components/schemas/StyleRangeOut"
+            },
+            "title": "Ranges",
+            "type": "array"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "code",
+          "name",
+          "display_name",
+          "category_code",
+          "category_name",
+          "parent_slug",
+          "ranges"
+        ],
+        "title": "StyleSummary",
         "type": "object"
       },
       "UserOut": {
@@ -282,6 +1309,88 @@
           }
         },
         "title": "UserUpdate",
+        "type": "object"
+      },
+      "YeastInput": {
+        "additionalProperties": false,
+        "properties": {
+          "attenuation_pct": {
+            "maximum": 100.0,
+            "minimum": 40.0,
+            "title": "Attenuation Pct",
+            "type": "number"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "attenuation_pct"
+        ],
+        "title": "YeastInput",
+        "type": "object"
+      },
+      "YeastOut": {
+        "additionalProperties": false,
+        "properties": {
+          "attenuation_max_pct": {
+            "title": "Attenuation Max Pct",
+            "type": "number"
+          },
+          "attenuation_midpoint_pct": {
+            "title": "Attenuation Midpoint Pct",
+            "type": "number"
+          },
+          "attenuation_min_pct": {
+            "title": "Attenuation Min Pct",
+            "type": "number"
+          },
+          "custom": {
+            "description": "True for the signed-in user's own entries, False for built-ins.",
+            "readOnly": true,
+            "title": "Custom",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "lab": {
+            "title": "Lab",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "product_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product Code"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "lab",
+          "product_code",
+          "attenuation_min_pct",
+          "attenuation_max_pct",
+          "attenuation_midpoint_pct",
+          "custom"
+        ],
+        "title": "YeastOut",
         "type": "object"
       }
     }
@@ -558,6 +1667,222 @@
         "summary": "Sign-in providers that are configured",
         "tags": [
           "auth"
+        ]
+      }
+    },
+    "/api/v1/calc": {
+      "post": {
+        "operationId": "calculate_api_v1_calc_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CalcResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Statistics and style matches for a recipe body",
+        "tags": [
+          "calc"
+        ]
+      }
+    },
+    "/api/v1/calc/scale": {
+      "post": {
+        "operationId": "scale_api_v1_calc_scale_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ScaleRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScaleResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Scale a recipe to a new batch volume and/or brewhouse efficiency",
+        "tags": [
+          "calc"
+        ]
+      }
+    },
+    "/api/v1/catalog/{kind}": {
+      "get": {
+        "operationId": "list_catalog_api_v1_catalog__kind__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/CatalogType"
+            }
+          },
+          {
+            "description": "Name contains",
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 100,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Name contains",
+              "title": "Q"
+            }
+          },
+          {
+            "description": "Opaque cursor from a previous page",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 400,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Opaque cursor from a previous page",
+              "title": "Cursor"
+            }
+          },
+          {
+            "description": "Page size",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "description": "Page size",
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/components/schemas/Page_FermentableOut_"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Page_HopOut_"
+                    },
+                    {
+                      "$ref": "#/components/schemas/Page_YeastOut_"
+                    }
+                  ],
+                  "title": "Response List Catalog Api V1 Catalog  Kind  Get"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Search fermentables, hops or yeasts",
+        "tags": [
+          "catalog"
         ]
       }
     },
@@ -847,6 +2172,172 @@
         "summary": "Unlink a sign-in provider",
         "tags": [
           "account"
+        ]
+      }
+    },
+    "/api/v1/styles": {
+      "get": {
+        "operationId": "list_styles_api_v1_styles_get",
+        "parameters": [
+          {
+            "description": "Name or code contains",
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 100,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Name or code contains",
+              "title": "Search"
+            }
+          },
+          {
+            "description": "Category code, e.g. 21",
+            "in": "query",
+            "name": "category",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 8,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Category code, e.g. 21",
+              "title": "Category"
+            }
+          },
+          {
+            "description": "Opaque cursor from a previous page",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 400,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Opaque cursor from a previous page",
+              "title": "Cursor"
+            }
+          },
+          {
+            "description": "Page size",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "description": "Page size",
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_StyleSummary_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "List styles",
+        "tags": [
+          "styles"
+        ]
+      }
+    },
+    "/api/v1/styles/{slug}": {
+      "get": {
+        "operationId": "get_style_api_v1_styles__slug__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "title": "Slug",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StyleDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Style with ranges and variants",
+        "tags": [
+          "styles"
         ]
       }
     }
