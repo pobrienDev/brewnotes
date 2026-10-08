@@ -56,9 +56,27 @@ def test_docs_disabled_outside_development(client: TestClient) -> None:
     assert client.get("/api/v1/docs").status_code == 404
 
 
-def test_unknown_host_is_rejected(client: TestClient) -> None:
+def test_unknown_host_is_rejected_with_problem(client: TestClient) -> None:
     response = client.get("/api/v1/openapi.json", headers={"host": "evil.example"})
     assert response.status_code == 400
+    assert response.headers["content-type"].startswith(PROBLEM_MEDIA_TYPE)
+    assert response.json()["detail"] == "Invalid host header."
+    assert response.json()["request_id"] == response.headers["x-request-id"]
+    assert "content-security-policy" in response.headers
+
+
+@pytest.mark.parametrize("host", ["testserver", "TestServer", "testserver:8000"])
+def test_allowed_host_variants(client: TestClient, host: str) -> None:
+    assert client.get("/api/v1/openapi.json", headers={"host": host}).status_code == 200
+
+
+def test_wildcard_and_ipv6_hosts() -> None:
+    from app.middleware import _host_matches
+
+    assert _host_matches("api.brewnotes.example:443", ["*.brewnotes.example"])
+    assert not _host_matches("brewnotes.example", ["*.brewnotes.example"])
+    assert _host_matches("[::1]:8000", ["[::1]"])
+    assert not _host_matches("evil.example", ["brewnotes.example"])
 
 
 def test_health_accepts_any_host_for_platform_probes(client: TestClient) -> None:

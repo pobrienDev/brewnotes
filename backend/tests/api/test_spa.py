@@ -48,6 +48,11 @@ def test_frontend_serving(tmp_path: Path) -> None:
         post_to_page = client.post("/recipes")
         assert post_to_page.status_code == 405
 
+        head = client.head("/recipes/anything")
+        assert head.status_code == 200
+        assert head.headers["content-type"].startswith("text/html")
+        assert head.headers["cache-control"] == "no-cache"
+
         traversal = client.get("/../pyproject.toml")
         assert traversal.status_code == 200
         assert traversal.text == root.text

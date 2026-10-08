@@ -95,7 +95,7 @@ def _mount_frontend(app: FastAPI, settings: Settings) -> None:
     if assets_dir.is_dir():
         app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
 
-    @app.get("/{full_path:path}", include_in_schema=False)
+    @app.api_route("/{full_path:path}", methods=["GET", "HEAD"], include_in_schema=False)
     def spa_fallback(full_path: str) -> FileResponse:
         if full_path == "api" or full_path.startswith("api/"):
             # Unknown API paths get a JSON 404, never index.html.

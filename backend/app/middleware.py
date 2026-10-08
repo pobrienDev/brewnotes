@@ -224,18 +224,48 @@ class SecurityHeadersMiddleware:
 HEALTH_PATH_PREFIX = "/api/v1/health/"
 
 
+def _host_matches(host: str, allowed: list[str]) -> bool:
+    if host.startswith("["):  # IPv6 literal, e.g. [::1]:8000
+        host = host[: host.index("]") + 1] if "]" in host else host
+    else:
+        host = host.split(":", 1)[0]
+    host = host.lower()
+    for pattern in allowed:
+        pattern = pattern.lower()
+        if pattern == "*" or host == pattern:
+            return True
+        if pattern.startswith("*.") and host.endswith(pattern[1:]):
+            return True
+    return False
+
+
 class TrustedHostMiddleware:
-    """Starlette's trusted-host check, except that the health endpoints accept any Host so the
-    container runtime and the platform can probe them by IP address. They reveal nothing."""
+    """Rejects requests whose Host header is not one of ours with a problem-details 400, so a
+    misrouted request can never reach the application. The health endpoints accept any Host
+    so the container runtime and the platform can probe them by IP address."""
 
     def __init__(self, app: ASGIApp, allowed_hosts: list[str]) -> None:
-        from starlette.middleware.trustedhost import TrustedHostMiddleware as _Starlette
-
         self.app = app
-        self.checked = _Starlette(app, allowed_hosts=allowed_hosts)
+        self.allowed_hosts = list(allowed_hosts)
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
-        if scope["type"] == "http" and scope.get("path", "").startswith(HEALTH_PATH_PREFIX):
+        if scope["type"] not in ("http", "websocket"):
             await self.app(scope, receive, send)
             return
-        await self.checked(scope, receive, send)
+        path: str = scope.get("path", "")
+        host = (_header(scope, b"host") or b"").decode("latin-1")
+        if path.startswith(HEALTH_PATH_PREFIX) or _host_matches(host, self.allowed_hosts):
+            await self.app(scope, receive, send)
+            return
+        body = problem_body_bytes(HTTPStatus.BAD_REQUEST, detail="Invalid host header.")
+        await send(
+            {
+                "type": "http.response.start",
+                "status": HTTPStatus.BAD_REQUEST,
+                "headers": [
+                    (b"content-type", PROBLEM_MEDIA_TYPE.encode()),
+                    (b"content-length", str(len(body)).encode()),
+                ],
+            }
+        )
+        await send({"type": "http.response.body", "body": body})
