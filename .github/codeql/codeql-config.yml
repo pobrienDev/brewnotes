@@ -1,0 +1,11 @@
+name: BrewNotes CodeQL config
+queries:
+  - uses: security-and-quality
+query-filters:
+  # Alembic reads revision, down_revision, branch_labels and depends_on from each migration
+  # module; CodeQL sees them as unused globals. Ruff covers genuinely unused names.
+  - exclude:
+      id: py/unused-global-variable
+paths-ignore:
+  - frontend/dist
+  - frontend/src/api/schema.d.ts

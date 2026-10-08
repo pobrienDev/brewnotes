@@ -53,7 +53,8 @@ def test_hsts_in_production() -> None:
 
 
 def test_docs_disabled_outside_development(client: TestClient) -> None:
-    assert client.get("/api/v1/docs").status_code == 404
+    response_ = client.get("/api/v1/docs")
+    assert response_.status_code == 404
 
 
 def test_unknown_host_is_rejected_with_problem(client: TestClient) -> None:
@@ -67,7 +68,8 @@ def test_unknown_host_is_rejected_with_problem(client: TestClient) -> None:
 
 @pytest.mark.parametrize("host", ["testserver", "TestServer", "testserver:8000"])
 def test_allowed_host_variants(client: TestClient, host: str) -> None:
-    assert client.get("/api/v1/openapi.json", headers={"host": host}).status_code == 200
+    response_ = client.get("/api/v1/openapi.json", headers={"host": host})
+    assert response_.status_code == 200
 
 
 def test_wildcard_and_ipv6_hosts() -> None:

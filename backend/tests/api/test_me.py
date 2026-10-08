@@ -62,7 +62,8 @@ def test_invalid_profile_updates_are_rejected(
 
 def test_update_requires_origin(client: TestClient, providers: FakeProviders) -> None:
     login_as(client, providers)
-    assert client.patch(f"{API}/me", json={"display_name": "Pat"}).status_code == 403
+    response_ = client.patch(f"{API}/me", json={"display_name": "Pat"})
+    assert response_.status_code == 403
     assert client.get(f"{API}/me").json()["display_name"] == "Octo Cat"
 
 
@@ -92,7 +93,8 @@ def test_export_contains_everything_about_the_account(
 
 
 def test_export_requires_sign_in(client: TestClient) -> None:
-    assert client.get(f"{API}/me/export").status_code == 401
+    response_ = client.get(f"{API}/me/export")
+    assert response_.status_code == 401
 
 
 def test_delete_account_removes_everything(
@@ -104,15 +106,19 @@ def test_delete_account_removes_everything(
         login_as(phone, providers, subject="1001")
         bystander_me = login_as(bystander, providers, subject="1002")
 
-        assert client.delete(f"{API}/me").status_code == 403  # CSRF
+        response_ = client.delete(f"{API}/me")
+        assert response_.status_code == 403  # CSRF
         response = client.delete(f"{API}/me", headers=CSRF)
         assert response.status_code == 204
         [header] = set_cookie_headers(response, "__Host-session")
         assert is_cleared(header)
 
-        assert client.get(f"{API}/me").status_code == 401
-        assert phone.get(f"{API}/me").status_code == 401
-        assert bystander.get(f"{API}/me").status_code == 200
+        response_ = client.get(f"{API}/me")
+        assert response_.status_code == 401
+        response_ = phone.get(f"{API}/me")
+        assert response_.status_code == 401
+        response_ = bystander.get(f"{API}/me")
+        assert response_.status_code == 200
 
         def count(model: type[User] | type[OAuthIdentity] | type[UserSession]) -> int:
             column = model.id if model is User else model.user_id  # type: ignore[union-attr]
