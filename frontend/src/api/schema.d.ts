@@ -106,6 +106,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/calc": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Statistics and style matches for a recipe body */
+        post: operations["calculate_api_v1_calc_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/calc/scale": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Scale a recipe to a new batch volume and/or brewhouse efficiency */
+        post: operations["scale_api_v1_calc_scale_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog/{kind}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Search fermentables, hops or yeasts */
+        get: operations["list_catalog_api_v1_catalog__kind__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/health/live": {
         parameters: {
             query?: never;
@@ -193,10 +244,105 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/styles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List styles */
+        get: operations["list_styles_api_v1_styles_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/styles/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Style with ranges and variants */
+        get: operations["get_style_api_v1_styles__slug__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** CalcResult */
+        CalcResult: {
+            /**
+             * Notes
+             * @description Assumptions and estimates the user should know about
+             */
+            notes: string[];
+            stats: components["schemas"]["RecipeStatsOut"];
+            /** Style Matches */
+            style_matches: components["schemas"]["StyleMatchOut"][];
+        };
+        /**
+         * CatalogType
+         * @enum {string}
+         */
+        CatalogType: "fermentables" | "hops" | "yeasts";
+        /** FermentableInput */
+        FermentableInput: {
+            /**
+             * Addition
+             * @enum {string}
+             */
+            addition: "mash" | "steep" | "boil" | "fermenter";
+            /** Amount Kg */
+            amount_kg: number;
+            /** Color Lovibond */
+            color_lovibond: number;
+            /** Name */
+            name: string;
+            /** Ppg */
+            ppg: number;
+        };
+        /** FermentableOut */
+        FermentableOut: {
+            /** Color Lovibond */
+            color_lovibond: number;
+            /**
+             * Custom
+             * @description True for the signed-in user's own entries, False for built-ins.
+             */
+            readonly custom: boolean;
+            /**
+             * Default Addition
+             * @enum {string}
+             */
+            default_addition: "mash" | "steep" | "boil" | "fermenter";
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Ppg */
+            ppg: number;
+            /**
+             * Type
+             * @enum {string}
+             */
+            type: "grain" | "extract" | "sugar" | "adjunct";
+        };
         /** FieldError */
         FieldError: {
             /**
@@ -217,6 +363,64 @@ export interface components {
              */
             status: "ok";
         };
+        /** HopContributionOut */
+        HopContributionOut: {
+            /**
+             * Estimated
+             * @description True for whirlpool additions, which have no consensus formula
+             */
+            estimated: boolean;
+            /** Ibu */
+            ibu: number;
+            /** Minutes */
+            minutes: number;
+            /** Name */
+            name: string;
+            /**
+             * Use
+             * @enum {string}
+             */
+            use: "boil" | "first_wort" | "whirlpool" | "dry_hop";
+            /** Utilization */
+            utilization: number;
+        };
+        /** HopInput */
+        HopInput: {
+            /** Alpha Pct */
+            alpha_pct: number;
+            /** Amount G */
+            amount_g: number;
+            /** Dry Hop Days */
+            dry_hop_days?: number | null;
+            /** Name */
+            name: string;
+            /** Time Min */
+            time_min?: number | null;
+            /**
+             * Use
+             * @enum {string}
+             */
+            use: "boil" | "first_wort" | "whirlpool" | "dry_hop";
+        };
+        /** HopOut */
+        HopOut: {
+            /** Alpha Typical Pct */
+            alpha_typical_pct: number;
+            /**
+             * Custom
+             * @description True for the signed-in user's own entries, False for built-ins.
+             */
+            readonly custom: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Origin */
+            origin: string | null;
+        };
         /** IdentityOut */
         IdentityOut: {
             /**
@@ -234,6 +438,70 @@ export interface components {
              * @enum {string}
              */
             provider: "github" | "google";
+        };
+        /** MetricMatchOut */
+        MetricMatchOut: {
+            /**
+             * Delta
+             * @description Signed distance from the nearest range edge; 0 when in
+             */
+            delta: number;
+            /**
+             * Metric
+             * @enum {string}
+             */
+            metric: "og" | "fg" | "abv" | "ibu" | "srm";
+            /** Penalty */
+            penalty: number;
+            /** Ranges */
+            ranges: components["schemas"]["RangeOut"][];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "in" | "low" | "high";
+            /** Value */
+            value: number;
+        };
+        /** Page[FermentableOut] */
+        Page_FermentableOut_: {
+            /** Items */
+            items: components["schemas"]["FermentableOut"][];
+            /**
+             * Next Cursor
+             * @description Pass as ?cursor= to fetch the next page; null on the last page
+             */
+            next_cursor: string | null;
+        };
+        /** Page[HopOut] */
+        Page_HopOut_: {
+            /** Items */
+            items: components["schemas"]["HopOut"][];
+            /**
+             * Next Cursor
+             * @description Pass as ?cursor= to fetch the next page; null on the last page
+             */
+            next_cursor: string | null;
+        };
+        /** Page[StyleSummary] */
+        Page_StyleSummary_: {
+            /** Items */
+            items: components["schemas"]["StyleSummary"][];
+            /**
+             * Next Cursor
+             * @description Pass as ?cursor= to fetch the next page; null on the last page
+             */
+            next_cursor: string | null;
+        };
+        /** Page[YeastOut] */
+        Page_YeastOut_: {
+            /** Items */
+            items: components["schemas"]["YeastOut"][];
+            /**
+             * Next Cursor
+             * @description Pass as ?cursor= to fetch the next page; null on the last page
+             */
+            next_cursor: string | null;
         };
         /**
          * Problem
@@ -268,10 +536,187 @@ export interface components {
             /** Providers */
             providers: ("github" | "google")[];
         };
+        /** RangeOut */
+        RangeOut: {
+            /** Label */
+            label: string | null;
+            /** Max */
+            max: number;
+            /** Min */
+            min: number;
+        };
+        /** RecipeInput */
+        RecipeInput: {
+            /**
+             * Batch Volume L
+             * @description Volume into the fermenter
+             */
+            batch_volume_l: number;
+            /** Boil Time Min */
+            boil_time_min: number;
+            /**
+             * Brewhouse Efficiency Pct
+             * @default 72
+             */
+            brewhouse_efficiency_pct: number;
+            /** Fermentables */
+            fermentables?: components["schemas"]["FermentableInput"][];
+            /** Hops */
+            hops?: components["schemas"]["HopInput"][];
+            /**
+             * Pre Boil Volume L
+             * @description Optional; only used to estimate boil gravity
+             */
+            pre_boil_volume_l?: number | null;
+            /**
+             * Steep Efficiency Pct
+             * @default 50
+             */
+            steep_efficiency_pct: number;
+            /**
+             * Target Style
+             * @description Slug of the style the recipe aims for
+             */
+            target_style?: string | null;
+            /** Yeasts */
+            yeasts?: components["schemas"]["YeastInput"][];
+        };
+        /** RecipeStatsOut */
+        RecipeStatsOut: {
+            /** Abv */
+            abv: number;
+            /**
+             * Abv Alternate
+             * @description Reported when OG > 1.070
+             */
+            abv_alternate: number | null;
+            /** Attenuation Assumed */
+            attenuation_assumed: boolean;
+            /** Attenuation Pct */
+            attenuation_pct: number;
+            /** Boil Gravity */
+            boil_gravity: number;
+            /**
+             * Boil Gravity Mode
+             * @enum {string}
+             */
+            boil_gravity_mode: "og" | "average_of_pre_boil_and_og";
+            /** Ebc */
+            ebc: number;
+            /** Fg */
+            fg: number;
+            /** Gravity Units */
+            gravity_units: number;
+            /** Hop Contributions */
+            hop_contributions: components["schemas"]["HopContributionOut"][];
+            /** Ibu */
+            ibu: number;
+            /** Mcu */
+            mcu: number;
+            /** Og */
+            og: number;
+            /** Srm */
+            srm: number;
+        };
+        /** ScaleRequest */
+        ScaleRequest: {
+            /** Batch Volume L */
+            batch_volume_l?: number | null;
+            /** Brewhouse Efficiency Pct */
+            brewhouse_efficiency_pct?: number | null;
+            recipe: components["schemas"]["RecipeInput"];
+        };
+        /** ScaleResult */
+        ScaleResult: {
+            recipe: components["schemas"]["RecipeInput"];
+            stats: components["schemas"]["RecipeStatsOut"];
+        };
         /** SignedOutEverywhere */
         SignedOutEverywhere: {
             /** Sessions Revoked */
             sessions_revoked: number;
+        };
+        /** StyleDetail */
+        StyleDetail: {
+            /** Category Code */
+            category_code: string;
+            /** Category Name */
+            category_name: string;
+            /** Code */
+            code: string | null;
+            /** Display Name */
+            display_name: string;
+            /** Guideline */
+            guideline: string;
+            /** Guideline Version */
+            guideline_version: string;
+            /** Name */
+            name: string;
+            parent: components["schemas"]["StyleSummary"] | null;
+            /** Parent Slug */
+            parent_slug: string | null;
+            /** Ranges */
+            ranges: components["schemas"]["StyleRangeOut"][];
+            /** Slug */
+            slug: string;
+            /** Source Url */
+            source_url: string | null;
+            /** Summary */
+            summary: string;
+            /** Variants */
+            variants: components["schemas"]["StyleSummary"][];
+        };
+        /** StyleMatchOut */
+        StyleMatchOut: {
+            /** Code */
+            code: string | null;
+            /** Compared */
+            compared: number;
+            /** Display Name */
+            display_name: string;
+            /** Fits */
+            fits: boolean;
+            /** Metrics */
+            metrics: components["schemas"]["MetricMatchOut"][];
+            /** Score */
+            score: number;
+            /** Slug */
+            slug: string;
+            /** Tiebreak */
+            tiebreak: number;
+        };
+        /** StyleRangeOut */
+        StyleRangeOut: {
+            /** Label */
+            label: string | null;
+            /** Max */
+            max: number;
+            /**
+             * Metric
+             * @enum {string}
+             */
+            metric: "og" | "fg" | "abv" | "ibu" | "srm";
+            /** Min */
+            min: number;
+        };
+        /** StyleSummary */
+        StyleSummary: {
+            /** Category Code */
+            category_code: string;
+            /** Category Name */
+            category_name: string;
+            /** Code */
+            code: string | null;
+            /** Display Name */
+            display_name: string;
+            /** Name */
+            name: string;
+            /** Parent Slug */
+            parent_slug: string | null;
+            /** Ranges */
+            ranges: components["schemas"]["StyleRangeOut"][];
+            /** Slug */
+            slug: string;
         };
         /** UserOut */
         UserOut: {
@@ -306,6 +751,38 @@ export interface components {
             display_name?: string | null;
             /** Unit Pref */
             unit_pref?: ("metric" | "imperial") | null;
+        };
+        /** YeastInput */
+        YeastInput: {
+            /** Attenuation Pct */
+            attenuation_pct: number;
+            /** Name */
+            name: string;
+        };
+        /** YeastOut */
+        YeastOut: {
+            /** Attenuation Max Pct */
+            attenuation_max_pct: number;
+            /** Attenuation Midpoint Pct */
+            attenuation_midpoint_pct: number;
+            /** Attenuation Min Pct */
+            attenuation_min_pct: number;
+            /**
+             * Custom
+             * @description True for the signed-in user's own entries, False for built-ins.
+             */
+            readonly custom: boolean;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Lab */
+            lab: string;
+            /** Name */
+            name: string;
+            /** Product Code */
+            product_code: string | null;
         };
     };
     responses: never;
@@ -522,6 +999,137 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProvidersOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    calculate_api_v1_calc_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RecipeInput"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CalcResult"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    scale_api_v1_calc_scale_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ScaleRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ScaleResult"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    list_catalog_api_v1_catalog__kind__get: {
+        parameters: {
+            query?: {
+                /** @description Name contains */
+                q?: string | null;
+                /** @description Opaque cursor from a previous page */
+                cursor?: string | null;
+                /** @description Page size */
+                limit?: number;
+            };
+            header?: never;
+            path: {
+                kind: components["schemas"]["CatalogType"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_FermentableOut_"] | components["schemas"]["Page_HopOut_"] | components["schemas"]["Page_YeastOut_"];
                 };
             };
             /** @description Client error (problem details) */
@@ -791,6 +1399,93 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    list_styles_api_v1_styles_get: {
+        parameters: {
+            query?: {
+                /** @description Name or code contains */
+                search?: string | null;
+                /** @description Category code, e.g. 21 */
+                category?: string | null;
+                /** @description Opaque cursor from a previous page */
+                cursor?: string | null;
+                /** @description Page size */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_StyleSummary_"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_style_api_v1_styles__slug__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StyleDetail"];
+                };
             };
             /** @description Client error (problem details) */
             "4XX": {

@@ -4,7 +4,7 @@ A craft beer app that follows a beer from recipe to glass: design it, brew it, t
 
 BrewNotes combines a brewing calculator, a brewing and tasting log, and beer discovery into one app built around a single object: a beer. The calculator and style browser work without signing in; saving anything requires an account via GitHub or Google.
 
-**Status:** Phase 1a (accounts and sessions). Nothing is deployed yet.
+**Status:** Phase 1b (brewing math, styles and catalog). Nothing is deployed yet.
 
 ## Stack
 
@@ -22,6 +22,7 @@ cp .env.example .env
 make db        # start Postgres 18 in Docker (creates dev and test databases)
 make install   # backend and frontend dependencies
 make migrate   # apply database migrations
+make seed      # load BJCP 2021 styles and the built-in ingredient catalog (idempotent)
 make dev       # FastAPI on :8000 and Vite on :5173 (proxies /api)
 ```
 
@@ -42,6 +43,14 @@ The callback URL is always `PUBLIC_BASE_URL` + `/api/v1/auth/callback/<provider>
 production that is your real https origin. GitHub needs no scopes (public profile only);
 Google needs the `openid` and `profile` scopes, which the app requests itself. No email is
 requested or stored.
+
+### Reference data
+
+`backend/data/` holds the seed files. `styles_bjcp_2021.json` carries the codes, names and
+numeric ranges of the BJCP 2021 Beer Style Guidelines with a link to each style's page;
+the one-line summaries are written for BrewNotes and are not guideline text. The ingredient
+files are hand-curated typical values from manufacturers' published specifications. `make seed`
+upserts everything by slug or name, so it is safe to re-run after editing a file.
 
 ### Requests that change data
 
