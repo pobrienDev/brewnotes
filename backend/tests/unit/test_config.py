@@ -13,8 +13,11 @@ def production_settings(
     public_base_url: str = "https://brewnotes.example/",
     google_client_secret: str | None = "d",
 ) -> Settings:
+    # app_env is passed explicitly: CI exports APP_ENV=test for the API tests, and real
+    # environment variables are read even when the .env file is disabled.
     return Settings(
         _env_file=None,
+        app_env="production",
         database_url=DATABASE_URL,
         secret_key=secret_key,
         public_base_url=public_base_url,
@@ -25,11 +28,26 @@ def production_settings(
     )
 
 
-def test_defaults_to_production() -> None:
-    settings = production_settings()
+def test_defaults_to_production(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.delenv("APP_ENV", raising=False)
+    settings = Settings(
+        _env_file=None,
+        database_url=DATABASE_URL,
+        secret_key=SECRET,
+        public_base_url="https://brewnotes.example/",
+        github_client_id="a",
+        github_client_secret="b",
+        google_client_id="c",
+        google_client_secret="d",
+    )
     assert settings.app_env == "production"
     assert settings.is_production
     assert settings.public_base_url == "https://brewnotes.example"
+
+
+def test_production_settings_accept_complete_configuration() -> None:
+    settings = production_settings()
+    assert settings.is_production
 
 
 def test_production_refuses_short_secret() -> None:
