@@ -30,3 +30,6 @@ frontend/coverage/
 # Local data
 *.log
 postgres-data/
+
+# Per-machine dev server launch config for the Claude desktop app
+.claude/launch.json
