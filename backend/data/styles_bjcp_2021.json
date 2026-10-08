@@ -1,0 +1,4373 @@
+{
+ "guideline": "BJCP",
+ "version": "2021",
+ "source": "https://www.bjcp.org/beer-styles/beer-style-guidelines/",
+ "note": "Numeric ranges, codes and names come from the BJCP 2021 Beer Style Guidelines; summaries are written for BrewNotes and are not guideline text.",
+ "categories": [
+  {
+   "code": "1",
+   "name": "Standard American Beer",
+   "styles": [
+    {
+     "slug": "american-light-lager",
+     "name": "American Light Lager",
+     "summary": "Very pale, very light-bodied lager built for refreshment: minimal malt, barely-there hops and a crisp, dry finish.",
+     "source_url": "https://www.bjcp.org/style/2021/1/1A/american-light-lager/",
+     "ranges": {
+      "og": [
+       [
+        1.028,
+        1.04
+       ]
+      ],
+      "fg": [
+       [
+        0.998,
+        1.008
+       ]
+      ],
+      "abv": [
+       [
+        2.8,
+        4.2
+       ]
+      ],
+      "ibu": [
+       [
+        8.0,
+        12.0
+       ]
+      ],
+      "srm": [
+       [
+        2.0,
+        3.0
+       ]
+      ]
+     },
+     "code": "1A"
+    },
+    {
+     "slug": "american-lager",
+     "name": "American Lager",
+     "summary": "Pale, clean and highly carbonated lager with a touch more body and malt than the light version, still restrained in hops.",
+     "source_url": "https://www.bjcp.org/style/2021/1/1B/american-lager/",
+     "ranges": {
+      "og": [
+       [
+        1.04,
+        1.05
+       ]
+      ],
+      "fg": [
+       [
+        1.004,
+        1.01
+       ]
+      ],
+      "abv": [
+       [
+        4.2,
+        5.3
+       ]
+      ],
+      "ibu": [
+       [
+        8.0,
+        18.0
+       ]
+      ],
+      "srm": [
+       [
+        2.0,
+        3.5
+       ]
+      ]
+     },
+     "code": "1B"
+    },
+    {
+     "slug": "cream-ale",
+     "name": "Cream Ale",
+     "summary": "Clean, pale American ale brewed and conditioned like a lager; light corn-like sweetness with a smooth, easy finish.",
+     "source_url": "https://www.bjcp.org/style/2021/1/1C/cream-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.042,
+        1.055
+       ]
+      ],
+      "fg": [
+       [
+        1.006,
+        1.012
+       ]
+      ],
+      "abv": [
+       [
+        4.2,
+        5.6
+       ]
+      ],
+      "ibu": [
+       [
+        8.0,
+        20.0
+       ]
+      ],
+      "srm": [
+       [
+        2.0,
+        5.0
+       ]
+      ]
+     },
+     "code": "1C"
+    },
+    {
+     "slug": "american-wheat-beer",
+     "name": "American Wheat Beer",
+     "summary": "Light, refreshing wheat beer with a clean yeast character rather than banana and clove; often hazy with a soft grainy flavour.",
+     "source_url": "https://www.bjcp.org/style/2021/1/1D/american-wheat-beer/",
+     "ranges": {
+      "og": [
+       [
+        1.04,
+        1.055
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.013
+       ]
+      ],
+      "abv": [
+       [
+        4.0,
+        5.5
+       ]
+      ],
+      "ibu": [
+       [
+        15.0,
+        30.0
+       ]
+      ],
+      "srm": [
+       [
+        3.0,
+        6.0
+       ]
+      ]
+     },
+     "code": "1D"
+    }
+   ]
+  },
+  {
+   "code": "2",
+   "name": "International Lager",
+   "styles": [
+    {
+     "slug": "international-pale-lager",
+     "name": "International Pale Lager",
+     "summary": "Highly attenuated pale lager with a little more flavour than the American mass-market versions; balanced and easy drinking.",
+     "source_url": "https://www.bjcp.org/style/2021/2/2A/international-pale-lager/",
+     "ranges": {
+      "og": [
+       [
+        1.042,
+        1.05
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.012
+       ]
+      ],
+      "abv": [
+       [
+        4.5,
+        6.0
+       ]
+      ],
+      "ibu": [
+       [
+        18.0,
+        25.0
+       ]
+      ],
+      "srm": [
+       [
+        2.0,
+        6.0
+       ]
+      ]
+     },
+     "code": "2A"
+    },
+    {
+     "slug": "international-amber-lager",
+     "name": "International Amber Lager",
+     "summary": "Smooth amber lager with a gentle caramel or toasty malt note and low bitterness; made for broad appeal.",
+     "source_url": "https://www.bjcp.org/style/2021/2/2B/international-amber-lager/",
+     "ranges": {
+      "og": [
+       [
+        1.042,
+        1.055
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        4.5,
+        6.0
+       ]
+      ],
+      "ibu": [
+       [
+        8.0,
+        25.0
+       ]
+      ],
+      "srm": [
+       [
+        6.0,
+        14.0
+       ]
+      ]
+     },
+     "code": "2B"
+    },
+    {
+     "slug": "international-dark-lager",
+     "name": "International Dark Lager",
+     "summary": "Dark but light-bodied lager with restrained roast and some sweetness; colour comes more from dark malt than flavour.",
+     "source_url": "https://www.bjcp.org/style/2021/2/2C/international-dark-lager/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.056
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.012
+       ]
+      ],
+      "abv": [
+       [
+        4.2,
+        6.0
+       ]
+      ],
+      "ibu": [
+       [
+        8.0,
+        20.0
+       ]
+      ],
+      "srm": [
+       [
+        14.0,
+        30.0
+       ]
+      ]
+     },
+     "code": "2C"
+    }
+   ]
+  },
+  {
+   "code": "3",
+   "name": "Czech Lager",
+   "styles": [
+    {
+     "slug": "czech-pale-lager",
+     "name": "Czech Pale Lager",
+     "summary": "Lower-strength Czech lager with soft bready malt, Saaz hop character and a rounded, somewhat bitter finish.",
+     "source_url": "https://www.bjcp.org/style/2021/3/3A/czech-pale-lager/",
+     "ranges": {
+      "og": [
+       [
+        1.028,
+        1.044
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        3.0,
+        4.1
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        35.0
+       ]
+      ],
+      "srm": [
+       [
+        3.0,
+        6.0
+       ]
+      ]
+     },
+     "code": "3A"
+    },
+    {
+     "slug": "czech-premium-pale-lager",
+     "name": "Czech Premium Pale Lager",
+     "summary": "The classic Czech pilsner: rich, soft pale malt, pronounced Saaz hop flavour and a long, clean bitterness.",
+     "source_url": "https://www.bjcp.org/style/2021/3/3B/czech-premium-pale-lager/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.06
+       ]
+      ],
+      "fg": [
+       [
+        1.013,
+        1.017
+       ]
+      ],
+      "abv": [
+       [
+        4.2,
+        5.8
+       ]
+      ],
+      "ibu": [
+       [
+        30.0,
+        45.0
+       ]
+      ],
+      "srm": [
+       [
+        3.5,
+        6.0
+       ]
+      ]
+     },
+     "code": "3B"
+    },
+    {
+     "slug": "czech-amber-lager",
+     "name": "Czech Amber Lager",
+     "summary": "Malty amber Czech lager with bready, caramel and toasty notes and moderate hop bitterness; richer than its pale sibling.",
+     "source_url": "https://www.bjcp.org/style/2021/3/3C/czech-amber-lager/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.06
+       ]
+      ],
+      "fg": [
+       [
+        1.013,
+        1.017
+       ]
+      ],
+      "abv": [
+       [
+        4.4,
+        5.8
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        35.0
+       ]
+      ],
+      "srm": [
+       [
+        10.0,
+        16.0
+       ]
+      ]
+     },
+     "code": "3C"
+    },
+    {
+     "slug": "czech-dark-lager",
+     "name": "Czech Dark Lager",
+     "summary": "Dark Czech lager that can run from sweet and roasty to dry and bitter; smooth, complex malt with a soft body.",
+     "source_url": "https://www.bjcp.org/style/2021/3/3D/czech-dark-lager/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.06
+       ]
+      ],
+      "fg": [
+       [
+        1.013,
+        1.017
+       ]
+      ],
+      "abv": [
+       [
+        4.4,
+        5.8
+       ]
+      ],
+      "ibu": [
+       [
+        18.0,
+        34.0
+       ]
+      ],
+      "srm": [
+       [
+        17.0,
+        35.0
+       ]
+      ]
+     },
+     "code": "3D"
+    }
+   ]
+  },
+  {
+   "code": "4",
+   "name": "Pale Malty European Lager",
+   "styles": [
+    {
+     "slug": "munich-helles",
+     "name": "Munich Helles",
+     "summary": "Pale, malt-forward German lager with a soft, bready sweetness and just enough hop bitterness to keep it clean.",
+     "source_url": "https://www.bjcp.org/style/2021/4/4A/munich-helles/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.048
+       ]
+      ],
+      "fg": [
+       [
+        1.006,
+        1.012
+       ]
+      ],
+      "abv": [
+       [
+        4.7,
+        5.4
+       ]
+      ],
+      "ibu": [
+       [
+        16.0,
+        22.0
+       ]
+      ],
+      "srm": [
+       [
+        3.0,
+        5.0
+       ]
+      ]
+     },
+     "code": "4A"
+    },
+    {
+     "slug": "festbier",
+     "name": "Festbier",
+     "summary": "Golden, smooth and malty celebration lager, a bit stronger than Helles, with a clean toasty-bready character.",
+     "source_url": "https://www.bjcp.org/style/2021/4/4B/festbier/",
+     "ranges": {
+      "og": [
+       [
+        1.054,
+        1.057
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.012
+       ]
+      ],
+      "abv": [
+       [
+        5.8,
+        6.3
+       ]
+      ],
+      "ibu": [
+       [
+        18.0,
+        25.0
+       ]
+      ],
+      "srm": [
+       [
+        4.0,
+        6.0
+       ]
+      ]
+     },
+     "code": "4B"
+    },
+    {
+     "slug": "helles-bock",
+     "name": "Helles Bock",
+     "summary": "Strong pale German lager, rich in bready malt with low hop flavour and a clean, well-attenuated finish.",
+     "source_url": "https://www.bjcp.org/style/2021/4/4C/helles-bock/",
+     "ranges": {
+      "og": [
+       [
+        1.064,
+        1.072
+       ]
+      ],
+      "fg": [
+       [
+        1.011,
+        1.018
+       ]
+      ],
+      "abv": [
+       [
+        6.3,
+        7.4
+       ]
+      ],
+      "ibu": [
+       [
+        23.0,
+        35.0
+       ]
+      ],
+      "srm": [
+       [
+        6.0,
+        9.0
+       ]
+      ]
+     },
+     "code": "4C"
+    }
+   ]
+  },
+  {
+   "code": "5",
+   "name": "Pale Bitter European Beer",
+   "styles": [
+    {
+     "slug": "german-leichtbier",
+     "name": "German Leichtbier",
+     "summary": "Light-bodied, lower-alcohol German pale lager with a crisp hop bitterness relative to its gentle malt.",
+     "source_url": "https://www.bjcp.org/style/2021/5/5A/german-leichtbier/",
+     "ranges": {
+      "og": [
+       [
+        1.026,
+        1.034
+       ]
+      ],
+      "fg": [
+       [
+        1.006,
+        1.01
+       ]
+      ],
+      "abv": [
+       [
+        2.4,
+        3.6
+       ]
+      ],
+      "ibu": [
+       [
+        15.0,
+        28.0
+       ]
+      ],
+      "srm": [
+       [
+        1.5,
+        4.0
+       ]
+      ]
+     },
+     "code": "5A"
+    },
+    {
+     "slug": "kolsch",
+     "name": "Kölsch",
+     "summary": "Delicate, brilliant pale ale from Cologne fermented cool and lagered; subtle fruit, soft malt and a crisp dry finish.",
+     "source_url": "https://www.bjcp.org/style/2021/5/5B/kolsch/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.05
+       ]
+      ],
+      "fg": [
+       [
+        1.007,
+        1.011
+       ]
+      ],
+      "abv": [
+       [
+        4.4,
+        5.2
+       ]
+      ],
+      "ibu": [
+       [
+        18.0,
+        30.0
+       ]
+      ],
+      "srm": [
+       [
+        3.5,
+        5.0
+       ]
+      ]
+     },
+     "code": "5B"
+    },
+    {
+     "slug": "german-helles-exportbier",
+     "name": "German Helles Exportbier",
+     "summary": "Pale, well-balanced German lager a touch stronger and fuller than Pils, with firm malt and moderate hop bitterness.",
+     "source_url": "https://www.bjcp.org/style/2021/5/5C/german-helles-exportbier/",
+     "ranges": {
+      "og": [
+       [
+        1.05,
+        1.058
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.015
+       ]
+      ],
+      "abv": [
+       [
+        5.0,
+        6.0
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        30.0
+       ]
+      ],
+      "srm": [
+       [
+        4.0,
+        6.0
+       ]
+      ]
+     },
+     "code": "5C"
+    },
+    {
+     "slug": "german-pils",
+     "name": "German Pils",
+     "summary": "Crisp, dry and bitter pale German lager with floral or spicy noble hops over a light, clean grainy malt.",
+     "source_url": "https://www.bjcp.org/style/2021/5/5D/german-pils/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.05
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.013
+       ]
+      ],
+      "abv": [
+       [
+        4.4,
+        5.2
+       ]
+      ],
+      "ibu": [
+       [
+        22.0,
+        40.0
+       ]
+      ],
+      "srm": [
+       [
+        2.0,
+        4.0
+       ]
+      ]
+     },
+     "code": "5D"
+    }
+   ]
+  },
+  {
+   "code": "6",
+   "name": "Amber Malty European Lager",
+   "styles": [
+    {
+     "slug": "marzen",
+     "name": "Märzen",
+     "summary": "Amber, toasty German lager with rich bready malt, low bitterness and a smooth, dry finish; the traditional Oktoberfest beer.",
+     "source_url": "https://www.bjcp.org/style/2021/6/6A/marzen/",
+     "ranges": {
+      "og": [
+       [
+        1.054,
+        1.06
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        5.6,
+        6.3
+       ]
+      ],
+      "ibu": [
+       [
+        18.0,
+        24.0
+       ]
+      ],
+      "srm": [
+       [
+        8.0,
+        17.0
+       ]
+      ]
+     },
+     "code": "6A"
+    },
+    {
+     "slug": "rauchbier",
+     "name": "Rauchbier",
+     "summary": "Amber Franconian lager with a beechwood smoked-malt character layered over Märzen-like toasty malt.",
+     "source_url": "https://www.bjcp.org/style/2021/6/6B/rauchbier/",
+     "ranges": {
+      "og": [
+       [
+        1.05,
+        1.057
+       ]
+      ],
+      "fg": [
+       [
+        1.012,
+        1.016
+       ]
+      ],
+      "abv": [
+       [
+        4.8,
+        6.0
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        30.0
+       ]
+      ],
+      "srm": [
+       [
+        12.0,
+        22.0
+       ]
+      ]
+     },
+     "code": "6B"
+    },
+    {
+     "slug": "dunkles-bock",
+     "name": "Dunkles Bock",
+     "summary": "Dark, strong and very malty German lager with toasty, bready richness and little hop presence.",
+     "source_url": "https://www.bjcp.org/style/2021/6/6C/dunkles-bock/",
+     "ranges": {
+      "og": [
+       [
+        1.064,
+        1.072
+       ]
+      ],
+      "fg": [
+       [
+        1.013,
+        1.019
+       ]
+      ],
+      "abv": [
+       [
+        6.3,
+        7.2
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        27.0
+       ]
+      ],
+      "srm": [
+       [
+        14.0,
+        22.0
+       ]
+      ]
+     },
+     "code": "6C"
+    }
+   ]
+  },
+  {
+   "code": "7",
+   "name": "Amber Bitter European Beer",
+   "styles": [
+    {
+     "slug": "vienna-lager",
+     "name": "Vienna Lager",
+     "summary": "Amber-red lager with an elegant toasty malt flavour, moderate body and a clean, dry, lightly bitter finish.",
+     "source_url": "https://www.bjcp.org/style/2021/7/7A/vienna-lager/",
+     "ranges": {
+      "og": [
+       [
+        1.048,
+        1.055
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        4.7,
+        5.5
+       ]
+      ],
+      "ibu": [
+       [
+        18.0,
+        30.0
+       ]
+      ],
+      "srm": [
+       [
+        9.0,
+        15.0
+       ]
+      ]
+     },
+     "code": "7A"
+    },
+    {
+     "slug": "altbier",
+     "name": "Altbier",
+     "summary": "Copper-coloured, bitter German ale fermented cool and lagered; clean, with firm bitterness and smooth malt.",
+     "source_url": "https://www.bjcp.org/style/2021/7/7B/altbier/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.052
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        4.3,
+        5.5
+       ]
+      ],
+      "ibu": [
+       [
+        25.0,
+        50.0
+       ]
+      ],
+      "srm": [
+       [
+        9.0,
+        17.0
+       ]
+      ]
+     },
+     "code": "7B"
+    }
+   ]
+  },
+  {
+   "code": "8",
+   "name": "Dark European Lager",
+   "styles": [
+    {
+     "slug": "munich-dunkel",
+     "name": "Munich Dunkel",
+     "summary": "Dark Munich lager with deep bready, toasty malt flavours, no roast harshness and gentle hop bitterness.",
+     "source_url": "https://www.bjcp.org/style/2021/8/8A/munich-dunkel/",
+     "ranges": {
+      "og": [
+       [
+        1.048,
+        1.056
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.016
+       ]
+      ],
+      "abv": [
+       [
+        4.5,
+        5.6
+       ]
+      ],
+      "ibu": [
+       [
+        18.0,
+        28.0
+       ]
+      ],
+      "srm": [
+       [
+        17.0,
+        28.0
+       ]
+      ]
+     },
+     "code": "8A"
+    },
+    {
+     "slug": "schwarzbier",
+     "name": "Schwarzbier",
+     "summary": "Black lager that drinks lighter than it looks: gentle roast, bready malt and a dry, clean finish.",
+     "source_url": "https://www.bjcp.org/style/2021/8/8B/schwarzbier/",
+     "ranges": {
+      "og": [
+       [
+        1.046,
+        1.052
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.016
+       ]
+      ],
+      "abv": [
+       [
+        4.4,
+        5.4
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        35.0
+       ]
+      ],
+      "srm": [
+       [
+        19.0,
+        30.0
+       ]
+      ]
+     },
+     "code": "8B"
+    }
+   ]
+  },
+  {
+   "code": "9",
+   "name": "Strong European Beer",
+   "styles": [
+    {
+     "slug": "doppelbock",
+     "name": "Doppelbock",
+     "summary": "Strong, intensely malty German lager ranging from pale to dark; rich, bready and warming with low bitterness.",
+     "source_url": "https://www.bjcp.org/style/2021/9/9A/doppelbock/",
+     "ranges": {
+      "og": [
+       [
+        1.072,
+        1.112
+       ]
+      ],
+      "fg": [
+       [
+        1.016,
+        1.024
+       ]
+      ],
+      "abv": [
+       [
+        7.0,
+        10.0
+       ]
+      ],
+      "ibu": [
+       [
+        16.0,
+        26.0
+       ]
+      ],
+      "srm": [
+       [
+        6.0,
+        25.0
+       ]
+      ]
+     },
+     "code": "9A"
+    },
+    {
+     "slug": "eisbock",
+     "name": "Eisbock",
+     "summary": "Very strong, concentrated bock made by freezing and removing ice; intensely malty, rich and warming.",
+     "source_url": "https://www.bjcp.org/style/2021/9/9B/eisbock/",
+     "ranges": {
+      "og": [
+       [
+        1.078,
+        1.12
+       ]
+      ],
+      "fg": [
+       [
+        1.02,
+        1.035
+       ]
+      ],
+      "abv": [
+       [
+        9.0,
+        14.0
+       ]
+      ],
+      "ibu": [
+       [
+        25.0,
+        35.0
+       ]
+      ],
+      "srm": [
+       [
+        17.0,
+        30.0
+       ]
+      ]
+     },
+     "code": "9B"
+    },
+    {
+     "slug": "baltic-porter",
+     "name": "Baltic Porter",
+     "summary": "Strong, smooth dark lager with layered toffee, dark fruit and gentle roast flavours and a clean fermentation.",
+     "source_url": "https://www.bjcp.org/style/2021/9/9C/baltic-porter/",
+     "ranges": {
+      "og": [
+       [
+        1.06,
+        1.09
+       ]
+      ],
+      "fg": [
+       [
+        1.016,
+        1.024
+       ]
+      ],
+      "abv": [
+       [
+        6.5,
+        9.5
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        40.0
+       ]
+      ],
+      "srm": [
+       [
+        17.0,
+        30.0
+       ]
+      ]
+     },
+     "code": "9C"
+    }
+   ]
+  },
+  {
+   "code": "10",
+   "name": "German Wheat Beer",
+   "styles": [
+    {
+     "slug": "weissbier",
+     "name": "Weissbier",
+     "summary": "Pale Bavarian wheat beer with banana and clove from the yeast, a fluffy body and lively carbonation.",
+     "source_url": "https://www.bjcp.org/style/2021/10/10A/weissbier/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.053
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        4.3,
+        5.6
+       ]
+      ],
+      "ibu": [
+       [
+        8.0,
+        15.0
+       ]
+      ],
+      "srm": [
+       [
+        2.0,
+        6.0
+       ]
+      ]
+     },
+     "code": "10A"
+    },
+    {
+     "slug": "dunkles-weissbier",
+     "name": "Dunkles Weissbier",
+     "summary": "Darker, maltier take on Weissbier with bready caramel notes alongside the banana and clove character.",
+     "source_url": "https://www.bjcp.org/style/2021/10/10B/dunkles-weissbier/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.057
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        4.3,
+        5.6
+       ]
+      ],
+      "ibu": [
+       [
+        10.0,
+        18.0
+       ]
+      ],
+      "srm": [
+       [
+        14.0,
+        23.0
+       ]
+      ]
+     },
+     "code": "10B"
+    },
+    {
+     "slug": "weizenbock",
+     "name": "Weizenbock",
+     "summary": "Strong Bavarian wheat beer, pale or dark, with rich malt, yeast-driven fruit and spice and a warming strength.",
+     "source_url": "https://www.bjcp.org/style/2021/10/10C/weizenbock/",
+     "ranges": {
+      "og": [
+       [
+        1.064,
+        1.09
+       ]
+      ],
+      "fg": [
+       [
+        1.015,
+        1.022
+       ]
+      ],
+      "abv": [
+       [
+        6.5,
+        9.0
+       ]
+      ],
+      "ibu": [
+       [
+        15.0,
+        30.0
+       ]
+      ],
+      "srm": [
+       [
+        6.0,
+        25.0
+       ]
+      ]
+     },
+     "code": "10C"
+    }
+   ]
+  },
+  {
+   "code": "11",
+   "name": "British Bitter",
+   "styles": [
+    {
+     "slug": "ordinary-bitter",
+     "name": "Ordinary Bitter",
+     "summary": "Low-strength, session-strength English ale with hop bitterness balancing a light bready or biscuity malt.",
+     "source_url": "https://www.bjcp.org/style/2021/11/11A/ordinary-bitter/",
+     "ranges": {
+      "og": [
+       [
+        1.03,
+        1.039
+       ]
+      ],
+      "fg": [
+       [
+        1.007,
+        1.011
+       ]
+      ],
+      "abv": [
+       [
+        3.2,
+        3.8
+       ]
+      ],
+      "ibu": [
+       [
+        25.0,
+        35.0
+       ]
+      ],
+      "srm": [
+       [
+        8.0,
+        14.0
+       ]
+      ]
+     },
+     "code": "11A"
+    },
+    {
+     "slug": "best-bitter",
+     "name": "Best Bitter",
+     "summary": "Flavourful English bitter of moderate strength with more malt and hop character than the ordinary version.",
+     "source_url": "https://www.bjcp.org/style/2021/11/11B/best-bitter/",
+     "ranges": {
+      "og": [
+       [
+        1.04,
+        1.048
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.012
+       ]
+      ],
+      "abv": [
+       [
+        3.8,
+        4.6
+       ]
+      ],
+      "ibu": [
+       [
+        25.0,
+        40.0
+       ]
+      ],
+      "srm": [
+       [
+        8.0,
+        16.0
+       ]
+      ]
+     },
+     "code": "11B"
+    },
+    {
+     "slug": "strong-bitter",
+     "name": "Strong Bitter",
+     "summary": "Stronger, fuller English bitter with a firm hop bitterness and a malt backbone that can show caramel notes.",
+     "source_url": "https://www.bjcp.org/style/2021/11/11C/strong-bitter/",
+     "ranges": {
+      "og": [
+       [
+        1.048,
+        1.06
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.016
+       ]
+      ],
+      "abv": [
+       [
+        4.6,
+        6.2
+       ]
+      ],
+      "ibu": [
+       [
+        30.0,
+        50.0
+       ]
+      ],
+      "srm": [
+       [
+        8.0,
+        18.0
+       ]
+      ]
+     },
+     "code": "11C"
+    }
+   ]
+  },
+  {
+   "code": "12",
+   "name": "Pale Commonwealth Beer",
+   "styles": [
+    {
+     "slug": "british-golden-ale",
+     "name": "British Golden Ale",
+     "summary": "Pale, hop-forward British ale with a light malt base and a crisp, refreshing bitterness.",
+     "source_url": "https://www.bjcp.org/style/2021/12/12A/british-golden-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.038,
+        1.053
+       ]
+      ],
+      "fg": [
+       [
+        1.006,
+        1.012
+       ]
+      ],
+      "abv": [
+       [
+        3.8,
+        5.0
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        45.0
+       ]
+      ],
+      "srm": [
+       [
+        2.0,
+        5.0
+       ]
+      ]
+     },
+     "code": "12A"
+    },
+    {
+     "slug": "australian-sparkling-ale",
+     "name": "Australian Sparkling Ale",
+     "summary": "Pale, highly carbonated Australian ale with a fruity yeast note, firm bitterness and a dry finish.",
+     "source_url": "https://www.bjcp.org/style/2021/12/12B/australian-sparkling-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.038,
+        1.05
+       ]
+      ],
+      "fg": [
+       [
+        1.004,
+        1.006
+       ]
+      ],
+      "abv": [
+       [
+        4.5,
+        6.0
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        35.0
+       ]
+      ],
+      "srm": [
+       [
+        4.0,
+        7.0
+       ]
+      ]
+     },
+     "code": "12B"
+    },
+    {
+     "slug": "english-ipa",
+     "name": "English IPA",
+     "summary": "Hoppy, bitter and moderately strong pale English ale with a dry finish and earthy or floral English hops.",
+     "source_url": "https://www.bjcp.org/style/2021/12/12C/english-ipa/",
+     "ranges": {
+      "og": [
+       [
+        1.05,
+        1.07
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.015
+       ]
+      ],
+      "abv": [
+       [
+        5.0,
+        7.5
+       ]
+      ],
+      "ibu": [
+       [
+        40.0,
+        60.0
+       ]
+      ],
+      "srm": [
+       [
+        6.0,
+        14.0
+       ]
+      ]
+     },
+     "code": "12C"
+    }
+   ]
+  },
+  {
+   "code": "13",
+   "name": "Brown British Beer",
+   "styles": [
+    {
+     "slug": "dark-mild",
+     "name": "Dark Mild",
+     "summary": "Low-strength dark English ale that is malty and gentle, with chocolate or caramel flavours and little bitterness.",
+     "source_url": "https://www.bjcp.org/style/2021/13/13A/dark-mild/",
+     "ranges": {
+      "og": [
+       [
+        1.03,
+        1.038
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.013
+       ]
+      ],
+      "abv": [
+       [
+        3.0,
+        3.8
+       ]
+      ],
+      "ibu": [
+       [
+        10.0,
+        25.0
+       ]
+      ],
+      "srm": [
+       [
+        14.0,
+        25.0
+       ]
+      ]
+     },
+     "code": "13A"
+    },
+    {
+     "slug": "british-brown-ale",
+     "name": "British Brown Ale",
+     "summary": "Malty, nutty brown ale of moderate strength with caramel and toffee notes and restrained hopping.",
+     "source_url": "https://www.bjcp.org/style/2021/13/13B/british-brown-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.04,
+        1.052
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.013
+       ]
+      ],
+      "abv": [
+       [
+        4.2,
+        5.9
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        30.0
+       ]
+      ],
+      "srm": [
+       [
+        12.0,
+        22.0
+       ]
+      ]
+     },
+     "code": "13B"
+    },
+    {
+     "slug": "english-porter",
+     "name": "English Porter",
+     "summary": "Moderate-strength dark English ale with chocolate and caramel malt flavours and a soft, drinkable character.",
+     "source_url": "https://www.bjcp.org/style/2021/13/13C/english-porter/",
+     "ranges": {
+      "og": [
+       [
+        1.04,
+        1.052
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        4.0,
+        5.4
+       ]
+      ],
+      "ibu": [
+       [
+        18.0,
+        35.0
+       ]
+      ],
+      "srm": [
+       [
+        20.0,
+        30.0
+       ]
+      ]
+     },
+     "code": "13C"
+    }
+   ]
+  },
+  {
+   "code": "14",
+   "name": "Scottish Ale",
+   "styles": [
+    {
+     "slug": "scottish-light",
+     "name": "Scottish Light",
+     "summary": "Lowest-strength Scottish ale: malty, a little caramel, low bitterness and a clean finish.",
+     "source_url": "https://www.bjcp.org/style/2021/14/14A/scottish-light/",
+     "ranges": {
+      "og": [
+       [
+        1.03,
+        1.035
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.013
+       ]
+      ],
+      "abv": [
+       [
+        2.5,
+        3.3
+       ]
+      ],
+      "ibu": [
+       [
+        10.0,
+        20.0
+       ]
+      ],
+      "srm": [
+       [
+        17.0,
+        25.0
+       ]
+      ]
+     },
+     "code": "14A"
+    },
+    {
+     "slug": "scottish-heavy",
+     "name": "Scottish Heavy",
+     "summary": "Malt-focused Scottish session ale with a bit more body and strength than Light, still gentle on hops.",
+     "source_url": "https://www.bjcp.org/style/2021/14/14B/scottish-heavy/",
+     "ranges": {
+      "og": [
+       [
+        1.035,
+        1.04
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.015
+       ]
+      ],
+      "abv": [
+       [
+        3.3,
+        3.9
+       ]
+      ],
+      "ibu": [
+       [
+        10.0,
+        20.0
+       ]
+      ],
+      "srm": [
+       [
+        12.0,
+        20.0
+       ]
+      ]
+     },
+     "code": "14B"
+    },
+    {
+     "slug": "scottish-export",
+     "name": "Scottish Export",
+     "summary": "Fullest of the Scottish ales, with rich caramel malt, moderate strength and a clean, low-hop profile.",
+     "source_url": "https://www.bjcp.org/style/2021/14/14C/scottish-export/",
+     "ranges": {
+      "og": [
+       [
+        1.04,
+        1.06
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.016
+       ]
+      ],
+      "abv": [
+       [
+        3.9,
+        6.0
+       ]
+      ],
+      "ibu": [
+       [
+        15.0,
+        30.0
+       ]
+      ],
+      "srm": [
+       [
+        12.0,
+        20.0
+       ]
+      ]
+     },
+     "code": "14C"
+    }
+   ]
+  },
+  {
+   "code": "15",
+   "name": "Irish Beer",
+   "styles": [
+    {
+     "slug": "irish-red-ale",
+     "name": "Irish Red Ale",
+     "summary": "Easy-drinking amber-red ale with a light caramel and toasty malt flavour and a dry, roasted-grain finish.",
+     "source_url": "https://www.bjcp.org/style/2021/15/15A/irish-red-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.036,
+        1.046
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        3.8,
+        5.0
+       ]
+      ],
+      "ibu": [
+       [
+        18.0,
+        28.0
+       ]
+      ],
+      "srm": [
+       [
+        9.0,
+        14.0
+       ]
+      ]
+     },
+     "code": "15A"
+    },
+    {
+     "slug": "irish-stout",
+     "name": "Irish Stout",
+     "summary": "Dry, roasty black ale with a coffee-like bitterness, creamy texture and modest strength.",
+     "source_url": "https://www.bjcp.org/style/2021/15/15B/irish-stout/",
+     "ranges": {
+      "og": [
+       [
+        1.036,
+        1.044
+       ]
+      ],
+      "fg": [
+       [
+        1.007,
+        1.011
+       ]
+      ],
+      "abv": [
+       [
+        3.8,
+        5.0
+       ]
+      ],
+      "ibu": [
+       [
+        25.0,
+        45.0
+       ]
+      ],
+      "srm": [
+       [
+        25.0,
+        40.0
+       ]
+      ]
+     },
+     "code": "15B"
+    },
+    {
+     "slug": "irish-extra-stout",
+     "name": "Irish Extra Stout",
+     "summary": "Fuller, stronger version of Irish stout with more roast, dark chocolate and a richer body.",
+     "source_url": "https://www.bjcp.org/style/2021/15/15C/irish-extra-stout/",
+     "ranges": {
+      "og": [
+       [
+        1.052,
+        1.062
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        5.0,
+        6.5
+       ]
+      ],
+      "ibu": [
+       [
+        35.0,
+        50.0
+       ]
+      ],
+      "srm": [
+       [
+        30.0,
+        40.0
+       ]
+      ]
+     },
+     "code": "15C"
+    }
+   ]
+  },
+  {
+   "code": "16",
+   "name": "Dark British Beer",
+   "styles": [
+    {
+     "slug": "sweet-stout",
+     "name": "Sweet Stout",
+     "summary": "Dark, sweet and full-bodied stout, often with lactose, giving a smooth, dessert-like roast character.",
+     "source_url": "https://www.bjcp.org/style/2021/16/16A/sweet-stout/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.06
+       ]
+      ],
+      "fg": [
+       [
+        1.012,
+        1.024
+       ]
+      ],
+      "abv": [
+       [
+        4.0,
+        6.0
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        40.0
+       ]
+      ],
+      "srm": [
+       [
+        30.0,
+        40.0
+       ]
+      ]
+     },
+     "code": "16A"
+    },
+    {
+     "slug": "oatmeal-stout",
+     "name": "Oatmeal Stout",
+     "summary": "Smooth, full-bodied dark ale where oats add silkiness alongside gentle roast and some sweetness.",
+     "source_url": "https://www.bjcp.org/style/2021/16/16B/oatmeal-stout/",
+     "ranges": {
+      "og": [
+       [
+        1.045,
+        1.065
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.018
+       ]
+      ],
+      "abv": [
+       [
+        4.2,
+        5.9
+       ]
+      ],
+      "ibu": [
+       [
+        25.0,
+        40.0
+       ]
+      ],
+      "srm": [
+       [
+        22.0,
+        40.0
+       ]
+      ]
+     },
+     "code": "16B"
+    },
+    {
+     "slug": "tropical-stout",
+     "name": "Tropical Stout",
+     "summary": "Sweet, fruity stout from warm climates, moderately strong with low bitterness and a smooth roast.",
+     "source_url": "https://www.bjcp.org/style/2021/16/16C/tropical-stout/",
+     "ranges": {
+      "og": [
+       [
+        1.056,
+        1.075
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.018
+       ]
+      ],
+      "abv": [
+       [
+        5.5,
+        8.0
+       ]
+      ],
+      "ibu": [
+       [
+        30.0,
+        50.0
+       ]
+      ],
+      "srm": [
+       [
+        30.0,
+        40.0
+       ]
+      ]
+     },
+     "code": "16C"
+    },
+    {
+     "slug": "foreign-extra-stout",
+     "name": "Foreign Extra Stout",
+     "summary": "Strong, roasty export stout, from dry to moderately sweet, with coffee and dark chocolate flavours.",
+     "source_url": "https://www.bjcp.org/style/2021/16/16D/foreign-extra-stout/",
+     "ranges": {
+      "og": [
+       [
+        1.056,
+        1.075
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.018
+       ]
+      ],
+      "abv": [
+       [
+        6.3,
+        8.0
+       ]
+      ],
+      "ibu": [
+       [
+        50.0,
+        70.0
+       ]
+      ],
+      "srm": [
+       [
+        30.0,
+        40.0
+       ]
+      ]
+     },
+     "code": "16D"
+    }
+   ]
+  },
+  {
+   "code": "17",
+   "name": "Strong British Ale",
+   "styles": [
+    {
+     "slug": "british-strong-ale",
+     "name": "British Strong Ale",
+     "summary": "Malty, moderately strong English ale, often rich with caramel and dark fruit and a balancing bitterness.",
+     "source_url": "https://www.bjcp.org/style/2021/17/17A/british-strong-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.055,
+        1.08
+       ]
+      ],
+      "fg": [
+       [
+        1.015,
+        1.022
+       ]
+      ],
+      "abv": [
+       [
+        5.5,
+        8.0
+       ]
+      ],
+      "ibu": [
+       [
+        30.0,
+        60.0
+       ]
+      ],
+      "srm": [
+       [
+        8.0,
+        22.0
+       ]
+      ]
+     },
+     "code": "17A"
+    },
+    {
+     "slug": "old-ale",
+     "name": "Old Ale",
+     "summary": "Aged, strong English ale with malt complexity, dried fruit and sometimes a hint of oxidation or wood.",
+     "source_url": "https://www.bjcp.org/style/2021/17/17B/old-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.055,
+        1.088
+       ]
+      ],
+      "fg": [
+       [
+        1.015,
+        1.022
+       ]
+      ],
+      "abv": [
+       [
+        5.5,
+        9.0
+       ]
+      ],
+      "ibu": [
+       [
+        30.0,
+        60.0
+       ]
+      ],
+      "srm": [
+       [
+        10.0,
+        22.0
+       ]
+      ]
+     },
+     "code": "17B"
+    },
+    {
+     "slug": "wee-heavy",
+     "name": "Wee Heavy",
+     "summary": "Strong, rich Scottish ale dominated by caramel and toffee malt with a warming, smooth finish.",
+     "source_url": "https://www.bjcp.org/style/2021/17/17C/wee-heavy/",
+     "ranges": {
+      "og": [
+       [
+        1.07,
+        1.13
+       ]
+      ],
+      "fg": [
+       [
+        1.018,
+        1.04
+       ]
+      ],
+      "abv": [
+       [
+        6.5,
+        10.0
+       ]
+      ],
+      "ibu": [
+       [
+        17.0,
+        35.0
+       ]
+      ],
+      "srm": [
+       [
+        14.0,
+        25.0
+       ]
+      ]
+     },
+     "code": "17C"
+    },
+    {
+     "slug": "english-barleywine",
+     "name": "English Barleywine",
+     "summary": "Very strong, complex English ale with intense malt, dried fruit and a long, warming, often aged character.",
+     "source_url": "https://www.bjcp.org/style/2021/17/17D/english-barleywine/",
+     "ranges": {
+      "og": [
+       [
+        1.08,
+        1.12
+       ]
+      ],
+      "fg": [
+       [
+        1.018,
+        1.03
+       ]
+      ],
+      "abv": [
+       [
+        8.0,
+        12.0
+       ]
+      ],
+      "ibu": [
+       [
+        35.0,
+        70.0
+       ]
+      ],
+      "srm": [
+       [
+        8.0,
+        22.0
+       ]
+      ]
+     },
+     "code": "17D"
+    }
+   ]
+  },
+  {
+   "code": "18",
+   "name": "Pale American Ale",
+   "styles": [
+    {
+     "slug": "blonde-ale",
+     "name": "Blonde Ale",
+     "summary": "Light, approachable American pale ale with soft malt, restrained hops and a clean, easy finish.",
+     "source_url": "https://www.bjcp.org/style/2021/18/18A/blonde-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.038,
+        1.054
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.013
+       ]
+      ],
+      "abv": [
+       [
+        3.8,
+        5.5
+       ]
+      ],
+      "ibu": [
+       [
+        15.0,
+        28.0
+       ]
+      ],
+      "srm": [
+       [
+        3.0,
+        6.0
+       ]
+      ]
+     },
+     "code": "18A"
+    },
+    {
+     "slug": "american-pale-ale",
+     "name": "American Pale Ale",
+     "summary": "Pale, refreshing American ale showing citrusy or piney hops over a clean, light malt base with moderate bitterness.",
+     "source_url": "https://www.bjcp.org/style/2021/18/18B/american-pale-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.045,
+        1.06
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.015
+       ]
+      ],
+      "abv": [
+       [
+        4.5,
+        6.2
+       ]
+      ],
+      "ibu": [
+       [
+        30.0,
+        50.0
+       ]
+      ],
+      "srm": [
+       [
+        5.0,
+        10.0
+       ]
+      ]
+     },
+     "code": "18B"
+    }
+   ]
+  },
+  {
+   "code": "19",
+   "name": "Amber and Brown American Beer",
+   "styles": [
+    {
+     "slug": "american-amber-ale",
+     "name": "American Amber Ale",
+     "summary": "Amber American ale balancing caramel malt against citrusy American hops and a moderate bitterness.",
+     "source_url": "https://www.bjcp.org/style/2021/19/19A/american-amber-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.045,
+        1.06
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.015
+       ]
+      ],
+      "abv": [
+       [
+        4.5,
+        6.2
+       ]
+      ],
+      "ibu": [
+       [
+        25.0,
+        40.0
+       ]
+      ],
+      "srm": [
+       [
+        10.0,
+        17.0
+       ]
+      ]
+     },
+     "code": "19A"
+    },
+    {
+     "slug": "california-common",
+     "name": "California Common",
+     "summary": "Amber beer fermented with lager yeast at ale temperatures; toasty malt, woody Northern Brewer hops and a clean finish.",
+     "source_url": "https://www.bjcp.org/style/2021/19/19B/california-common/",
+     "ranges": {
+      "og": [
+       [
+        1.048,
+        1.054
+       ]
+      ],
+      "fg": [
+       [
+        1.011,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        4.5,
+        5.5
+       ]
+      ],
+      "ibu": [
+       [
+        30.0,
+        45.0
+       ]
+      ],
+      "srm": [
+       [
+        9.0,
+        14.0
+       ]
+      ]
+     },
+     "code": "19B"
+    },
+    {
+     "slug": "american-brown-ale",
+     "name": "American Brown Ale",
+     "summary": "Malty brown ale with chocolate and caramel notes, given a hoppier, more bitter edge than its British cousin.",
+     "source_url": "https://www.bjcp.org/style/2021/19/19C/american-brown-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.045,
+        1.06
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.016
+       ]
+      ],
+      "abv": [
+       [
+        4.3,
+        6.2
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        30.0
+       ]
+      ],
+      "srm": [
+       [
+        18.0,
+        35.0
+       ]
+      ]
+     },
+     "code": "19C"
+    }
+   ]
+  },
+  {
+   "code": "20",
+   "name": "American Porter and Stout",
+   "styles": [
+    {
+     "slug": "american-porter",
+     "name": "American Porter",
+     "summary": "Robust, roasty dark ale with chocolate flavours and a noticeable American hop presence.",
+     "source_url": "https://www.bjcp.org/style/2021/20/20A/american-porter/",
+     "ranges": {
+      "og": [
+       [
+        1.05,
+        1.07
+       ]
+      ],
+      "fg": [
+       [
+        1.012,
+        1.018
+       ]
+      ],
+      "abv": [
+       [
+        4.8,
+        6.5
+       ]
+      ],
+      "ibu": [
+       [
+        25.0,
+        50.0
+       ]
+      ],
+      "srm": [
+       [
+        22.0,
+        40.0
+       ]
+      ]
+     },
+     "code": "20A"
+    },
+    {
+     "slug": "american-stout",
+     "name": "American Stout",
+     "summary": "Strong, bold stout with assertive roast and American hop bitterness and flavour.",
+     "source_url": "https://www.bjcp.org/style/2021/20/20B/american-stout/",
+     "ranges": {
+      "og": [
+       [
+        1.05,
+        1.075
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.022
+       ]
+      ],
+      "abv": [
+       [
+        5.0,
+        7.0
+       ]
+      ],
+      "ibu": [
+       [
+        35.0,
+        75.0
+       ]
+      ],
+      "srm": [
+       [
+        30.0,
+        40.0
+       ]
+      ]
+     },
+     "code": "20B"
+    },
+    {
+     "slug": "imperial-stout",
+     "name": "Imperial Stout",
+     "summary": "Very strong, intense black ale with layers of roast, dark fruit and chocolate and a warming finish.",
+     "source_url": "https://www.bjcp.org/style/2021/20/20C/imperial-stout/",
+     "ranges": {
+      "og": [
+       [
+        1.075,
+        1.115
+       ]
+      ],
+      "fg": [
+       [
+        1.018,
+        1.03
+       ]
+      ],
+      "abv": [
+       [
+        8.0,
+        12.0
+       ]
+      ],
+      "ibu": [
+       [
+        50.0,
+        90.0
+       ]
+      ],
+      "srm": [
+       [
+        30.0,
+        40.0
+       ]
+      ]
+     },
+     "code": "20C"
+    }
+   ]
+  },
+  {
+   "code": "21",
+   "name": "IPA",
+   "styles": [
+    {
+     "slug": "american-ipa",
+     "name": "American IPA",
+     "summary": "Hop-forward pale ale with prominent citrus, pine or tropical American hops, firm bitterness and a dry finish.",
+     "source_url": "https://www.bjcp.org/style/2021/21/21A/american-ipa/",
+     "ranges": {
+      "og": [
+       [
+        1.056,
+        1.07
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        5.5,
+        7.5
+       ]
+      ],
+      "ibu": [
+       [
+        40.0,
+        70.0
+       ]
+      ],
+      "srm": [
+       [
+        6.0,
+        14.0
+       ]
+      ]
+     },
+     "code": "21A"
+    },
+    {
+     "slug": "specialty-ipa",
+     "name": "Specialty IPA",
+     "summary": "A family of IPAs that change one major element of the American IPA, such as colour, grain or yeast; ranges depend on the variant.",
+     "source_url": "https://www.bjcp.org/style/2021/21/21B/specialty-ipa/",
+     "ranges": {},
+     "code": "21B",
+     "variants": [
+      {
+       "slug": "specialty-ipa-belgian-ipa",
+       "name": "Belgian IPA",
+       "summary": "IPA fermented with Belgian yeast, adding fruity, spicy esters and phenols to a hop-forward base.",
+       "source_url": "https://www.bjcp.org/style/2021/21/21B/specialty-ipa-belgian-ipa/",
+       "ranges": {
+        "og": [
+         [
+          1.058,
+          1.08
+         ]
+        ],
+        "fg": [
+         [
+          1.008,
+          1.016
+         ]
+        ],
+        "abv": [
+         [
+          6.2,
+          9.5
+         ]
+        ],
+        "ibu": [
+         [
+          50.0,
+          100.0
+         ]
+        ],
+        "srm": [
+         [
+          5.0,
+          8.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "specialty-ipa-black-ipa",
+       "name": "Black IPA",
+       "summary": "Dark IPA with the hop intensity of an American IPA and only a gentle roast; drinks like an IPA, looks like a stout.",
+       "source_url": "https://www.bjcp.org/style/2021/21/21B/specialty-ipa-black-ipa/",
+       "ranges": {
+        "og": [
+         [
+          1.05,
+          1.085
+         ]
+        ],
+        "fg": [
+         [
+          1.01,
+          1.018
+         ]
+        ],
+        "abv": [
+         [
+          5.5,
+          9.0
+         ]
+        ],
+        "ibu": [
+         [
+          50.0,
+          90.0
+         ]
+        ],
+        "srm": [
+         [
+          25.0,
+          40.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "specialty-ipa-brown-ipa",
+       "name": "Brown IPA",
+       "summary": "Hoppy IPA with the caramel and chocolate malt flavours of a brown ale underneath.",
+       "source_url": "https://www.bjcp.org/style/2021/21/21B/specialty-ipa-brown-ipa/",
+       "ranges": {
+        "og": [
+         [
+          1.056,
+          1.07
+         ]
+        ],
+        "fg": [
+         [
+          1.008,
+          1.016
+         ]
+        ],
+        "abv": [
+         [
+          5.5,
+          7.5
+         ]
+        ],
+        "ibu": [
+         [
+          40.0,
+          70.0
+         ]
+        ],
+        "srm": [
+         [
+          18.0,
+          35.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "specialty-ipa-brut-ipa",
+       "name": "Brut IPA",
+       "summary": "Very dry, pale and highly carbonated IPA with low bitterness and expressive hop aroma, often using enzymes to dry out.",
+       "source_url": "https://www.bjcp.org/style/2021/21/21B/specialty-ipa-brut-ipa/",
+       "ranges": {
+        "og": [
+         [
+          1.046,
+          1.057
+         ]
+        ],
+        "fg": [
+         [
+          0.99,
+          1.004
+         ]
+        ],
+        "abv": [
+         [
+          6.0,
+          7.5
+         ]
+        ],
+        "ibu": [
+         [
+          20.0,
+          30.0
+         ]
+        ],
+        "srm": [
+         [
+          2.0,
+          4.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "specialty-ipa-red-ipa",
+       "name": "Red IPA",
+       "summary": "IPA with a red-amber colour and caramel malt depth supporting bold American hops.",
+       "source_url": "https://www.bjcp.org/style/2021/21/21B/specialty-ipa-red-ipa/",
+       "ranges": {
+        "og": [
+         [
+          1.056,
+          1.07
+         ]
+        ],
+        "fg": [
+         [
+          1.008,
+          1.016
+         ]
+        ],
+        "abv": [
+         [
+          5.5,
+          7.5
+         ]
+        ],
+        "ibu": [
+         [
+          40.0,
+          70.0
+         ]
+        ],
+        "srm": [
+         [
+          11.0,
+          17.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "specialty-ipa-rye-ipa",
+       "name": "Rye IPA",
+       "summary": "IPA with a noticeable share of rye, adding a spicy, drying grain character to the hops.",
+       "source_url": "https://www.bjcp.org/style/2021/21/21B/specialty-ipa-rye-ipa/",
+       "ranges": {
+        "og": [
+         [
+          1.056,
+          1.075
+         ]
+        ],
+        "fg": [
+         [
+          1.008,
+          1.014
+         ]
+        ],
+        "abv": [
+         [
+          5.5,
+          8.0
+         ]
+        ],
+        "ibu": [
+         [
+          50.0,
+          75.0
+         ]
+        ],
+        "srm": [
+         [
+          6.0,
+          14.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "specialty-ipa-white-ipa",
+       "name": "White IPA",
+       "summary": "Hoppy cross between an American IPA and a Belgian witbier: wheat, spices and citrus hops.",
+       "source_url": "https://www.bjcp.org/style/2021/21/21B/specialty-ipa-white-ipa/",
+       "ranges": {
+        "og": [
+         [
+          1.056,
+          1.065
+         ]
+        ],
+        "fg": [
+         [
+          1.01,
+          1.016
+         ]
+        ],
+        "abv": [
+         [
+          5.5,
+          7.0
+         ]
+        ],
+        "ibu": [
+         [
+          40.0,
+          70.0
+         ]
+        ],
+        "srm": [
+         [
+          5.0,
+          6.0
+         ]
+        ]
+       }
+      }
+     ]
+    },
+    {
+     "slug": "hazy-ipa",
+     "name": "Hazy IPA",
+     "summary": "Soft, juicy, cloudy IPA with intense tropical and citrus hop aroma, low perceived bitterness and a full, smooth body.",
+     "source_url": "https://www.bjcp.org/style/2021/21/21C/hazy-ipa/",
+     "ranges": {
+      "og": [
+       [
+        1.06,
+        1.085
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.015
+       ]
+      ],
+      "abv": [
+       [
+        6.0,
+        9.0
+       ]
+      ],
+      "ibu": [
+       [
+        25.0,
+        60.0
+       ]
+      ],
+      "srm": [
+       [
+        3.0,
+        7.0
+       ]
+      ]
+     },
+     "code": "21C"
+    }
+   ]
+  },
+  {
+   "code": "22",
+   "name": "Strong American Ale",
+   "styles": [
+    {
+     "slug": "double-ipa",
+     "name": "Double IPA",
+     "summary": "Stronger, more intensely hopped IPA that stays drinkable: big hop flavour and bitterness with a dry finish.",
+     "source_url": "https://www.bjcp.org/style/2021/22/22A/double-ipa/",
+     "ranges": {
+      "og": [
+       [
+        1.065,
+        1.085
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.018
+       ]
+      ],
+      "abv": [
+       [
+        7.5,
+        10.0
+       ]
+      ],
+      "ibu": [
+       [
+        60.0,
+        100.0
+       ]
+      ],
+      "srm": [
+       [
+        6.0,
+        14.0
+       ]
+      ]
+     },
+     "code": "22A"
+    },
+    {
+     "slug": "american-strong-ale",
+     "name": "American Strong Ale",
+     "summary": "Strong, malty and hoppy American ale that sits between an amber ale and a barleywine.",
+     "source_url": "https://www.bjcp.org/style/2021/22/22B/american-strong-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.062,
+        1.09
+       ]
+      ],
+      "fg": [
+       [
+        1.014,
+        1.024
+       ]
+      ],
+      "abv": [
+       [
+        6.3,
+        10.0
+       ]
+      ],
+      "ibu": [
+       [
+        50.0,
+        100.0
+       ]
+      ],
+      "srm": [
+       [
+        7.0,
+        18.0
+       ]
+      ]
+     },
+     "code": "22B"
+    },
+    {
+     "slug": "american-barleywine",
+     "name": "American Barleywine",
+     "summary": "Very strong American ale with intense malt and an equally bold, citrusy hop presence.",
+     "source_url": "https://www.bjcp.org/style/2021/22/22C/american-barleywine/",
+     "ranges": {
+      "og": [
+       [
+        1.08,
+        1.12
+       ]
+      ],
+      "fg": [
+       [
+        1.016,
+        1.03
+       ]
+      ],
+      "abv": [
+       [
+        8.0,
+        12.0
+       ]
+      ],
+      "ibu": [
+       [
+        50.0,
+        100.0
+       ]
+      ],
+      "srm": [
+       [
+        9.0,
+        18.0
+       ]
+      ]
+     },
+     "code": "22C"
+    },
+    {
+     "slug": "wheatwine",
+     "name": "Wheatwine",
+     "summary": "Strong American ale built on wheat malt, bready and smooth with moderate hopping and honey-like richness.",
+     "source_url": "https://www.bjcp.org/style/2021/22/22D/wheatwine/",
+     "ranges": {
+      "og": [
+       [
+        1.08,
+        1.12
+       ]
+      ],
+      "fg": [
+       [
+        1.016,
+        1.03
+       ]
+      ],
+      "abv": [
+       [
+        8.0,
+        12.0
+       ]
+      ],
+      "ibu": [
+       [
+        30,
+        60
+       ]
+      ],
+      "srm": [
+       [
+        6,
+        14
+       ]
+      ]
+     },
+     "code": "22D"
+    }
+   ]
+  },
+  {
+   "code": "23",
+   "name": "European Sour Ale",
+   "styles": [
+    {
+     "slug": "berliner-weisse",
+     "name": "Berliner Weisse",
+     "summary": "Very pale, tart and light German wheat beer with a clean lactic sourness and low alcohol.",
+     "source_url": "https://www.bjcp.org/style/2021/23/23A/berliner-weisse/",
+     "ranges": {
+      "og": [
+       [
+        1.028,
+        1.032
+       ]
+      ],
+      "fg": [
+       [
+        1.003,
+        1.006
+       ]
+      ],
+      "abv": [
+       [
+        2.8,
+        3.8
+       ]
+      ],
+      "ibu": [
+       [
+        3.0,
+        8.0
+       ]
+      ],
+      "srm": [
+       [
+        2.0,
+        3.0
+       ]
+      ]
+     },
+     "code": "23A"
+    },
+    {
+     "slug": "flanders-red-ale",
+     "name": "Flanders Red Ale",
+     "summary": "Sour, fruity red-brown Belgian ale aged in wood, with tart cherry, plum and a touch of vinegar-like acidity.",
+     "source_url": "https://www.bjcp.org/style/2021/23/23B/flanders-red-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.048,
+        1.057
+       ]
+      ],
+      "fg": [
+       [
+        1.002,
+        1.012
+       ]
+      ],
+      "abv": [
+       [
+        4.6,
+        6.5
+       ]
+      ],
+      "ibu": [
+       [
+        10.0,
+        25.0
+       ]
+      ],
+      "srm": [
+       [
+        10.0,
+        17.0
+       ]
+      ]
+     },
+     "code": "23B"
+    },
+    {
+     "slug": "oud-bruin",
+     "name": "Oud Bruin",
+     "summary": "Malty, lightly sour brown Belgian ale with caramel, dark fruit and a gentle tartness from long aging.",
+     "source_url": "https://www.bjcp.org/style/2021/23/23C/oud-bruin/",
+     "ranges": {
+      "og": [
+       [
+        1.04,
+        1.074
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.012
+       ]
+      ],
+      "abv": [
+       [
+        4.0,
+        8.0
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        25.0
+       ]
+      ],
+      "srm": [
+       [
+        17.0,
+        22.0
+       ]
+      ]
+     },
+     "code": "23C"
+    },
+    {
+     "slug": "lambic",
+     "name": "Lambic",
+     "summary": "Unblended, spontaneously fermented Belgian wheat beer: tart, funky and complex, usually served young and flat.",
+     "source_url": "https://www.bjcp.org/style/2021/23/23D/lambic/",
+     "ranges": {
+      "og": [
+       [
+        1.04,
+        1.054
+       ]
+      ],
+      "fg": [
+       [
+        1.001,
+        1.01
+       ]
+      ],
+      "abv": [
+       [
+        5.0,
+        6.5
+       ]
+      ],
+      "ibu": [
+       [
+        0.0,
+        10.0
+       ]
+      ],
+      "srm": [
+       [
+        3.0,
+        6.0
+       ]
+      ]
+     },
+     "code": "23D"
+    },
+    {
+     "slug": "gueuze",
+     "name": "Gueuze",
+     "summary": "Blend of young and old lambic refermented in the bottle: effervescent, tart, funky and complex.",
+     "source_url": "https://www.bjcp.org/style/2021/23/23E/gueuze/",
+     "ranges": {
+      "og": [
+       [
+        1.04,
+        1.054
+       ]
+      ],
+      "fg": [
+       [
+        1.0,
+        1.006
+       ]
+      ],
+      "abv": [
+       [
+        5.0,
+        8.0
+       ]
+      ],
+      "ibu": [
+       [
+        0.0,
+        10.0
+       ]
+      ],
+      "srm": [
+       [
+        5.0,
+        6.0
+       ]
+      ]
+     },
+     "code": "23E"
+    },
+    {
+     "slug": "fruit-lambic",
+     "name": "Fruit Lambic",
+     "summary": "Lambic refermented with fruit such as cherries or raspberries, balancing tartness and fruit character.",
+     "source_url": "https://www.bjcp.org/style/2021/23/23F/fruit-lambic/",
+     "ranges": {
+      "og": [
+       [
+        1.04,
+        1.06
+       ]
+      ],
+      "fg": [
+       [
+        1.0,
+        1.01
+       ]
+      ],
+      "abv": [
+       [
+        5.0,
+        7.0
+       ]
+      ],
+      "ibu": [
+       [
+        0,
+        10
+       ]
+      ],
+      "srm": [
+       [
+        3,
+        7
+       ]
+      ]
+     },
+     "code": "23F"
+    },
+    {
+     "slug": "gose",
+     "name": "Gose",
+     "summary": "Tart, lightly salted German wheat beer with coriander and a refreshing, highly carbonated character.",
+     "source_url": "https://www.bjcp.org/style/2021/23/23G/gose/",
+     "ranges": {
+      "og": [
+       [
+        1.036,
+        1.056
+       ]
+      ],
+      "fg": [
+       [
+        1.006,
+        1.01
+       ]
+      ],
+      "abv": [
+       [
+        4.2,
+        4.8
+       ]
+      ],
+      "ibu": [
+       [
+        5.0,
+        12.0
+       ]
+      ],
+      "srm": [
+       [
+        3.0,
+        4.0
+       ]
+      ]
+     },
+     "code": "23G"
+    }
+   ]
+  },
+  {
+   "code": "24",
+   "name": "Belgian Ale",
+   "styles": [
+    {
+     "slug": "witbier",
+     "name": "Witbier",
+     "summary": "Pale, hazy Belgian wheat beer spiced with coriander and orange peel; soft, refreshing and lightly tart.",
+     "source_url": "https://www.bjcp.org/style/2021/24/24A/witbier/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.052
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.012
+       ]
+      ],
+      "abv": [
+       [
+        4.5,
+        5.5
+       ]
+      ],
+      "ibu": [
+       [
+        8.0,
+        20.0
+       ]
+      ],
+      "srm": [
+       [
+        2.0,
+        4.0
+       ]
+      ]
+     },
+     "code": "24A"
+    },
+    {
+     "slug": "belgian-pale-ale",
+     "name": "Belgian Pale Ale",
+     "summary": "Moderate-strength Belgian ale with toasty, biscuity malt, gentle fruit from the yeast and balanced hops.",
+     "source_url": "https://www.bjcp.org/style/2021/24/24B/belgian-pale-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.048,
+        1.054
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        4.8,
+        5.5
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        30.0
+       ]
+      ],
+      "srm": [
+       [
+        8.0,
+        14.0
+       ]
+      ]
+     },
+     "code": "24B"
+    },
+    {
+     "slug": "biere-de-garde",
+     "name": "Bière de Garde",
+     "summary": "French farmhouse-style ale, malty and smooth, from blond to brown, with a clean, cellar-aged character.",
+     "source_url": "https://www.bjcp.org/style/2021/24/24C/biere-de-garde/",
+     "ranges": {
+      "og": [
+       [
+        1.06,
+        1.08
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.016
+       ]
+      ],
+      "abv": [
+       [
+        6.0,
+        8.5
+       ]
+      ],
+      "ibu": [
+       [
+        18.0,
+        28.0
+       ]
+      ],
+      "srm": [
+       [
+        6.0,
+        19.0
+       ]
+      ]
+     },
+     "code": "24C"
+    }
+   ]
+  },
+  {
+   "code": "25",
+   "name": "Strong Belgian Ale",
+   "styles": [
+    {
+     "slug": "belgian-blond-ale",
+     "name": "Belgian Blond Ale",
+     "summary": "Moderately strong golden Belgian ale with a soft malt sweetness, fruity-spicy yeast and a dry finish.",
+     "source_url": "https://www.bjcp.org/style/2021/25/25A/belgian-blond-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.062,
+        1.075
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.018
+       ]
+      ],
+      "abv": [
+       [
+        6.0,
+        7.5
+       ]
+      ],
+      "ibu": [
+       [
+        15.0,
+        30.0
+       ]
+      ],
+      "srm": [
+       [
+        4.0,
+        6.0
+       ]
+      ]
+     },
+     "code": "25A"
+    },
+    {
+     "slug": "saison",
+     "name": "Saison",
+     "summary": "Highly attenuated, dry and refreshing Belgian farmhouse ale with spicy, fruity yeast character; brewed at several strengths.",
+     "source_url": "https://www.bjcp.org/style/2021/25/25B/saison/",
+     "ranges": {
+      "og": [
+       [
+        1.048,
+        1.065,
+        "standard"
+       ]
+      ],
+      "fg": [
+       [
+        1.002,
+        1.008,
+        "standard"
+       ]
+      ],
+      "abv": [
+       [
+        3.5,
+        5.0,
+        "table"
+       ],
+       [
+        5.0,
+        7.0,
+        "standard"
+       ],
+       [
+        7.0,
+        9.5,
+        "super"
+       ]
+      ],
+      "ibu": [
+       [
+        20,
+        35
+       ]
+      ],
+      "srm": [
+       [
+        5,
+        14,
+        "pale"
+       ],
+       [
+        15,
+        22,
+        "dark"
+       ]
+      ]
+     },
+     "code": "25B"
+    },
+    {
+     "slug": "belgian-golden-strong-ale",
+     "name": "Belgian Golden Strong Ale",
+     "summary": "Pale, strong, highly carbonated Belgian ale that is dry and deceptively light with fruity, spicy yeast notes.",
+     "source_url": "https://www.bjcp.org/style/2021/25/25C/belgian-golden-strong-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.07,
+        1.095
+       ]
+      ],
+      "fg": [
+       [
+        1.005,
+        1.016
+       ]
+      ],
+      "abv": [
+       [
+        7.5,
+        10.5
+       ]
+      ],
+      "ibu": [
+       [
+        22.0,
+        35.0
+       ]
+      ],
+      "srm": [
+       [
+        3.0,
+        6.0
+       ]
+      ]
+     },
+     "code": "25C"
+    }
+   ]
+  },
+  {
+   "code": "26",
+   "name": "Monastic Ale",
+   "styles": [
+    {
+     "slug": "belgian-single",
+     "name": "Belgian Single",
+     "summary": "Pale, hoppy and dry Belgian monastic table beer with a spicy yeast character and modest strength.",
+     "source_url": "https://www.bjcp.org/style/2021/26/26A/belgian-single/",
+     "ranges": {
+      "og": [
+       [
+        1.044,
+        1.054
+       ]
+      ],
+      "fg": [
+       [
+        1.004,
+        1.01
+       ]
+      ],
+      "abv": [
+       [
+        4.8,
+        6.0
+       ]
+      ],
+      "ibu": [
+       [
+        25.0,
+        45.0
+       ]
+      ],
+      "srm": [
+       [
+        3.0,
+        5.0
+       ]
+      ]
+     },
+     "code": "26A"
+    },
+    {
+     "slug": "belgian-dubbel",
+     "name": "Belgian Dubbel",
+     "summary": "Deep reddish-brown Belgian ale with rich malt, dark fruit and spicy yeast notes and a dry finish.",
+     "source_url": "https://www.bjcp.org/style/2021/26/26B/belgian-dubbel/",
+     "ranges": {
+      "og": [
+       [
+        1.062,
+        1.075
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.018
+       ]
+      ],
+      "abv": [
+       [
+        6.0,
+        7.6
+       ]
+      ],
+      "ibu": [
+       [
+        15.0,
+        25.0
+       ]
+      ],
+      "srm": [
+       [
+        10.0,
+        17.0
+       ]
+      ]
+     },
+     "code": "26B"
+    },
+    {
+     "slug": "belgian-tripel",
+     "name": "Belgian Tripel",
+     "summary": "Strong golden Belgian ale, spicy and fruity from the yeast, with a light body and a dry, effervescent finish.",
+     "source_url": "https://www.bjcp.org/style/2021/26/26C/belgian-tripel/",
+     "ranges": {
+      "og": [
+       [
+        1.075,
+        1.085
+       ]
+      ],
+      "fg": [
+       [
+        1.008,
+        1.014
+       ]
+      ],
+      "abv": [
+       [
+        7.5,
+        9.5
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        40.0
+       ]
+      ],
+      "srm": [
+       [
+        4.5,
+        7.0
+       ]
+      ]
+     },
+     "code": "26C"
+    },
+    {
+     "slug": "belgian-dark-strong-ale",
+     "name": "Belgian Dark Strong Ale",
+     "summary": "Rich, complex, very strong dark Belgian ale with dark fruit, malt depth and spicy yeast character.",
+     "source_url": "https://www.bjcp.org/style/2021/26/26D/belgian-dark-strong-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.075,
+        1.11
+       ]
+      ],
+      "fg": [
+       [
+        1.01,
+        1.024
+       ]
+      ],
+      "abv": [
+       [
+        8.0,
+        12.0
+       ]
+      ],
+      "ibu": [
+       [
+        20.0,
+        35.0
+       ]
+      ],
+      "srm": [
+       [
+        12.0,
+        22.0
+       ]
+      ]
+     },
+     "code": "26D"
+    }
+   ]
+  },
+  {
+   "code": "27",
+   "name": "Historical Beer",
+   "styles": [
+    {
+     "code": "27A",
+     "slug": "historical-beer",
+     "name": "Historical Beer",
+     "summary": "Beers of historical interest that are brewed today in small numbers; each named style below has its own profile.",
+     "source_url": "https://www.bjcp.org/style/2021/27/",
+     "ranges": {},
+     "variants": [
+      {
+       "slug": "historical-beer-kellerbier",
+       "name": "Kellerbier",
+       "summary": "Unfiltered, lightly carbonated version of a German lager served fresh from the cellar; ranges follow the base style.",
+       "source_url": "https://www.bjcp.org/style/2021/27/27A/historical-beer-kellerbier/",
+       "ranges": {}
+      },
+      {
+       "slug": "historical-beer-kentucky-common",
+       "name": "Kentucky Common",
+       "summary": "Dark amber American ale brewed quickly with corn and some dark malt; grainy and gently sweet.",
+       "source_url": "https://www.bjcp.org/style/2021/27/27A/historical-beer-kentucky-common/",
+       "ranges": {
+        "og": [
+         [
+          1.044,
+          1.055
+         ]
+        ],
+        "fg": [
+         [
+          1.01,
+          1.018
+         ]
+        ],
+        "abv": [
+         [
+          4.0,
+          5.5
+         ]
+        ],
+        "ibu": [
+         [
+          15.0,
+          30.0
+         ]
+        ],
+        "srm": [
+         [
+          11.0,
+          20.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "historical-beer-lichtenhainer",
+       "name": "Lichtenhainer",
+       "summary": "Pale, tart and lightly smoked German wheat beer of low strength.",
+       "source_url": "https://www.bjcp.org/style/2021/27/27A/historical-beer-lichtenhainer/",
+       "ranges": {
+        "og": [
+         [
+          1.032,
+          1.04
+         ]
+        ],
+        "fg": [
+         [
+          1.004,
+          1.008
+         ]
+        ],
+        "abv": [
+         [
+          3.5,
+          4.7
+         ]
+        ],
+        "ibu": [
+         [
+          5.0,
+          12.0
+         ]
+        ],
+        "srm": [
+         [
+          3.0,
+          6.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "historical-beer-london-brown-ale",
+       "name": "London Brown Ale",
+       "summary": "Sweet, dark and low-alcohol English brown ale with caramel and toffee flavours.",
+       "source_url": "https://www.bjcp.org/style/2021/27/27A/historical-beer-london-brown-ale/",
+       "ranges": {
+        "og": [
+         [
+          1.033,
+          1.038
+         ]
+        ],
+        "fg": [
+         [
+          1.012,
+          1.015
+         ]
+        ],
+        "abv": [
+         [
+          2.8,
+          3.6
+         ]
+        ],
+        "ibu": [
+         [
+          15.0,
+          20.0
+         ]
+        ],
+        "srm": [
+         [
+          22.0,
+          35.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "historical-beer-piwo-grodziskie",
+       "name": "Piwo Grodziskie",
+       "summary": "Pale, low-alcohol Polish ale made from oak-smoked wheat malt; light, crisp and highly carbonated.",
+       "source_url": "https://www.bjcp.org/style/2021/27/27A/historical-beer-piwo-grodziskie/",
+       "ranges": {
+        "og": [
+         [
+          1.028,
+          1.032
+         ]
+        ],
+        "fg": [
+         [
+          1.006,
+          1.012
+         ]
+        ],
+        "abv": [
+         [
+          2.5,
+          3.3
+         ]
+        ],
+        "ibu": [
+         [
+          20.0,
+          35.0
+         ]
+        ],
+        "srm": [
+         [
+          3.0,
+          6.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "historical-beer-pre-prohibition-lager",
+       "name": "Pre-Prohibition Lager",
+       "summary": "Fuller-flavoured American pilsner of the 1800s with corn or rice and a noticeable hop bitterness.",
+       "source_url": "https://www.bjcp.org/style/2021/27/27A/historical-beer-pre-prohibition-lager/",
+       "ranges": {
+        "og": [
+         [
+          1.044,
+          1.06
+         ]
+        ],
+        "fg": [
+         [
+          1.01,
+          1.015
+         ]
+        ],
+        "abv": [
+         [
+          4.5,
+          6.0
+         ]
+        ],
+        "ibu": [
+         [
+          25.0,
+          40.0
+         ]
+        ],
+        "srm": [
+         [
+          3.0,
+          6.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "historical-beer-pre-prohibition-porter",
+       "name": "Pre-Prohibition Porter",
+       "summary": "American porter of the 1800s with adjuncts and a lighter, drier roast than English versions.",
+       "source_url": "https://www.bjcp.org/style/2021/27/27A/historical-beer-pre-prohibition-porter/",
+       "ranges": {
+        "og": [
+         [
+          1.046,
+          1.06
+         ]
+        ],
+        "fg": [
+         [
+          1.01,
+          1.016
+         ]
+        ],
+        "abv": [
+         [
+          4.5,
+          6.0
+         ]
+        ],
+        "ibu": [
+         [
+          20.0,
+          30.0
+         ]
+        ],
+        "srm": [
+         [
+          20.0,
+          30.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "historical-beer-roggenbier",
+       "name": "Roggenbier",
+       "summary": "German rye ale fermented with wheat beer yeast; spicy rye with banana and clove notes.",
+       "source_url": "https://www.bjcp.org/style/2021/27/27A/historical-beer-roggenbier/",
+       "ranges": {
+        "og": [
+         [
+          1.046,
+          1.056
+         ]
+        ],
+        "fg": [
+         [
+          1.01,
+          1.014
+         ]
+        ],
+        "abv": [
+         [
+          4.5,
+          6.0
+         ]
+        ],
+        "ibu": [
+         [
+          10.0,
+          20.0
+         ]
+        ],
+        "srm": [
+         [
+          14.0,
+          19.0
+         ]
+        ]
+       }
+      },
+      {
+       "slug": "historical-beer-sahti",
+       "name": "Sahti",
+       "summary": "Traditional Finnish ale flavoured with juniper and often fermented with baker's yeast; strong, sweet and unusual.",
+       "source_url": "https://www.bjcp.org/style/2021/27/27A/historical-beer-sahti/",
+       "ranges": {
+        "og": [
+         [
+          1.076,
+          1.12
+         ]
+        ],
+        "fg": [
+         [
+          1.016,
+          1.038
+         ]
+        ],
+        "abv": [
+         [
+          7.0,
+          11.0
+         ]
+        ],
+        "ibu": [
+         [
+          0.0,
+          15.0
+         ]
+        ],
+        "srm": [
+         [
+          4.0,
+          22.0
+         ]
+        ]
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "28",
+   "name": "American Wild Ale",
+   "styles": [
+    {
+     "slug": "brett-beer",
+     "name": "Brett Beer",
+     "summary": "Beer fermented wholly or partly with Brettanomyces, adding fruity, funky complexity; ranges follow the base style.",
+     "source_url": "https://www.bjcp.org/style/2021/28/28A/brett-beer/",
+     "ranges": {},
+     "code": "28A"
+    },
+    {
+     "slug": "mixed-fermentation-sour-beer",
+     "name": "Mixed-Fermentation Sour Beer",
+     "summary": "Sour beer fermented with a mix of yeast and bacteria; tart and complex, with ranges set by the base style.",
+     "source_url": "https://www.bjcp.org/style/2021/28/28B/mixed-fermentation-sour-beer/",
+     "ranges": {},
+     "code": "28B"
+    },
+    {
+     "slug": "wild-specialty-beer",
+     "name": "Wild Specialty Beer",
+     "summary": "Wild or sour beer with added fruit, spices, wood or other specialty ingredients; ranges follow the base style.",
+     "source_url": "https://www.bjcp.org/style/2021/28/28C/wild-specialty-beer/",
+     "ranges": {},
+     "code": "28C"
+    },
+    {
+     "slug": "straight-sour-beer",
+     "name": "Straight Sour Beer",
+     "summary": "Clean, soured beer without funk, usually quick-soured with Lactobacillus; bright acidity on a light base.",
+     "source_url": "https://www.bjcp.org/style/2021/28/28D/straight-sour-beer/",
+     "ranges": {
+      "og": [
+       [
+        1.048,
+        1.065
+       ]
+      ],
+      "fg": [
+       [
+        1.006,
+        1.013
+       ]
+      ],
+      "abv": [
+       [
+        4.5,
+        7.0
+       ]
+      ],
+      "ibu": [
+       [
+        3.0,
+        8.0
+       ]
+      ],
+      "srm": [
+       [
+        2.0,
+        3.0
+       ]
+      ]
+     },
+     "code": "28D"
+    }
+   ]
+  },
+  {
+   "code": "29",
+   "name": "Fruit Beer",
+   "styles": [
+    {
+     "slug": "fruit-beer",
+     "name": "Fruit Beer",
+     "summary": "Any base beer with fruit added as a noticeable but balanced component; ranges follow the base style.",
+     "source_url": "https://www.bjcp.org/style/2021/29/29A/fruit-beer/",
+     "ranges": {},
+     "code": "29A"
+    },
+    {
+     "slug": "fruit-and-spice-beer",
+     "name": "Fruit and Spice Beer",
+     "summary": "Beer combining fruit with spices, herbs or vegetables on a base style; ranges follow the base.",
+     "source_url": "https://www.bjcp.org/style/2021/29/29B/fruit-and-spice-beer/",
+     "ranges": {},
+     "code": "29B"
+    },
+    {
+     "slug": "specialty-fruit-beer",
+     "name": "Specialty Fruit Beer",
+     "summary": "Fruit beer with a further specialty ingredient such as sugar, honey or syrup; ranges follow the base style.",
+     "source_url": "https://www.bjcp.org/style/2021/29/29C/specialty-fruit-beer/",
+     "ranges": {},
+     "code": "29C"
+    },
+    {
+     "slug": "grape-ale",
+     "name": "Grape Ale",
+     "summary": "Beer brewed with a significant share of grapes or grape must, bridging beer and wine; varies with the grapes and base.",
+     "source_url": "https://www.bjcp.org/style/2021/29/29D/grape-ale/",
+     "ranges": {
+      "og": [
+       [
+        1.059,
+        1.075
+       ]
+      ],
+      "fg": [
+       [
+        1.004,
+        1.013
+       ]
+      ],
+      "abv": [
+       [
+        6.0,
+        8.5
+       ]
+      ],
+      "ibu": [
+       [
+        10.0,
+        30.0
+       ]
+      ],
+      "srm": [
+       [
+        4.0,
+        8.0
+       ]
+      ]
+     },
+     "code": "29D"
+    }
+   ]
+  },
+  {
+   "code": "30",
+   "name": "Spiced Beer",
+   "styles": [
+    {
+     "slug": "spice-herb-or-vegetable-beer",
+     "name": "Spice, Herb, or Vegetable Beer",
+     "summary": "Beer with spices, herbs or vegetables in supporting balance with a base style; ranges follow the base.",
+     "source_url": "https://www.bjcp.org/style/2021/30/30A/spice-herb-or-vegetable-beer/",
+     "ranges": {},
+     "code": "30A"
+    },
+    {
+     "slug": "autumn-seasonal-beer",
+     "name": "Autumn Seasonal Beer",
+     "summary": "Autumn-themed spiced beer, often pumpkin-pie flavoured and amber in colour; usually above session strength.",
+     "source_url": "https://www.bjcp.org/style/2021/30/30B/autumn-seasonal-beer/",
+     "ranges": {},
+     "code": "30B"
+    },
+    {
+     "slug": "winter-seasonal-beer",
+     "name": "Winter Seasonal Beer",
+     "summary": "Spiced, often dark and stronger winter beer suggesting the flavours of the holiday season.",
+     "source_url": "https://www.bjcp.org/style/2021/30/30C/winter-seasonal-beer/",
+     "ranges": {},
+     "code": "30C"
+    },
+    {
+     "slug": "specialty-spice-beer",
+     "name": "Specialty Spice Beer",
+     "summary": "Spiced beer that also features another specialty ingredient such as sugar or honey; ranges follow the base.",
+     "source_url": "https://www.bjcp.org/style/2021/30/30D/specialty-spice-beer/",
+     "ranges": {},
+     "code": "30D"
+    }
+   ]
+  },
+  {
+   "code": "31",
+   "name": "Alternative Fermentables Beer",
+   "styles": [
+    {
+     "slug": "alternative-grain-beer",
+     "name": "Alternative Grain Beer",
+     "summary": "Beer where an unusual grain such as oats, rye, buckwheat or spelt is a defining ingredient; ranges follow the base.",
+     "source_url": "https://www.bjcp.org/style/2021/31/31A/alternative-grain-beer/",
+     "ranges": {},
+     "code": "31A"
+    },
+    {
+     "slug": "alternative-sugar-beer",
+     "name": "Alternative Sugar Beer",
+     "summary": "Beer where an added sugar such as honey, maple or molasses is a defining ingredient; ranges follow the base.",
+     "source_url": "https://www.bjcp.org/style/2021/31/31B/alternative-sugar-beer/",
+     "ranges": {},
+     "code": "31B"
+    }
+   ]
+  },
+  {
+   "code": "32",
+   "name": "Smoked Beer",
+   "styles": [
+    {
+     "slug": "classic-style-smoked-beer",
+     "name": "Classic Style Smoked Beer",
+     "summary": "A classic style with smoked malt added; the smoke complements rather than overwhelms the base beer.",
+     "source_url": "https://www.bjcp.org/style/2021/32/32A/classic-style-smoked-beer/",
+     "ranges": {},
+     "code": "32A"
+    },
+    {
+     "slug": "specialty-smoked-beer",
+     "name": "Specialty Smoked Beer",
+     "summary": "Smoked beer on a non-classic base or with additional specialty ingredients.",
+     "source_url": "https://www.bjcp.org/style/2021/32/32B/specialty-smoked-beer/",
+     "ranges": {},
+     "code": "32B"
+    }
+   ]
+  },
+  {
+   "code": "33",
+   "name": "Wood Beer",
+   "styles": [
+    {
+     "slug": "wood-aged-beer",
+     "name": "Wood-Aged Beer",
+     "summary": "Beer aged in or on wood without strong spirit character; wood and vanilla notes over the base style.",
+     "source_url": "https://www.bjcp.org/style/2021/33/33A/wood-aged-beer/",
+     "ranges": {},
+     "code": "33A"
+    },
+    {
+     "slug": "specialty-wood-aged-beer",
+     "name": "Specialty Wood-Aged Beer",
+     "summary": "Beer aged in barrels that held spirits or wine, picking up flavours from the previous contents.",
+     "source_url": "https://www.bjcp.org/style/2021/33/33B/specialty-wood-aged-beer/",
+     "ranges": {},
+     "code": "33B"
+    }
+   ]
+  },
+  {
+   "code": "34",
+   "name": "Specialty Beer",
+   "styles": [
+    {
+     "slug": "commercial-specialty-beer",
+     "name": "Commercial Specialty Beer",
+     "summary": "A beer brewed to match a specific commercial style not otherwise described in the guidelines.",
+     "source_url": "https://www.bjcp.org/style/2021/34/34A/commercial-specialty-beer/",
+     "ranges": {},
+     "code": "34A"
+    },
+    {
+     "slug": "mixed-style-beer",
+     "name": "Mixed-Style Beer",
+     "summary": "A beer that deliberately combines two or more classic styles.",
+     "source_url": "https://www.bjcp.org/style/2021/34/34B/mixed-style-beer/",
+     "ranges": {},
+     "code": "34B"
+    },
+    {
+     "slug": "experimental-beer",
+     "name": "Experimental Beer",
+     "summary": "Beer using ingredients, processes or ideas that fit no other category; anything goes, within reason.",
+     "source_url": "https://www.bjcp.org/style/2021/34/34C/experimental-beer/",
+     "ranges": {},
+     "code": "34C"
+    }
+   ]
+  }
+ ]
+}

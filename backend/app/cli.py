@@ -35,6 +35,38 @@ def export_openapi(
 
 # Advisory lock keys so cron never runs two copies of the same job at once.
 LOCK_CLEANUP_SESSIONS = 1_001
+LOCK_SEED = 1_002
+
+
+@cli.command("seed")
+def seed() -> None:
+    """Load or refresh the BJCP styles and the built-in ingredient catalog (idempotent)."""
+    from sqlalchemy import text
+    from sqlalchemy.orm import Session
+
+    from app.config import get_settings
+    from app.db import create_engine_from_settings
+    from app.services.seed_service import seed_all
+
+    engine = create_engine_from_settings(get_settings())
+    try:
+        with Session(engine) as db, db.begin():
+            locked = db.execute(
+                text("SELECT pg_try_advisory_xact_lock(:key)"), {"key": LOCK_SEED}
+            ).scalar()
+            if not locked:
+                print("another seed run holds the lock; nothing to do")
+                return
+            counts = seed_all(db)
+        print(
+            f"styles: {counts.styles_created} created, {counts.styles_updated} updated, "
+            f"{counts.ranges} ranges; fermentables: {counts.fermentables}; "
+            f"hops: {counts.hops}; yeasts: {counts.yeasts}"
+        )
+        for warning in counts.warnings:
+            print(f"warning: {warning}")
+    finally:
+        engine.dispose()
 
 
 @cli.command("cleanup-sessions")

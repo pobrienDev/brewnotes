@@ -1,0 +1,255 @@
+{
+ "note": "Hand-curated typical values from manufacturers' published specifications. Figures are planning values, not lot analyses; recipes copy what they use.",
+ "items": [
+  {
+   "name": "Cascade",
+   "alpha_typical_pct": 5.5,
+   "origin": "US"
+  },
+  {
+   "name": "Centennial",
+   "alpha_typical_pct": 10,
+   "origin": "US"
+  },
+  {
+   "name": "Chinook",
+   "alpha_typical_pct": 13,
+   "origin": "US"
+  },
+  {
+   "name": "Citra",
+   "alpha_typical_pct": 12,
+   "origin": "US"
+  },
+  {
+   "name": "Mosaic",
+   "alpha_typical_pct": 12.5,
+   "origin": "US"
+  },
+  {
+   "name": "Simcoe",
+   "alpha_typical_pct": 13,
+   "origin": "US"
+  },
+  {
+   "name": "Amarillo",
+   "alpha_typical_pct": 9.5,
+   "origin": "US"
+  },
+  {
+   "name": "Columbus",
+   "alpha_typical_pct": 15,
+   "origin": "US"
+  },
+  {
+   "name": "Warrior",
+   "alpha_typical_pct": 16,
+   "origin": "US"
+  },
+  {
+   "name": "Nugget",
+   "alpha_typical_pct": 13,
+   "origin": "US"
+  },
+  {
+   "name": "Willamette",
+   "alpha_typical_pct": 5,
+   "origin": "US"
+  },
+  {
+   "name": "Crystal",
+   "alpha_typical_pct": 4,
+   "origin": "US"
+  },
+  {
+   "name": "Mt. Hood",
+   "alpha_typical_pct": 6,
+   "origin": "US"
+  },
+  {
+   "name": "Cluster",
+   "alpha_typical_pct": 7,
+   "origin": "US"
+  },
+  {
+   "name": "Northern Brewer",
+   "alpha_typical_pct": 9,
+   "origin": "Germany"
+  },
+  {
+   "name": "Magnum",
+   "alpha_typical_pct": 13,
+   "origin": "Germany"
+  },
+  {
+   "name": "Perle",
+   "alpha_typical_pct": 8,
+   "origin": "Germany"
+  },
+  {
+   "name": "Hallertau Mittelfrüh",
+   "alpha_typical_pct": 4,
+   "origin": "Germany"
+  },
+  {
+   "name": "Tettnang",
+   "alpha_typical_pct": 4.5,
+   "origin": "Germany"
+  },
+  {
+   "name": "Spalt",
+   "alpha_typical_pct": 4.5,
+   "origin": "Germany"
+  },
+  {
+   "name": "Hersbrucker",
+   "alpha_typical_pct": 3.5,
+   "origin": "Germany"
+  },
+  {
+   "name": "Mandarina Bavaria",
+   "alpha_typical_pct": 8.5,
+   "origin": "Germany"
+  },
+  {
+   "name": "Huell Melon",
+   "alpha_typical_pct": 7,
+   "origin": "Germany"
+  },
+  {
+   "name": "Hallertau Blanc",
+   "alpha_typical_pct": 10,
+   "origin": "Germany"
+  },
+  {
+   "name": "Saaz",
+   "alpha_typical_pct": 3.5,
+   "origin": "Czech Republic"
+  },
+  {
+   "name": "East Kent Goldings",
+   "alpha_typical_pct": 5.5,
+   "origin": "UK"
+  },
+  {
+   "name": "Fuggle",
+   "alpha_typical_pct": 4.5,
+   "origin": "UK"
+  },
+  {
+   "name": "Challenger",
+   "alpha_typical_pct": 7.5,
+   "origin": "UK"
+  },
+  {
+   "name": "Target",
+   "alpha_typical_pct": 10.5,
+   "origin": "UK"
+  },
+  {
+   "name": "First Gold",
+   "alpha_typical_pct": 7.5,
+   "origin": "UK"
+  },
+  {
+   "name": "Styrian Goldings (Celeia)",
+   "alpha_typical_pct": 4.5,
+   "origin": "Slovenia"
+  },
+  {
+   "name": "Strisselspalt",
+   "alpha_typical_pct": 2.5,
+   "origin": "France"
+  },
+  {
+   "name": "Galaxy",
+   "alpha_typical_pct": 14,
+   "origin": "Australia"
+  },
+  {
+   "name": "Vic Secret",
+   "alpha_typical_pct": 16,
+   "origin": "Australia"
+  },
+  {
+   "name": "Enigma",
+   "alpha_typical_pct": 16,
+   "origin": "Australia"
+  },
+  {
+   "name": "Nelson Sauvin",
+   "alpha_typical_pct": 12,
+   "origin": "New Zealand"
+  },
+  {
+   "name": "Motueka",
+   "alpha_typical_pct": 7,
+   "origin": "New Zealand"
+  },
+  {
+   "name": "Riwaka",
+   "alpha_typical_pct": 5.5,
+   "origin": "New Zealand"
+  },
+  {
+   "name": "Pacific Jade",
+   "alpha_typical_pct": 13,
+   "origin": "New Zealand"
+  },
+  {
+   "name": "Wai-iti",
+   "alpha_typical_pct": 3.5,
+   "origin": "New Zealand"
+  },
+  {
+   "name": "Southern Cross",
+   "alpha_typical_pct": 13,
+   "origin": "New Zealand"
+  },
+  {
+   "name": "Sorachi Ace",
+   "alpha_typical_pct": 13,
+   "origin": "US"
+  },
+  {
+   "name": "El Dorado",
+   "alpha_typical_pct": 15,
+   "origin": "US"
+  },
+  {
+   "name": "Idaho 7",
+   "alpha_typical_pct": 13,
+   "origin": "US"
+  },
+  {
+   "name": "Strata",
+   "alpha_typical_pct": 12,
+   "origin": "US"
+  },
+  {
+   "name": "Sabro",
+   "alpha_typical_pct": 15,
+   "origin": "US"
+  },
+  {
+   "name": "Azacca",
+   "alpha_typical_pct": 15,
+   "origin": "US"
+  },
+  {
+   "name": "Ekuanot",
+   "alpha_typical_pct": 14.5,
+   "origin": "US"
+  },
+  {
+   "name": "Comet",
+   "alpha_typical_pct": 10,
+   "origin": "US"
+  },
+  {
+   "name": "Loral",
+   "alpha_typical_pct": 11,
+   "origin": "US"
+  }
+ ]
+}
