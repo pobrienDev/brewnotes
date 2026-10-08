@@ -11,6 +11,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy.orm import sessionmaker
+from starlette.middleware.sessions import SessionMiddleware
 
 from app import __version__
 from app.api.v1.router import router as api_v1_router
@@ -24,6 +25,8 @@ from app.middleware import (
     SecurityHeadersMiddleware,
     TrustedHostMiddleware,
 )
+from app.security.csrf import OriginCheckMiddleware
+from app.security.oauth import build_oauth
 
 API_PREFIX = "/api/v1"
 
@@ -51,16 +54,27 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     engine = create_engine_from_settings(settings)
     app.state.engine = engine
     app.state.session_factory = sessionmaker(engine)
+    app.state.oauth = build_oauth(settings)
+    app.state.rate_limiters = {}
 
     register_exception_handlers(app)
     app.include_router(api_v1_router, prefix=API_PREFIX)
     _mount_frontend(app, settings)
 
     # add_middleware wraps outermost-last, so this order runs: request ID, security headers,
-    # body limit, trusted host, then the application.
+    # body limit, trusted host, CSRF origin check, OAuth state cookie, then the application.
     allowed_hosts = list(settings.allowed_hosts)
     if settings.app_env == "test":
         allowed_hosts.append("testserver")
+    app.add_middleware(
+        SessionMiddleware,
+        secret_key=settings.secret_key,
+        session_cookie=settings.oauth_cookie_name,
+        max_age=settings.oauth_state_max_age_s,
+        same_site="lax",
+        https_only=settings.secure_cookies,
+    )
+    app.add_middleware(OriginCheckMiddleware, allowed_origin=settings.public_base_url)
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=allowed_hosts)
     app.add_middleware(BodySizeLimitMiddleware, max_bytes=settings.max_body_bytes)
     app.add_middleware(SecurityHeadersMiddleware, settings=settings)
