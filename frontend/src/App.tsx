@@ -6,6 +6,8 @@ import { AccountPage } from './pages/AccountPage'
 import { BatchesPage } from './pages/BatchesPage'
 import { BatchPage } from './pages/BatchPage'
 import { BeersPage } from './pages/BeersPage'
+import { BreweryPage } from './pages/BreweryPage'
+import { DiscoverPage } from './pages/DiscoverPage'
 import { HomePage } from './pages/HomePage'
 import { IngredientsPage } from './pages/IngredientsPage'
 import { NewBatchPage } from './pages/NewBatchPage'
@@ -30,6 +32,8 @@ export default function App() {
         <Route path="styles" element={<StylesPage />} />
         <Route path="styles/compare" element={<StyleComparePage />} />
         <Route path="styles/:slug" element={<StyleDetailPage />} />
+        <Route path="breweries" element={<DiscoverPage />} />
+        <Route path="breweries/:id" element={<BreweryPage />} />
         <Route path="recipes/new" element={<RecipeEditorPage />} />
         <Route path="recipes" element={<RequireAuth><RecipesPage /></RequireAuth>} />
         <Route path="recipes/:id" element={<RequireAuth><RecipeEditorPage /></RequireAuth>} />

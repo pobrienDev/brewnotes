@@ -99,7 +99,8 @@ test('log and rate a commercial beer', async ({ page }) => {
   await page.getByLabel('Style').selectOption({ label: '22A Double IPA' })
   await page.getByLabel('ABV (%)').fill('8')
   await page.getByRole('button', { name: 'Add', exact: true }).click()
-  const item = page.getByRole('listitem').filter({ hasText: 'Pliny the Elder' })
+  // .first(): a long-lived dev database may hold this beer from earlier runs.
+  const item = page.getByRole('listitem').filter({ hasText: 'Pliny the Elder' }).first()
   await expect(item).toContainText('Russian River')
   await item.getByRole('link', { name: 'Rate' }).click()
   await page.getByLabel('5 out of 5', { exact: true }).check({ force: true })

@@ -4,9 +4,11 @@ import { Link } from 'react-router'
 
 import { api } from '../api/client'
 import type { components } from '../api/schema'
+import { BreweryPicker } from '../components/BreweryPicker'
 import { RatingDisplay } from '../components/RatingInput'
 import { type BeerOut, useBeers } from '../hooks/useBeers'
 import { useAllStyles } from '../hooks/useStyles'
+import type { BreweryRef } from '../lib/map'
 import { describeProblem } from '../lib/problem'
 import { trim } from '../lib/units'
 
@@ -45,7 +47,13 @@ export function BeersPage() {
                 <div>
                   <span className="font-medium">{beer.name}</span>
                   <div className="text-xs text-stone-500">
-                    {[beer.brewery_name, beer.style?.display_name, beer.abv === null ? null : `${trim(beer.abv, 1)}% ABV`].filter(Boolean).join(' · ') || 'No details'}
+                    {beer.brewery ? (
+                      <Link to={`/breweries/${beer.brewery.id}`} className="text-amber-800 hover:underline">{beer.brewery_name ?? beer.brewery.name}</Link>
+                    ) : (
+                      beer.brewery_name
+                    )}
+                    {[beer.style?.display_name, beer.abv === null ? null : `${trim(beer.abv, 1)}% ABV`].filter(Boolean).map((part) => ` · ${part}`).join('')}
+                    {!beer.brewery_name && !beer.brewery && !beer.style && beer.abv === null && 'No details'}
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
@@ -78,6 +86,7 @@ function BeerForm({ beer, onDone }: { beer: BeerOut | null; onDone: () => void }
   const [style, setStyle] = useState(beer?.style?.slug ?? '')
   const [abv, setAbv] = useState(beer?.abv === null || beer?.abv === undefined ? '' : String(beer.abv))
   const [notes, setNotes] = useState(beer?.notes ?? '')
+  const [linked, setLinked] = useState<BreweryRef | null>(beer?.brewery ?? null)
   const save = useMutation({
     mutationFn: async () => {
       const body: BeerWrite & BeerUpdate = {
@@ -86,19 +95,28 @@ function BeerForm({ beer, onDone }: { beer: BeerOut | null; onDone: () => void }
         style: style || null,
         abv: abv === '' ? null : Number(abv),
         notes,
+        brewery_id: linked?.id ?? null,
       }
       const result = beer
         ? await api.PATCH('/api/v1/beers/{beer_id}', { params: { path: { beer_id: beer.id } }, body })
         : await api.POST('/api/v1/beers', { body })
       if (!result.data) throw new Error(describeProblem(result.error, `Save failed (${result.response.status})`))
     },
-    onSuccess: () => { setName(''); setBrewery(''); setStyle(''); setAbv(''); setNotes(''); onDone() },
+    onSuccess: () => { setName(''); setBrewery(''); setStyle(''); setAbv(''); setNotes(''); setLinked(null); onDone() },
   })
   return (
     <form className="space-y-3 rounded border border-stone-200 bg-white p-3" onSubmit={(e) => { e.preventDefault(); save.mutate() }}>
       <h2 className="font-semibold">{beer ? `Edit ${beer.name}` : 'Add a beer'}</h2>
       <label className="block text-sm">Name<input className={input} value={name} onChange={(e) => setName(e.target.value)} maxLength={200} required /></label>
       <label className="block text-sm">Brewery<input className={input} value={brewery} onChange={(e) => setBrewery(e.target.value)} maxLength={200} /></label>
+      <BreweryPicker
+        value={linked}
+        label="On the map (optional)"
+        onChange={(b) => {
+          setLinked(b)
+          if (b && !brewery.trim()) setBrewery(b.name)
+        }}
+      />
       <label className="block text-sm">
         Style
         <select className={input} value={style} onChange={(e) => setStyle(e.target.value)}>

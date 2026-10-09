@@ -42,3 +42,18 @@ export function useAllBeers() {
     },
   })
 }
+
+/** The user's beers linked to one brewery (for the brewery page). */
+export function useBeersAt(breweryId: string | undefined) {
+  return useQuery({
+    queryKey: [...BEERS_KEY, 'at', breweryId ?? ''],
+    enabled: Boolean(breweryId),
+    queryFn: async (): Promise<BeerOut[]> => {
+      const { data, error } = await api.GET('/api/v1/beers', {
+        params: { query: { brewery_id: breweryId!, limit: 100 } },
+      })
+      if (!data) throw new Error(describeProblem(error, 'Could not load beers'))
+      return data.items
+    },
+  })
+}

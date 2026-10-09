@@ -21,6 +21,9 @@ export function Layout() {
           <NavLink to="/styles" className={navClass}>
             Styles
           </NavLink>
+          <NavLink to="/breweries" className={navClass}>
+            Discover
+          </NavLink>
           {me.data && (
             <>
               <NavLink to="/recipes" className={navClass} end>

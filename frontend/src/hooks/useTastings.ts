@@ -11,16 +11,22 @@ export const TASTINGS_KEY = ['tastings'] as const
 export interface TastingFilter {
   batchId?: string
   beerId?: string
+  breweryId?: string
 }
 
 export function useTastings(filter: TastingFilter = {}) {
   return useInfiniteQuery({
-    queryKey: [...TASTINGS_KEY, 'list', filter.batchId ?? null, filter.beerId ?? null],
+    queryKey: [...TASTINGS_KEY, 'list', filter.batchId ?? null, filter.beerId ?? null, filter.breweryId ?? null],
     initialPageParam: null as string | null,
     queryFn: async ({ pageParam }) => {
       const { data, error } = await api.GET('/api/v1/tastings', {
         params: {
-          query: { batch_id: filter.batchId, beer_id: filter.beerId, cursor: pageParam ?? undefined },
+          query: {
+            batch_id: filter.batchId,
+            beer_id: filter.beerId,
+            brewery_id: filter.breweryId,
+            cursor: pageParam ?? undefined,
+          },
         },
       })
       if (!data) throw new Error(describeProblem(error, 'Could not load tastings'))

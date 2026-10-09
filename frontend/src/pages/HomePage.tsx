@@ -15,13 +15,15 @@ export function HomePage() {
           Build a recipe and watch gravity, alcohol, bitterness and colour update as you type, see which
           BJCP styles it fits and what is out of range, and scale it to any batch size. Then brew it:
           log gravity and temperature readings, watch the fermentation chart, and rate the result next
-          to the commercial beers you have tried. No account needed for the calculator; sign in with
-          GitHub or Google to save recipes and keep a brewing log.
+          to the commercial beers you have tried, and find breweries near you on the map. No account
+          needed for the calculator, styles or the map; sign in with GitHub or Google to save recipes
+          and keep a brewing log.
         </p>
       </div>
       <div className="flex flex-wrap gap-3">
         <Link to="/recipes/new" className="rounded bg-amber-600 px-4 py-2 text-white hover:bg-amber-700">Open the calculator</Link>
         <Link to="/styles" className="rounded border border-stone-300 px-4 py-2 hover:bg-stone-100">Browse styles</Link>
+        <Link to="/breweries" className="rounded border border-stone-300 px-4 py-2 hover:bg-stone-100">Find breweries</Link>
         {me.data ? (
           <>
             <Link to="/recipes" className="rounded border border-stone-300 px-4 py-2 hover:bg-stone-100">My recipes</Link>
