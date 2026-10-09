@@ -5184,6 +5184,25 @@
             }
           },
           {
+            "description": "Only tastings of this subject",
+            "in": "query",
+            "name": "brewery_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only tastings of this subject",
+              "title": "Brewery Id"
+            }
+          },
+          {
             "description": "Opaque cursor from a previous page",
             "in": "query",
             "name": "cursor",
@@ -7205,6 +7224,25 @@
               ],
               "description": "Only tastings of this subject",
               "title": "Beer Id"
+            }
+          },
+          {
+            "description": "Only tastings of this subject",
+            "in": "query",
+            "name": "brewery_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only tastings of this subject",
+              "title": "Brewery Id"
             }
           },
           {

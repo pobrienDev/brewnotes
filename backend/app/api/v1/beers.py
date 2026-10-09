@@ -13,6 +13,7 @@ from app.db import get_db
 from app.models import User
 from app.schemas.beers import BeerOut, BeerUpdate, BeerWrite, SearchParam
 from app.schemas.pagination import DEFAULT_LIMIT, CursorParam, LimitParam, Page
+from app.schemas.tastings import SubjectParam
 from app.security.rate_limit import user_rate_limit
 from app.security.sessions import current_user
 from app.services import beer_service
@@ -26,10 +27,13 @@ def list_beers(
     db: Annotated[Session, Depends(get_db)],
     user: Annotated[User, Depends(current_user)],
     q: SearchParam = None,
+    brewery_id: SubjectParam = None,
     cursor: CursorParam = None,
     limit: LimitParam = DEFAULT_LIMIT,
 ) -> Page[BeerOut]:
-    return beer_service.list_beers(db, user, search=q, cursor=cursor, limit=limit)
+    return beer_service.list_beers(
+        db, user, search=q, brewery_id=brewery_id, cursor=cursor, limit=limit
+    )
 
 
 @router.post(

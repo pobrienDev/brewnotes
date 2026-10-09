@@ -22,6 +22,7 @@ def list_for_user(
     *,
     batch_id: uuid.UUID | None,
     beer_id: uuid.UUID | None,
+    brewery_id: uuid.UUID | None = None,
     after: tuple[datetime, uuid.UUID] | None,
     limit: int,
 ) -> list[Tasting]:
@@ -36,6 +37,8 @@ def list_for_user(
         query = query.where(Tasting.batch_id == batch_id)
     if beer_id is not None:
         query = query.where(Tasting.beer_id == beer_id)
+    if brewery_id is not None:
+        query = query.where(Tasting.brewery_id == brewery_id)
     if after is not None:
         query = query.where(tuple_(Tasting.tasted_at, Tasting.id) < tuple_(after[0], after[1]))
     return list(db.scalars(query))

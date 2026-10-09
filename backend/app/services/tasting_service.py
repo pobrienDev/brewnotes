@@ -54,12 +54,19 @@ def list_tastings(
     *,
     batch_id: uuid.UUID | None,
     beer_id: uuid.UUID | None,
+    brewery_id: uuid.UUID | None = None,
     cursor: str | None,
     limit: int,
 ) -> Page[TastingOut]:
     after = decode_time_cursor(cursor) if cursor else None
     rows = tasting_repo.list_for_user(
-        db, user.id, batch_id=batch_id, beer_id=beer_id, after=after, limit=limit
+        db,
+        user.id,
+        batch_id=batch_id,
+        beer_id=beer_id,
+        brewery_id=brewery_id,
+        after=after,
+        limit=limit,
     )
     has_more = len(rows) > limit
     rows = rows[:limit]

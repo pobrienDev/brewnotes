@@ -2680,6 +2680,8 @@ export interface operations {
             query?: {
                 /** @description Match on the beer or brewery name */
                 q?: string | null;
+                /** @description Only tastings of this subject */
+                brewery_id?: string | null;
                 /** @description Opaque cursor from a previous page */
                 cursor?: string | null;
                 /** @description Page size */
@@ -4124,6 +4126,8 @@ export interface operations {
                 batch_id?: string | null;
                 /** @description Only tastings of this subject */
                 beer_id?: string | null;
+                /** @description Only tastings of this subject */
+                brewery_id?: string | null;
                 /** @description Opaque cursor from a previous page */
                 cursor?: string | null;
                 /** @description Page size */
