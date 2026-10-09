@@ -4,7 +4,7 @@ A craft beer app that follows a beer from recipe to glass: design it, brew it, t
 
 BrewNotes combines a brewing calculator, a brewing and tasting log, and beer discovery into one app built around a single object: a beer. The calculator and style browser work without signing in; saving anything requires an account via GitHub or Google.
 
-**Status:** Phases 1 and 2 complete in development (accounts, recipe designer, styles, catalog, batches with readings and a fermentation chart, private commercial beers, tastings). Nothing is deployed yet.
+**Status:** Phases 1 to 3 complete in development (accounts, recipe designer, styles, catalog, batches with readings and a fermentation chart, private commercial beers, tastings, a brewery map from Open Brewery DB). Nothing is deployed yet.
 
 ## Stack
 
@@ -23,6 +23,7 @@ make db        # start Postgres 18 in Docker (creates dev and test databases)
 make install   # backend and frontend dependencies
 make migrate   # apply database migrations
 make seed      # load BJCP 2021 styles and the built-in ingredient catalog (idempotent)
+make sync-breweries  # load Open Brewery DB (idempotent; weekly from cron in production)
 make dev       # FastAPI on :8000 and Vite on :5173 (proxies /api)
 ```
 
@@ -49,6 +50,19 @@ requested or stored.
 `make dev-fake-login` starts the backend with a fake GitHub standing in for the OAuth app
 (`backend/tests/e2e/harness.py`): "Continue with GitHub" signs you in as a test account
 immediately. Pair it with `make dev-frontend`. The browser smoke tests use the same harness.
+
+### Breweries and the map
+
+`make sync-breweries` loads Open Brewery DB's data dump (about 12,000 breweries, MIT licensed)
+and is safe to re-run; in production the host's cron runs it weekly. Breweries that vanish
+upstream are flagged, never deleted, so tastings logged there keep working.
+
+Map tiles come from [MapTiler](https://www.maptiler.com/) (plan Section 14: a keyed,
+domain-restricted provider). Put a key in `frontend/.env.local` as `VITE_MAP_TILE_KEY=...` and
+restrict it to your site's origin in MapTiler Cloud (API keys → Allowed HTTP origins). Without a
+key the map still shows markers on a blank background. Another raster provider only needs a
+different URL template in `frontend/src/lib/map.ts` and its host in `MAP_TILE_HOST` for the
+content security policy.
 
 ### Reference data
 
