@@ -563,6 +563,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/recommendations/styles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Styles to try, from my ratings
+         * @description The user's average rating per style and per BJCP category, and untried styles whose vital statistics are closest to the styles they rated well, each with its reasons. With fewer than `min_tastings` style-rated tastings the answer is a cold start: pass `strength`, `bitterness` and `color` to get suggestions from those answers instead.
+         */
+        get: operations["recommend_styles_api_v1_recommendations_styles_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/styles": {
         parameters: {
             query?: never;
@@ -967,6 +987,19 @@ export interface components {
          * @enum {string}
          */
         CatalogType: "fermentables" | "hops" | "yeasts";
+        /** Difference */
+        Difference: {
+            /**
+             * Direction
+             * @enum {string}
+             */
+            direction: "higher" | "lower";
+            /**
+             * Metric
+             * @enum {string}
+             */
+            metric: "og" | "fg" | "abv" | "ibu" | "srm";
+        };
         /** FermentableInput */
         FermentableInput: {
             /**
@@ -1353,6 +1386,44 @@ export interface components {
             /** Min */
             min: number;
         };
+        /** RatedFamily */
+        RatedFamily: {
+            /** Category Code */
+            category_code: string;
+            /** Category Name */
+            category_name: string;
+            /**
+             * Count
+             * @description Tastings tied to styles in this category
+             */
+            count: number;
+            /**
+             * Mean
+             * @description Average rating over those tastings
+             */
+            mean: number;
+        };
+        /** RatedStyle */
+        RatedStyle: {
+            /** Category Code */
+            category_code: string;
+            /** Category Name */
+            category_name: string;
+            /**
+             * Count
+             * @description Tastings tied to this style
+             */
+            count: number;
+            /** Display Name */
+            display_name: string;
+            /**
+             * Mean
+             * @description Average rating, 0.5 to 5
+             */
+            mean: number;
+            /** Slug */
+            slug: string;
+        };
         /** ReadingCreate */
         ReadingCreate: {
             /** Gravity Sg */
@@ -1391,6 +1462,34 @@ export interface components {
             taken_at: string;
             /** Temp C */
             temp_c: number | null;
+        };
+        /**
+         * Reason
+         * @description Why a style is suggested: a style the user rated well, or their cold-start answers.
+         */
+        Reason: {
+            /**
+             * Count
+             * @description How many tastings that rating rests on
+             */
+            count: number;
+            /**
+             * Distance
+             * @description 0 for identical statistics, about 0.05 for a near twin, 0.25 for something quite different
+             */
+            distance: number;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "style" | "answers";
+            /**
+             * Rating
+             * @description The user's average rating of that style
+             */
+            rating: number | null;
+            /** @description The rated style; null for the answers */
+            style: components["schemas"]["StyleRef"] | null;
         };
         /** RecipeFermentableInput */
         RecipeFermentableInput: {
@@ -1833,6 +1932,71 @@ export interface components {
             metric: "og" | "fg" | "abv" | "ibu" | "srm";
             /** Min */
             min: number;
+        };
+        /** StyleRecommendations */
+        StyleRecommendations: {
+            /**
+             * Answered
+             * @description Whether any cold-start answer was given
+             */
+            answered: boolean;
+            /** Cold Start */
+            cold_start: boolean;
+            /**
+             * Families
+             * @description Average rating per category, best first
+             */
+            families: components["schemas"]["RatedFamily"][];
+            /**
+             * Min Tastings
+             * @description Below this the cold-start questions are asked
+             */
+            min_tastings: number;
+            /**
+             * Styles
+             * @description Average rating per style, best first
+             */
+            styles: components["schemas"]["RatedStyle"][];
+            /**
+             * Suggestions
+             * @description Untried styles, best first
+             */
+            suggestions: components["schemas"]["StyleSuggestion"][];
+            /**
+             * Tastings With Style
+             * @description Tastings that could be tied to a style
+             */
+            tastings_with_style: number;
+        };
+        /** StyleRef */
+        StyleRef: {
+            /** Category Code */
+            category_code: string;
+            /** Category Name */
+            category_name: string;
+            /** Display Name */
+            display_name: string;
+            /** Slug */
+            slug: string;
+        };
+        /** StyleSuggestion */
+        StyleSuggestion: {
+            /**
+             * Because
+             * @description Strongest reason first
+             */
+            because: components["schemas"]["Reason"][];
+            /**
+             * Differences
+             * @description Where the style's statistics differ noticeably from the first reason's
+             */
+            differences: components["schemas"]["Difference"][];
+            /**
+             * Score
+             * @description Ranking score; only positive scores are suggested
+             */
+            score: number;
+            style: components["schemas"]["StyleSummary"];
         };
         /** StyleSummary */
         StyleSummary: {
@@ -4011,6 +4175,53 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    recommend_styles_api_v1_recommendations_styles_get: {
+        parameters: {
+            query?: {
+                /** @description How many styles to suggest */
+                limit?: number;
+                /** @description Cold-start answer: how strong a beer you like */
+                strength?: ("session" | "standard" | "strong") | null;
+                /** @description Cold-start answer: how bitter */
+                bitterness?: ("soft" | "balanced" | "bitter") | null;
+                /** @description Cold-start answer: how dark */
+                color?: ("pale" | "amber" | "dark") | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StyleRecommendations"];
+                };
             };
             /** @description Client error (problem details) */
             "4XX": {
