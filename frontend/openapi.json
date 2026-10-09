@@ -1096,6 +1096,36 @@
         "title": "CatalogType",
         "type": "string"
       },
+      "Difference": {
+        "additionalProperties": false,
+        "properties": {
+          "direction": {
+            "enum": [
+              "higher",
+              "lower"
+            ],
+            "title": "Direction",
+            "type": "string"
+          },
+          "metric": {
+            "enum": [
+              "og",
+              "fg",
+              "abv",
+              "ibu",
+              "srm"
+            ],
+            "title": "Metric",
+            "type": "string"
+          }
+        },
+        "required": [
+          "metric",
+          "direction"
+        ],
+        "title": "Difference",
+        "type": "object"
+      },
       "FermentableInput": {
         "additionalProperties": false,
         "properties": {
@@ -2249,6 +2279,78 @@
         "title": "RangeOut",
         "type": "object"
       },
+      "RatedFamily": {
+        "additionalProperties": false,
+        "properties": {
+          "category_code": {
+            "title": "Category Code",
+            "type": "string"
+          },
+          "category_name": {
+            "title": "Category Name",
+            "type": "string"
+          },
+          "count": {
+            "description": "Tastings tied to styles in this category",
+            "title": "Count",
+            "type": "integer"
+          },
+          "mean": {
+            "description": "Average rating over those tastings",
+            "title": "Mean",
+            "type": "number"
+          }
+        },
+        "required": [
+          "category_code",
+          "category_name",
+          "count",
+          "mean"
+        ],
+        "title": "RatedFamily",
+        "type": "object"
+      },
+      "RatedStyle": {
+        "additionalProperties": false,
+        "properties": {
+          "category_code": {
+            "title": "Category Code",
+            "type": "string"
+          },
+          "category_name": {
+            "title": "Category Name",
+            "type": "string"
+          },
+          "count": {
+            "description": "Tastings tied to this style",
+            "title": "Count",
+            "type": "integer"
+          },
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "mean": {
+            "description": "Average rating, 0.5 to 5",
+            "title": "Mean",
+            "type": "number"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "display_name",
+          "category_code",
+          "category_name",
+          "count",
+          "mean"
+        ],
+        "title": "RatedStyle",
+        "type": "object"
+      },
       "ReadingCreate": {
         "additionalProperties": false,
         "properties": {
@@ -2353,6 +2455,62 @@
           "created_at"
         ],
         "title": "ReadingOut",
+        "type": "object"
+      },
+      "Reason": {
+        "additionalProperties": false,
+        "description": "Why a style is suggested: a style the user rated well, or their cold-start answers.",
+        "properties": {
+          "count": {
+            "description": "How many tastings that rating rests on",
+            "title": "Count",
+            "type": "integer"
+          },
+          "distance": {
+            "description": "0 for identical statistics, about 0.05 for a near twin, 0.25 for something quite different",
+            "title": "Distance",
+            "type": "number"
+          },
+          "kind": {
+            "enum": [
+              "style",
+              "answers"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "rating": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The user's average rating of that style",
+            "title": "Rating"
+          },
+          "style": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StyleRef"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The rated style; null for the answers"
+          }
+        },
+        "required": [
+          "kind",
+          "style",
+          "rating",
+          "count",
+          "distance"
+        ],
+        "title": "Reason",
         "type": "object"
       },
       "RecipeFermentableInput": {
@@ -3621,6 +3779,131 @@
           "label"
         ],
         "title": "StyleRangeOut",
+        "type": "object"
+      },
+      "StyleRecommendations": {
+        "additionalProperties": false,
+        "properties": {
+          "answered": {
+            "description": "Whether any cold-start answer was given",
+            "title": "Answered",
+            "type": "boolean"
+          },
+          "cold_start": {
+            "title": "Cold Start",
+            "type": "boolean"
+          },
+          "families": {
+            "description": "Average rating per category, best first",
+            "items": {
+              "$ref": "#/components/schemas/RatedFamily"
+            },
+            "title": "Families",
+            "type": "array"
+          },
+          "min_tastings": {
+            "description": "Below this the cold-start questions are asked",
+            "title": "Min Tastings",
+            "type": "integer"
+          },
+          "styles": {
+            "description": "Average rating per style, best first",
+            "items": {
+              "$ref": "#/components/schemas/RatedStyle"
+            },
+            "title": "Styles",
+            "type": "array"
+          },
+          "suggestions": {
+            "description": "Untried styles, best first",
+            "items": {
+              "$ref": "#/components/schemas/StyleSuggestion"
+            },
+            "title": "Suggestions",
+            "type": "array"
+          },
+          "tastings_with_style": {
+            "description": "Tastings that could be tied to a style",
+            "title": "Tastings With Style",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "tastings_with_style",
+          "min_tastings",
+          "cold_start",
+          "answered",
+          "styles",
+          "families",
+          "suggestions"
+        ],
+        "title": "StyleRecommendations",
+        "type": "object"
+      },
+      "StyleRef": {
+        "additionalProperties": false,
+        "properties": {
+          "category_code": {
+            "title": "Category Code",
+            "type": "string"
+          },
+          "category_name": {
+            "title": "Category Name",
+            "type": "string"
+          },
+          "display_name": {
+            "title": "Display Name",
+            "type": "string"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "display_name",
+          "category_code",
+          "category_name"
+        ],
+        "title": "StyleRef",
+        "type": "object"
+      },
+      "StyleSuggestion": {
+        "additionalProperties": false,
+        "properties": {
+          "because": {
+            "description": "Strongest reason first",
+            "items": {
+              "$ref": "#/components/schemas/Reason"
+            },
+            "title": "Because",
+            "type": "array"
+          },
+          "differences": {
+            "description": "Where the style's statistics differ noticeably from the first reason's",
+            "items": {
+              "$ref": "#/components/schemas/Difference"
+            },
+            "title": "Differences",
+            "type": "array"
+          },
+          "score": {
+            "description": "Ranking score; only positive scores are suggested",
+            "title": "Score",
+            "type": "number"
+          },
+          "style": {
+            "$ref": "#/components/schemas/StyleSummary"
+          }
+        },
+        "required": [
+          "style",
+          "score",
+          "because",
+          "differences"
+        ],
+        "title": "StyleSuggestion",
         "type": "object"
       },
       "StyleSummary": {
@@ -7015,6 +7298,133 @@
         "summary": "Replace a recipe",
         "tags": [
           "recipes"
+        ]
+      }
+    },
+    "/api/v1/recommendations/styles": {
+      "get": {
+        "description": "The user's average rating per style and per BJCP category, and untried styles whose vital statistics are closest to the styles they rated well, each with its reasons. With fewer than `min_tastings` style-rated tastings the answer is a cold start: pass `strength`, `bitterness` and `color` to get suggestions from those answers instead.",
+        "operationId": "recommend_styles_api_v1_recommendations_styles_get",
+        "parameters": [
+          {
+            "description": "How many styles to suggest",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "description": "How many styles to suggest",
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Cold-start answer: how strong a beer you like",
+            "in": "query",
+            "name": "strength",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "session",
+                    "standard",
+                    "strong"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Cold-start answer: how strong a beer you like",
+              "title": "Strength"
+            }
+          },
+          {
+            "description": "Cold-start answer: how bitter",
+            "in": "query",
+            "name": "bitterness",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "soft",
+                    "balanced",
+                    "bitter"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Cold-start answer: how bitter",
+              "title": "Bitterness"
+            }
+          },
+          {
+            "description": "Cold-start answer: how dark",
+            "in": "query",
+            "name": "color",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "pale",
+                    "amber",
+                    "dark"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Cold-start answer: how dark",
+              "title": "Color"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StyleRecommendations"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Styles to try, from my ratings",
+        "tags": [
+          "recommendations"
         ]
       }
     },
