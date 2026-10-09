@@ -1,6 +1,18 @@
 from fastapi import APIRouter
 
-from app.api.v1 import auth, batches, beers, calc, catalog, health, me, recipes, styles, tastings
+from app.api.v1 import (
+    auth,
+    batches,
+    beers,
+    breweries,
+    calc,
+    catalog,
+    health,
+    me,
+    recipes,
+    styles,
+    tastings,
+)
 
 router = APIRouter()
 router.include_router(health.router)
@@ -13,3 +25,4 @@ router.include_router(recipes.router)
 router.include_router(batches.router)
 router.include_router(beers.router)
 router.include_router(tastings.router)
+router.include_router(breweries.router)

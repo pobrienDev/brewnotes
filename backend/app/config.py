@@ -71,6 +71,15 @@ class Settings(BaseSettings):
     quota_readings_per_batch: int = 20_000
     quota_beers: int = 5000
     quota_tastings: int = 5000
+    # Phase 3: breweries come from Open Brewery DB's MIT-licensed dump (plan Appendix B).
+    brewery_dump_url: str = (
+        "https://raw.githubusercontent.com/openbrewerydb/openbrewerydb/master/breweries.csv"
+    )
+    brewery_dump_max_bytes: int = 50_000_000
+    # Most breweries one map request returns; the map clusters them and asks to zoom in.
+    map_max_results: int = 500
+    # Origin the browser loads map tiles from (allowed in the CSP); empty disables tiles.
+    map_tile_host: str = "https://api.maptiler.com"
 
     @field_validator("allowed_hosts", mode="before")
     @classmethod

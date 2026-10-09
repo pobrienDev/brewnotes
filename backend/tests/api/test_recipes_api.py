@@ -347,7 +347,7 @@ def test_export_includes_recipes_and_custom_ingredients(
         f"{API}/catalog/hops", json={"name": "My Hop", "alpha_typical_pct": 9}, headers=CSRF
     )
     export = client.get(f"{API}/me/export").json()
-    assert export["schema_version"] == 3
+    assert export["schema_version"] == 4
     assert [r["id"] for r in export["recipes"]] == [created["id"]]
     assert export["recipes"][0]["fermentables"][0]["name"] == "2-row pale malt"
     assert export["recipes"][0]["target_style"] == "american-pale-ale"

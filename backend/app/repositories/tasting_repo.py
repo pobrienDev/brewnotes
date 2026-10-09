@@ -11,7 +11,9 @@ from app.models import Tasting
 
 
 def _loaded() -> Select[Any]:
-    return select(Tasting).options(selectinload(Tasting.batch), selectinload(Tasting.beer))
+    return select(Tasting).options(
+        selectinload(Tasting.batch), selectinload(Tasting.beer), selectinload(Tasting.brewery)
+    )
 
 
 def list_for_user(

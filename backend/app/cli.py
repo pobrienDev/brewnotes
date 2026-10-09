@@ -36,6 +36,7 @@ def export_openapi(
 # Advisory lock keys so cron never runs two copies of the same job at once.
 LOCK_CLEANUP_SESSIONS = 1_001
 LOCK_SEED = 1_002
+LOCK_SYNC_BREWERIES = 1_003
 
 
 @cli.command("seed")
@@ -93,6 +94,48 @@ def cleanup_sessions() -> None:
                 return
             deleted = purge_expired_sessions(db, settings, datetime.now(UTC))
         print(f"deleted {deleted} expired sessions")
+    finally:
+        engine.dispose()
+
+
+@cli.command("sync-breweries")
+def sync_breweries(
+    source: Annotated[
+        str | None,
+        typer.Option(
+            help="CSV path or https URL; defaults to BREWERY_DUMP_URL (Open Brewery DB's dump)"
+        ),
+    ] = None,
+) -> None:
+    """Load or refresh breweries from Open Brewery DB (idempotent; weekly from cron)."""
+    from sqlalchemy import text
+    from sqlalchemy.orm import Session
+
+    from app.config import get_settings
+    from app.db import create_engine_from_settings
+    from app.services.brewery_service import sync
+
+    settings = get_settings()
+    engine = create_engine_from_settings(settings)
+    try:
+        with Session(engine) as db, db.begin():
+            locked = db.execute(
+                text("SELECT pg_try_advisory_xact_lock(:key)"), {"key": LOCK_SYNC_BREWERIES}
+            ).scalar()
+            if not locked:
+                print("another sync-breweries run holds the lock; nothing to do")
+                return
+            counts = sync(db, settings, source=source)
+        print(
+            f"breweries: {counts.present} present upstream; {counts.created} created, "
+            f"{counts.updated} updated, {counts.restored} restored, {counts.removed} removed, "
+            f"{counts.skipped} skipped"
+        )
+        for warning in counts.warnings:
+            print(f"warning: {warning}")
+    except ValueError as exc:
+        print(f"error: {exc}")
+        raise typer.Exit(code=1) from None
     finally:
         engine.dispose()
 

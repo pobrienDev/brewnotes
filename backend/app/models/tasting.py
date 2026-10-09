@@ -23,6 +23,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.db import Base
 from app.models.batch import Batch
 from app.models.beer import Beer
+from app.models.brewery import Brewery
 from app.models.common import Timestamps, UUIDv7PrimaryKey, now_utc
 from app.models.recipe import MAX_NOTES
 
@@ -69,6 +70,10 @@ class Tasting(UUIDv7PrimaryKey, Timestamps, Base):
     tasted_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True), nullable=False, default=now_utc, server_default=func.now()
     )
+    # Phase 3: where it was tasted, when logged from a brewery page.
+    brewery_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid, ForeignKey("breweries.id", ondelete="SET NULL"), index=True
+    )
 
     # Read-only views of the subject; the service sets batch_id / beer_id directly so that
     # clearing a link can never also clear user_id.
@@ -78,3 +83,4 @@ class Tasting(UUIDv7PrimaryKey, Timestamps, Base):
     beer: Mapped[Beer | None] = relationship(
         primaryjoin="Tasting.beer_id == Beer.id", foreign_keys=[beer_id], viewonly=True
     )
+    brewery: Mapped[Brewery | None] = relationship()
