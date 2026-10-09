@@ -8,6 +8,7 @@ from urllib.parse import parse_qs, urlsplit
 import httpx2
 from fastapi.testclient import TestClient
 
+from app.domain.units import gal_to_l, lb_to_kg, oz_to_g
 from tests.fakes import FakeProviders
 
 API = "/api/v1"
@@ -99,3 +100,67 @@ def is_cleared(header: str) -> bool:
     """A Set-Cookie header that deletes the cookie (Max-Age=0 or an expiry in the past)."""
     attrs = cookie_attributes(header)
     return attrs.get("max-age") == "0" or attrs.get("expires", "").startswith("Thu, 01 Jan 1970")
+
+
+def recipe_body(**overrides: Any) -> dict[str, Any]:
+    """The Appendix A pale ale as a saved-recipe body (plan Appendix A)."""
+    body: dict[str, Any] = {
+        "name": "Appendix A Pale Ale",
+        "notes": "First fixture recipe.",
+        "target_style": "american-pale-ale",
+        "batch_volume_l": gal_to_l(5.5),
+        "boil_time_min": 60,
+        "brewhouse_efficiency_pct": 72,
+        "fermentables": [
+            {
+                "name": "2-row pale malt",
+                "type": "grain",
+                "amount_kg": lb_to_kg(10),
+                "ppg": 37,
+                "color_lovibond": 2,
+                "addition": "mash",
+            },
+            {
+                "name": "Munich malt",
+                "type": "grain",
+                "amount_kg": lb_to_kg(0.5),
+                "ppg": 35,
+                "color_lovibond": 9,
+                "addition": "mash",
+            },
+            {
+                "name": "Crystal 40",
+                "type": "grain",
+                "amount_kg": lb_to_kg(1),
+                "ppg": 34,
+                "color_lovibond": 40,
+                "addition": "mash",
+            },
+        ],
+        "hops": [
+            {
+                "name": "Cascade",
+                "amount_g": oz_to_g(1),
+                "alpha_pct": 6.5,
+                "use": "boil",
+                "time_min": 60,
+            },
+            {
+                "name": "Cascade",
+                "amount_g": oz_to_g(1),
+                "alpha_pct": 6.5,
+                "use": "boil",
+                "time_min": 10,
+            },
+            {
+                "name": "Centennial",
+                "amount_g": oz_to_g(1),
+                "alpha_pct": 10,
+                "use": "boil",
+                "time_min": 5,
+            },
+        ],
+        "yeasts": [{"name": "US-05", "attenuation_pct": 75}],
+    }
+    body.update(overrides)
+    return body
