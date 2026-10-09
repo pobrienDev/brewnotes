@@ -67,6 +67,10 @@ class Settings(BaseSettings):
     # Per-account quotas (plan Section 5). Starting values; tune later.
     quota_recipes: int = 500
     quota_custom_ingredients: int = 200
+    quota_batches: int = 1000
+    quota_readings_per_batch: int = 20_000
+    quota_beers: int = 5000
+    quota_tastings: int = 5000
 
     @field_validator("allowed_hosts", mode="before")
     @classmethod
