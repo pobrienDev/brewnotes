@@ -23,7 +23,7 @@ they are the portable version of what matters; the full plan lives outside the r
 
 - Work one phase (or sub-phase) at a time on a branch `phase-<n>-<topic>`, open a PR, stop
   for review. **Never merge a PR without a fresh yes from the user, Dependabot's included.**
-- `main` is protected: seven required checks (four CI jobs, two CodeQL analyses, the CodeQL
+- `main` is protected: eight required checks (five CI jobs, two CodeQL analyses, the CodeQL
   alert gate), linear history, enforce_admins. Merge phase PRs with `--rebase` to keep the
   small commits; Dependabot PRs with `--squash`.
 - Say the suggested effort level at the start of each step. Rough map: xhigh for brewing math,
@@ -57,6 +57,16 @@ they are the portable version of what matters; the full plan lives outside the r
 - Regenerate the frontend contract after any schema change: `make types` (writes
   `frontend/openapi.json` and `frontend/src/api/schema.d.ts`; CI fails if stale). No brewing
   math in TypeScript; `dangerouslySetInnerHTML` is lint-banned.
+- Partial updates (PATCH) subclass `app.schemas.PartialUpdate`: omitted fields stay, explicit
+  null is rejected unless the field is listed in `nullable`. Body references to another user's
+  rows (a recipe to brew, a batch or beer to rate) are 422 "unknown …", not 404.
+- Batches freeze the recipe in `recipe_snapshot` (JSONB, `schema_version`); read it only through
+  `app.schemas.snapshot.parse_snapshot`, and add a new version there rather than editing V1.
+- Browser smoke tests: `backend/tests/e2e/harness.py` serves the real app with the API tests'
+  fake GitHub behind "Continue with GitHub" (`make dev-fake-login` + `make dev-frontend`, then
+  `make e2e`). CI runs them against the built frontend. Use it for any signed-in walk-through on
+  a machine without registered OAuth apps; `GET /api/v1/fake-github/become?subject=1002&name=…`
+  switches accounts (returns 204, so call it with curl, not by navigating a browser to it).
 
 ## Data provenance
 
@@ -72,6 +82,8 @@ make db && make install && make migrate && make seed && make dev   # local stack
 make check                                                        # everything CI runs
 cd backend && uv run pytest -q                                    # backend tests only
 cd backend && uv run python -m app.cli --help                     # seed, cleanup-sessions, export-openapi
+make dev-fake-login                                               # backend with fake GitHub sign-in (port 8000)
+make e2e                                                          # Playwright smoke tests against the dev stack
 ```
 
 ## Environment quirks (Patrick's Mac, Oct 2026)
@@ -84,8 +96,10 @@ cd backend && uv run python -m app.cli --help                     # seed, cleanu
   (dartmetrics); 5174 is Docker's. Run this backend on 8001 and Vite on 5180:
   `frontend/.env.local` carries `VITE_API_PROXY_TARGET=http://localhost:8001` (gitignored), and
   the Claude desktop app's dev-server config `.claude/launch.json` (gitignored, per machine)
-  starts both with `PUBLIC_BASE_URL=http://localhost:5180` so the CSRF origin check passes.
-  On another machine use the standard 8000/5173 and skip both files.
+  starts both with `PUBLIC_BASE_URL=http://localhost:5180` so the CSRF origin check passes; a
+  third entry `backend-fake-login` runs `tests.e2e.harness:app` the same way for signed-in
+  checks. On another machine use the standard 8000/5173 and skip both files.
+- Playwright's Chromium is installed per machine (`npx playwright install chromium`, ~100 MB).
 - Authlib 1.8 runs on `httpx2` and validates ID tokens with `joserfc`; Starlette 1.7's
   TestClient also wants `httpx2`. Tests talk to the app over `https://testserver` so the
   `__Host-` cookies behave as in production.
