@@ -85,8 +85,10 @@ Breweries are not committed: `sync-breweries` downloads Open Brewery DB's `brewe
 (MIT; `BREWERY_DUMP_URL`) at run time, validates every row through `BreweryRow`, upserts by
 `obdb_id` and flags vanished rows with `removed_at`. The only committed brewery data is the
 ten-row fixture `backend/tests/data/breweries_sample.csv` (fictional addresses). Map tiles:
-MapTiler, chosen at Phase 3 for its origin-restricted keys and free tier; the key lives in
-`frontend/.env.local` (`VITE_MAP_TILE_KEY`) and never in the repo.
+MapTiler, chosen at Phase 3 for its origin-restricted keys and free tier; the key lives in the
+root `.env` or `frontend/.env.local` (`VITE_MAP_TILE_KEY`; Vite reads both, the frontend file
+wins) and never in the repo. The free plan requires MapTiler's logo on the map; `BreweryMap`
+shows it whenever tiles are on.
 
 ## Commands
 
@@ -111,7 +113,8 @@ what remains (optional devices, BeerXML, the first deployment).
   Dependabot ignores those majors on purpose.
 - Ports 8000 (uvicorn) and 5173 (Vite) are held by month-old dev servers from another project
   (dartmetrics); 5174 is Docker's. Run this backend on 8001 and Vite on 5180:
-  `frontend/.env.local` carries `VITE_API_PROXY_TARGET=http://localhost:8001` (gitignored), and
+  `frontend/.env.local` carries `VITE_API_PROXY_TARGET=http://localhost:8001` (gitignored; the
+  MapTiler key sits in the root `.env`), and
   the Claude desktop app's dev-server config `.claude/launch.json` (gitignored, per machine)
   starts both with `PUBLIC_BASE_URL=http://localhost:5180` so the CSRF origin check passes; a
   third entry `backend-fake-login` runs `tests.e2e.harness:app` the same way for signed-in

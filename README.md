@@ -58,11 +58,12 @@ and is safe to re-run; in production the host's cron runs it weekly. Breweries t
 upstream are flagged, never deleted, so tastings logged there keep working.
 
 Map tiles come from [MapTiler](https://www.maptiler.com/) (plan Section 14: a keyed,
-domain-restricted provider). Put a key in `frontend/.env.local` as `VITE_MAP_TILE_KEY=...` and
-restrict it to your site's origin in MapTiler Cloud (API keys → Allowed HTTP origins). Without a
-key the map still shows markers on a blank background. Another raster provider only needs a
-different URL template in `frontend/src/lib/map.ts` and its host in `MAP_TILE_HOST` for the
-content security policy.
+domain-restricted provider; the free plan needs no card and the app shows its logo as that plan
+requires). Put a key in `.env` (or `frontend/.env.local`) as `VITE_MAP_TILE_KEY=...` and
+restrict it to your site's origin in MapTiler Cloud (API keys → Allowed HTTP origins); Vite reads
+it at startup, so restart the frontend after adding it. Without a key the map still shows markers
+on a blank background. Another raster provider only needs a different URL template in
+`frontend/src/lib/map.ts` and its host in `MAP_TILE_HOST` for the content security policy.
 
 ### Recommendations
 

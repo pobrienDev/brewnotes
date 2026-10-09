@@ -37,12 +37,22 @@ export function clampBounds(b: Bounds): Bounds {
   return { west: wrapLongitude(b.west), south, east: wrapLongitude(b.east), north }
 }
 
+/**
+ * Lowest map zoom. MapTiler's 512px tiles are served with a zoom offset of -1, so at map zoom
+ * 0 Leaflet would ask for tile zoom -1, which does not exist (404 and a grey map).
+ */
+export const MIN_ZOOM = 1
+export const MAX_ZOOM = 19
+
 export interface TileConfig {
   url: string
   attribution: string
   tileSize: number
   zoomOffset: number
   maxZoom: number
+  /** MapTiler's free plan requires its logo on the map, linking to its site. */
+  logoUrl: string
+  logoHref: string
 }
 
 /**
@@ -58,7 +68,9 @@ export function tileConfig(key: string | undefined): TileConfig | null {
       '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>',
     tileSize: 512,
     zoomOffset: -1,
-    maxZoom: 19,
+    maxZoom: MAX_ZOOM,
+    logoUrl: 'https://api.maptiler.com/resources/logo.svg',
+    logoHref: 'https://www.maptiler.com/',
   }
 }
 
