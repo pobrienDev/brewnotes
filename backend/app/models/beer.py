@@ -17,6 +17,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db import Base
+from app.models.brewery import Brewery
 from app.models.catalog import Style
 from app.models.common import Timestamps, UUIDv7PrimaryKey
 from app.models.recipe import MAX_NAME, MAX_NOTES
@@ -46,5 +47,11 @@ class Beer(UUIDv7PrimaryKey, Timestamps, Base):
     )
     abv: Mapped[float | None] = mapped_column(Double)
     notes: Mapped[str] = mapped_column(Text, nullable=False, default="")
+    # Phase 3: the brewery this beer comes from, when the user linked one (breweries are
+    # never hard-deleted; SET NULL is a safety net).
+    brewery_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid, ForeignKey("breweries.id", ondelete="SET NULL"), index=True
+    )
 
     style: Mapped[Style | None] = relationship()
+    brewery: Mapped[Brewery | None] = relationship()

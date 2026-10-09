@@ -14,6 +14,7 @@ def _loaded() -> Select[Any]:
     return select(Beer).options(
         selectinload(Beer.style).selectinload(Style.ranges),
         selectinload(Beer.style).selectinload(Style.parent),
+        selectinload(Beer.brewery),
     )
 
 

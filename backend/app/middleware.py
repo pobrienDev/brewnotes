@@ -155,6 +155,8 @@ def build_content_security_policy(settings: Settings) -> str:
         "https://avatars.githubusercontent.com",
         "https://lh3.googleusercontent.com",
     ]
+    if settings.map_tile_host:
+        image_hosts.append(settings.map_tile_host)
     connect = ["'self'"]
     if settings.sentry_dsn:
         connect.append("https://*.sentry.io")

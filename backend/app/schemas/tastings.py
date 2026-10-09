@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
-from typing import Annotated
+from typing import Annotated, ClassVar
 
 from fastapi import Query
 from pydantic import Field, field_validator, model_validator
@@ -13,6 +13,7 @@ from app.models.recipe import MAX_NOTES
 from app.models.tasting import MAX_TASTING_FIELD, RATING_MAX, RATING_MIN, RATING_STEP
 from app.schemas.base import PartialUpdate, Schema
 from app.schemas.batches import BatchStatusName, _aware_not_far_future
+from app.schemas.breweries import BreweryRef
 
 SubjectParam = Annotated[uuid.UUID | None, Query(description="Only tastings of this subject")]
 
@@ -36,6 +37,7 @@ class TastingCreate(TastingNotes):
     beer_id: uuid.UUID | None = None
     rating: float = Field(ge=RATING_MIN, le=RATING_MAX, description="0.5 to 5 in half steps")
     tasted_at: datetime | None = Field(default=None, description="Defaults to now")
+    brewery_id: uuid.UUID | None = Field(default=None, description="Where it was tasted")
 
     @field_validator("rating")
     @classmethod
@@ -58,6 +60,8 @@ class TastingCreate(TastingNotes):
 class TastingUpdate(PartialUpdate):
     """The subject (batch or beer) is fixed; everything else can change."""
 
+    nullable: ClassVar[frozenset[str]] = frozenset({"brewery_id"})
+
     rating: float | None = Field(default=None, ge=RATING_MIN, le=RATING_MAX)
     aroma: str | None = Field(default=None, max_length=MAX_TASTING_FIELD)
     appearance: str | None = Field(default=None, max_length=MAX_TASTING_FIELD)
@@ -65,6 +69,7 @@ class TastingUpdate(PartialUpdate):
     mouthfeel: str | None = Field(default=None, max_length=MAX_TASTING_FIELD)
     notes: str | None = Field(default=None, max_length=MAX_NOTES)
     tasted_at: datetime | None = None
+    brewery_id: uuid.UUID | None = None
 
     @field_validator("rating")
     @classmethod
@@ -93,6 +98,7 @@ class TastingOut(TastingNotes):
     id: uuid.UUID
     batch: TastingBatchRef | None
     beer: TastingBeerRef | None
+    brewery: BreweryRef | None
     rating: float
     tasted_at: datetime
     created_at: datetime

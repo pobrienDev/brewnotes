@@ -388,7 +388,7 @@ def test_export_includes_the_log(
     tasting = taste(client, beer_id=beer["id"], rating=4.5, flavor="Pine and grapefruit")
 
     export = client.get(f"{API}/me/export").json()
-    assert export["schema_version"] == 3
+    assert export["schema_version"] == 4
     [exported_batch] = export["batches"]
     assert exported_batch["id"] == batch["id"]
     assert exported_batch["recipe_snapshot"]["name"] == "Appendix A Pale Ale"

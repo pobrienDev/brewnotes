@@ -14,6 +14,7 @@ from app.config import Settings
 from app.errors import FieldError, ValidationProblemError
 from app.models import Tasting, User
 from app.repositories import batch_repo, beer_repo, tasting_repo
+from app.schemas.breweries import BreweryRef
 from app.schemas.pagination import Page, decode_time_cursor, encode_cursor
 from app.schemas.tastings import (
     TastingBatchRef,
@@ -22,6 +23,7 @@ from app.schemas.tastings import (
     TastingOut,
     TastingUpdate,
 )
+from app.services import brewery_service
 
 
 def _not_found() -> HTTPException:
@@ -33,6 +35,7 @@ def to_out(tasting: Tasting) -> TastingOut:
         id=tasting.id,
         batch=TastingBatchRef.model_validate(tasting.batch) if tasting.batch else None,
         beer=TastingBeerRef.model_validate(tasting.beer) if tasting.beer else None,
+        brewery=BreweryRef.model_validate(tasting.brewery) if tasting.brewery else None,
         rating=tasting.rating,
         aroma=tasting.aroma,
         appearance=tasting.appearance,
@@ -100,6 +103,7 @@ def create(
             ),
         )
     _check_subject(db, user, body)
+    brewery_service.check_reference(db, body.brewery_id)
     tasting = Tasting(
         user_id=user.id,
         batch_id=body.batch_id,
@@ -111,6 +115,7 @@ def create(
         mouthfeel=body.mouthfeel,
         notes=body.notes,
         tasted_at=body.tasted_at or now or datetime.now(UTC),
+        brewery_id=body.brewery_id,
     )
     tasting_repo.add(db, tasting)
     db.expire(tasting)
@@ -128,7 +133,10 @@ def update(db: Session, user: User, tasting_id: uuid.UUID, body: TastingUpdate) 
     tasting = tasting_repo.get(db, user.id, tasting_id)
     if tasting is None:
         raise _not_found()
-    for field, value in body.model_dump(exclude_unset=True).items():
+    changes = body.model_dump(exclude_unset=True)
+    if "brewery_id" in changes:
+        brewery_service.check_reference(db, changes["brewery_id"])
+    for field, value in changes.items():
         setattr(tasting, field, value)
     db.flush()
     db.expire(tasting)
@@ -155,6 +163,7 @@ def export_rows(db: Session, user: User) -> list[dict[str, Any]]:
             "mouthfeel": t.mouthfeel,
             "notes": t.notes,
             "tasted_at": t.tasted_at,
+            "brewery_id": t.brewery_id,
             "created_at": t.created_at,
             "updated_at": t.updated_at,
         }

@@ -1,0 +1,11 @@
+id,name,brewery_type,address_1,address_2,address_3,city,state_province,postal_code,country,phone,website_url,longitude,latitude
+b0000001-0000-4000-8000-000000000001,Cascade Hollow Brewing,micro,123 NW Flanders St,,,Portland,Oregon,97209,United States,503-555-0101,https://cascadehollow.example,-122.6765,45.5255
+b0000001-0000-4000-8000-000000000002,Burnside Brewpub,brewpub,456 E Burnside St,Suite 2,,Portland,Oregon,97214,United States,503-555-0102,https://burnside.example,-122.6587,45.5230
+b0000001-0000-4000-8000-000000000003,Old Town Brewery,closed,789 SW 1st Ave,,,Portland,Oregon,97204,United States,,,-122.6730,45.5200
+b0000001-0000-4000-8000-000000000004,Someday Brewing,planning,,,,Portland,Oregon,97201,United States,,,,
+b0000001-0000-4000-8000-000000000005,Giesinger Bräu,regional,Martin-Luther-Straße 2,,,München,Bayern,81539,Germany,+49 89 5555 0105,https://giesinger.example,11.5820,48.1180
+b0000001-0000-4000-8000-000000000006,Yarra Bend Ales,micro,10 Fitzroy St,,,Melbourne,Victoria,3065,Australia,,https://yarrabend.example,144.9780,-37.7980
+b0000001-0000-4000-8000-000000000007,Dateline Brewing,nano,1 Harbour Rd,,,Suva,Central,,Fiji,,,178.4419,-18.1416
+b0000001-0000-4000-8000-000000000008,Chatham Rise Brewing,micro,2 Waitangi Wharf,,,Waitangi,Chatham Islands,8942,New Zealand,,,-176.5600,-43.9500
+b0000001-0000-4000-8000-000000000009,Taproom Twenty,taproom,20 Division St,,,Portland,Oregon,97202,United States,,notaurl,-122.6500,45.5050
+b0000001-0000-4000-8000-000000000010,Bad Coordinates Brewing,micro,1 Nowhere Ln,,,Portland,Oregon,97203,United States,,,-999,45.5

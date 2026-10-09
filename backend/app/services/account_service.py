@@ -37,7 +37,7 @@ def export(
     Later phases append their own sections (schema_version goes up each time).
     """
     return {
-        "schema_version": 3,
+        "schema_version": 4,
         "exported_at": now,
         "user": {
             "id": user.id,

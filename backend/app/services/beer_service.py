@@ -14,8 +14,10 @@ from app.errors import FieldError, ValidationProblemError
 from app.models import Beer, Style, User
 from app.repositories import beer_repo, style_repo
 from app.schemas.beers import BeerOut, BeerUpdate, BeerWrite
+from app.schemas.breweries import BreweryRef
 from app.schemas.pagination import Page, decode_name_cursor, encode_cursor
 from app.schemas.styles import StyleSummary
+from app.services import brewery_service
 
 
 def _not_found() -> HTTPException:
@@ -42,6 +44,7 @@ def to_out(beer: Beer, stats: tuple[int, float] | None) -> BeerOut:
         style=StyleSummary.from_model(beer.style) if beer.style is not None else None,
         abv=beer.abv,
         notes=beer.notes,
+        brewery=BreweryRef.model_validate(beer.brewery) if beer.brewery is not None else None,
         tastings_count=count,
         average_rating=average,
         created_at=beer.created_at,
@@ -78,6 +81,7 @@ def create(db: Session, settings: Settings, user: User, body: BeerWrite) -> Beer
             detail=f"Beer limit reached ({settings.quota_beers}). Delete one to add another.",
         )
     style = _resolve_style(db, body.style)
+    brewery_service.check_reference(db, body.brewery_id)
     beer = Beer(
         user_id=user.id,
         name=body.name,
@@ -85,6 +89,7 @@ def create(db: Session, settings: Settings, user: User, body: BeerWrite) -> Beer
         style_id=style.id if style is not None else None,
         abv=body.abv,
         notes=body.notes,
+        brewery_id=body.brewery_id,
     )
     beer_repo.add(db, beer)
     db.expire(beer)
@@ -106,6 +111,8 @@ def update(db: Session, user: User, beer_id: uuid.UUID, body: BeerUpdate) -> Bee
     if "style" in changes:
         style = _resolve_style(db, changes.pop("style"))
         beer.style_id = style.id if style is not None else None
+    if "brewery_id" in changes:
+        brewery_service.check_reference(db, changes["brewery_id"])
     for field, value in changes.items():
         setattr(beer, field, value)
     db.flush()
@@ -129,6 +136,7 @@ def export_rows(db: Session, user: User) -> list[dict[str, Any]]:
             "style": beer.style.slug if beer.style is not None else None,
             "abv": beer.abv,
             "notes": beer.notes,
+            "brewery_id": beer.brewery_id,
             "created_at": beer.created_at,
             "updated_at": beer.updated_at,
         }

@@ -3,6 +3,7 @@
 from app.db import Base
 from app.models.batch import Batch, BatchStatus, Reading, ReadingSource
 from app.models.beer import Beer
+from app.models.brewery import Brewery
 from app.models.catalog import Fermentable, Hop, Style, StyleRange, Yeast
 from app.models.recipe import Recipe, RecipeFermentable, RecipeHop, RecipeYeast
 from app.models.tasting import Tasting
@@ -13,6 +14,7 @@ __all__ = [
     "Batch",
     "BatchStatus",
     "Beer",
+    "Brewery",
     "Fermentable",
     "Hop",
     "OAuthIdentity",
