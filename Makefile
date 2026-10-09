@@ -1,4 +1,4 @@
-.PHONY: db db-down install migrate migration seed dev dev-backend dev-frontend dev-fake-login test test-backend test-frontend e2e lint lint-backend lint-frontend types check openapi
+.PHONY: db db-down install migrate migration seed sync-breweries dev dev-backend dev-frontend dev-fake-login test test-backend test-frontend e2e lint lint-backend lint-frontend types check openapi
 
 BACKEND := cd backend && uv run
 FRONTEND := cd frontend && npm
@@ -24,6 +24,9 @@ migration:     ## make migration m="describe change"
 
 seed:
 	$(BACKEND) python -m app.cli seed
+
+sync-breweries: ## Load or refresh breweries from Open Brewery DB (weekly from cron in production)
+	$(BACKEND) python -m app.cli sync-breweries
 
 ## Development servers
 dev:

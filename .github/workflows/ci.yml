@@ -162,6 +162,7 @@ jobs:
           cd backend
           uv run alembic upgrade head
           uv run python -m app.cli seed
+          uv run python -m app.cli sync-breweries --source tests/data/breweries_sample.csv
       - name: Start the app with the fake sign-in
         run: |
           cd backend

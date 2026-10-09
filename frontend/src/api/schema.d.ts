@@ -215,6 +215,74 @@ export interface paths {
         patch: operations["update_beer_api_v1_beers__beer_id__patch"];
         trace?: never;
     };
+    "/api/v1/breweries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Breweries inside a map area (at most map_max_results; the map clusters them) */
+        get: operations["map_breweries_api_v1_breweries_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/breweries/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Search breweries by name or city */
+        get: operations["search_breweries_api_v1_breweries_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/breweries/types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Brewery types with how many breweries each has */
+        get: operations["brewery_types_api_v1_breweries_types_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/breweries/{brewery_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A brewery */
+        get: operations["read_brewery_api_v1_breweries__brewery_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/calc": {
         parameters: {
             query?: never;
@@ -705,6 +773,7 @@ export interface components {
             abv: number | null;
             /** Average Rating */
             average_rating: number | null;
+            brewery: components["schemas"]["BreweryRef"] | null;
             /** Brewery Name */
             brewery_name: string | null;
             /**
@@ -734,6 +803,8 @@ export interface components {
         BeerUpdate: {
             /** Abv */
             abv?: number | null;
+            /** Brewery Id */
+            brewery_id?: string | null;
             /** Brewery Name */
             brewery_name?: string | null;
             /** Name */
@@ -747,6 +818,11 @@ export interface components {
         BeerWrite: {
             /** Abv */
             abv?: number | null;
+            /**
+             * Brewery Id
+             * @description A brewery from the map
+             */
+            brewery_id?: string | null;
             /** Brewery Name */
             brewery_name?: string | null;
             /** Name */
@@ -761,6 +837,119 @@ export interface components {
              * @description Style slug
              */
             style?: string | null;
+        };
+        /** BreweryDetail */
+        BreweryDetail: {
+            /** Address 1 */
+            address_1: string | null;
+            /** Address 2 */
+            address_2: string | null;
+            /** Address 3 */
+            address_3: string | null;
+            /** Brewery Type */
+            brewery_type: string;
+            /** City */
+            city: string | null;
+            /** Country */
+            country: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Latitude */
+            latitude: number | null;
+            /** Longitude */
+            longitude: number | null;
+            /** Name */
+            name: string;
+            /** Obdb Id */
+            obdb_id: string;
+            /** Phone */
+            phone: string | null;
+            /** Postal Code */
+            postal_code: string | null;
+            /**
+             * Removed At
+             * @description Set when it vanished from the upstream data
+             */
+            removed_at: string | null;
+            /** State Province */
+            state_province: string | null;
+            /**
+             * Synced At
+             * Format: date-time
+             */
+            synced_at: string;
+            /** Website Url */
+            website_url: string | null;
+        };
+        /** BreweryMapResult */
+        BreweryMapResult: {
+            /** Items */
+            items: components["schemas"]["BrewerySummary"][];
+            /** Limit */
+            limit: number;
+            /**
+             * Truncated
+             * @description True when more breweries fit the area than returned
+             */
+            truncated: boolean;
+        };
+        /**
+         * BreweryRef
+         * @description Enough to name a brewery next to a beer or tasting.
+         */
+        BreweryRef: {
+            /** City */
+            city: string | null;
+            /** Country */
+            country: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** State Province */
+            state_province: string | null;
+        };
+        /** BrewerySummary */
+        BrewerySummary: {
+            /** Brewery Type */
+            brewery_type: string;
+            /** City */
+            city: string | null;
+            /** Country */
+            country: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Latitude */
+            latitude: number | null;
+            /** Longitude */
+            longitude: number | null;
+            /** Name */
+            name: string;
+            /** Obdb Id */
+            obdb_id: string;
+            /**
+             * Removed At
+             * @description Set when it vanished from the upstream data
+             */
+            removed_at: string | null;
+            /** State Province */
+            state_province: string | null;
+        };
+        /** BreweryTypeCount */
+        BreweryTypeCount: {
+            /** Brewery Type */
+            brewery_type: string;
+            /** Count */
+            count: number;
         };
         /** CalcResult */
         CalcResult: {
@@ -1036,6 +1225,16 @@ export interface components {
         Page_BeerOut_: {
             /** Items */
             items: components["schemas"]["BeerOut"][];
+            /**
+             * Next Cursor
+             * @description Pass as ?cursor= to fetch the next page; null on the last page
+             */
+            next_cursor: string | null;
+        };
+        /** Page[BrewerySummary] */
+        Page_BrewerySummary_: {
+            /** Items */
+            items: components["schemas"]["BrewerySummary"][];
             /**
              * Next Cursor
              * @description Pass as ?cursor= to fetch the next page; null on the last page
@@ -1701,6 +1900,11 @@ export interface components {
             /** Beer Id */
             beer_id?: string | null;
             /**
+             * Brewery Id
+             * @description Where it was tasted
+             */
+            brewery_id?: string | null;
+            /**
              * Flavor
              * @default
              */
@@ -1741,6 +1945,7 @@ export interface components {
             aroma: string;
             batch: components["schemas"]["TastingBatchRef"] | null;
             beer: components["schemas"]["TastingBeerRef"] | null;
+            brewery: components["schemas"]["BreweryRef"] | null;
             /**
              * Created At
              * Format: date-time
@@ -1789,6 +1994,8 @@ export interface components {
             appearance?: string | null;
             /** Aroma */
             aroma?: string | null;
+            /** Brewery Id */
+            brewery_id?: string | null;
             /** Flavor */
             flavor?: string | null;
             /** Mouthfeel */
@@ -2655,6 +2862,174 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["BeerOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    map_breweries_api_v1_breweries_get: {
+        parameters: {
+            query: {
+                /** @description Visible area as west,south,east,north (min lon, min lat, max lon, max lat) */
+                bbox: string;
+                /** @description Only these brewery types (repeat the parameter); default all but closed */
+                type?: string[] | null;
+                /** @description Also return breweries marked closed */
+                include_closed?: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BreweryMapResult"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    search_breweries_api_v1_breweries_search_get: {
+        parameters: {
+            query: {
+                /** @description Name or city */
+                q: string;
+                /** @description Opaque cursor from a previous page */
+                cursor?: string | null;
+                /** @description Page size */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_BrewerySummary_"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    brewery_types_api_v1_breweries_types_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BreweryTypeCount"][];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    read_brewery_api_v1_breweries__brewery_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                brewery_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BreweryDetail"];
                 };
             };
             /** @description Client error (problem details) */
