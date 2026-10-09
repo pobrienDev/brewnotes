@@ -33,3 +33,5 @@ postgres-data/
 
 # Per-machine dev server launch config for the Claude desktop app
 .claude/launch.json
+frontend/playwright-report/
+frontend/test-results/

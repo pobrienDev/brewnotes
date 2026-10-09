@@ -10,7 +10,7 @@ const COLOURS: Record<BatchStatus, string> = {
 
 export function StatusBadge({ status }: { status: BatchStatus }) {
   return (
-    <span className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${COLOURS[status]}`}>
+    <span data-testid="status-badge" className={`inline-block rounded px-2 py-0.5 text-xs font-medium ${COLOURS[status]}`}>
       {STATUS_LABELS[status]}
     </span>
   )
