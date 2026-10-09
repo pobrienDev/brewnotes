@@ -6,7 +6,7 @@ import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default defineConfig([
-  globalIgnores(['dist', 'coverage', 'src/api/schema.d.ts']),
+  globalIgnores(['dist', 'coverage', 'src/api/schema.d.ts', 'playwright-report', 'test-results']),
   {
     files: ['**/*.{ts,tsx}'],
     extends: [
@@ -29,5 +29,10 @@ export default defineConfig([
         },
       ],
     },
+  },
+  {
+    // Playwright runs in Node, not the browser.
+    files: ['e2e/**/*.ts', 'playwright.config.ts'],
+    languageOptions: { globals: globals.node },
   },
 ])
