@@ -10,6 +10,7 @@ from app.api.v1 import (
     health,
     me,
     recipes,
+    recommendations,
     styles,
     tastings,
 )
@@ -26,3 +27,4 @@ router.include_router(batches.router)
 router.include_router(beers.router)
 router.include_router(tastings.router)
 router.include_router(breweries.router)
+router.include_router(recommendations.router)

@@ -4,10 +4,10 @@ import uuid
 from datetime import datetime
 from typing import Any
 
-from sqlalchemy import Select, func, select, tuple_
+from sqlalchemy import Select, and_, func, select, tuple_, union_all
 from sqlalchemy.orm import Session, selectinload
 
-from app.models import Tasting
+from app.models import Batch, Beer, Style, Tasting
 
 
 def _loaded() -> Select[Any]:
@@ -54,6 +54,29 @@ def count_for_user(db: Session, user_id: uuid.UUID) -> int:
     return (
         db.scalar(select(func.count()).select_from(Tasting).where(Tasting.user_id == user_id)) or 0
     )
+
+
+def style_ratings(db: Session, user_id: uuid.UUID) -> dict[uuid.UUID, tuple[int, float]]:
+    """(number of tastings, average rating) per style the user has tasted: tastings of beers
+    that carry a style, and of batches whose recipe snapshot names a target style."""
+    via_beer = (
+        select(Beer.style_id.label("style_id"), Tasting.rating.label("rating"))
+        .select_from(Tasting)
+        .join(Beer, and_(Beer.id == Tasting.beer_id, Beer.user_id == Tasting.user_id))
+        .where(Tasting.user_id == user_id, Beer.style_id.is_not(None))
+    )
+    via_batch = (
+        select(Style.id.label("style_id"), Tasting.rating.label("rating"))
+        .select_from(Tasting)
+        .join(Batch, and_(Batch.id == Tasting.batch_id, Batch.user_id == Tasting.user_id))
+        .join(Style, Style.slug == Batch.recipe_snapshot["target_style"].astext)
+        .where(Tasting.user_id == user_id)
+    )
+    rated = union_all(via_beer, via_batch).subquery()
+    rows = db.execute(
+        select(rated.c.style_id, func.count(), func.avg(rated.c.rating)).group_by(rated.c.style_id)
+    )
+    return {style_id: (count, float(average)) for style_id, count, average in rows}
 
 
 def add(db: Session, tasting: Tasting) -> None:
