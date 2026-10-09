@@ -82,7 +82,8 @@ def test_validation(seeded: None, client: TestClient, providers: FakeProviders) 
         {"rating": 4.0, "batch_id": batch["id"], "brewery_id": str(uuid.uuid4())},
     ]
     for body in cases:
-        assert client.post(f"{API}/tastings", json=body, headers=CSRF).status_code == 422, body
+        response_ = client.post(f"{API}/tastings", json=body, headers=CSRF)
+        assert response_.status_code == 422, body
     unknown_batch = client.post(
         f"{API}/tastings", json={"rating": 4.0, "batch_id": str(uuid.uuid4())}, headers=CSRF
     )
@@ -119,9 +120,11 @@ def test_update_and_delete(seeded: None, client: TestClient, providers: FakeProv
         {"beer_id": str(uuid.uuid4())},
         {"batch_id": None},
     ]:
-        assert client.patch(url, json=bad, headers=CSRF).status_code == 422, bad
+        response_ = client.patch(url, json=bad, headers=CSRF)
+        assert response_.status_code == 422, bad
 
-    assert client.delete(url, headers=CSRF).status_code == 204
+    response_ = client.delete(url, headers=CSRF)
+    assert response_.status_code == 204
     assert client.get(url).status_code == 404
     assert client.get(f"{API}/beers/{beer['id']}").json()["tastings_count"] == 0
 
