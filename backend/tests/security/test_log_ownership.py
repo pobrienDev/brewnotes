@@ -106,7 +106,8 @@ def test_account_deletion_removes_the_log(
 
     assert (count(Batch, user_id), count(Reading, user_id)) == (1, 1)
     assert (count(Beer, user_id), count(Tasting, user_id)) == (1, 2)
-    assert client.delete(f"{API}/me", headers=CSRF).status_code == 204
+    response_ = client.delete(f"{API}/me", headers=CSRF)
+    assert response_.status_code == 204
     for model in (Batch, Reading, Beer, Tasting):
         assert count(model, user_id) == 0, model
     with make_client(app) as bystander:

@@ -119,7 +119,8 @@ def test_snapshot_survives_recipe_edits_and_deletion(
     assert after_edit["recipe"] == batch["recipe"]
     assert after_edit["expected"] == batch["expected"]
 
-    assert client.delete(f"{API}/recipes/{recipe['id']}", headers=CSRF).status_code == 204
+    response_ = client.delete(f"{API}/recipes/{recipe['id']}", headers=CSRF)
+    assert response_.status_code == 204
     after_delete = client.get(f"{API}/batches/{batch['id']}").json()
     assert after_delete["recipe_id"] is None
     assert after_delete["recipe"]["recipe_id"] == recipe["id"]  # provenance kept in the snapshot
@@ -171,7 +172,8 @@ def test_update_status_and_measurements(
     ]:
         response = client.patch(url, json=bad, headers=CSRF)
         assert response.status_code == 422, bad
-    assert client.patch(url, json={"status": "done"}).status_code == 403  # no Origin
+    response_ = client.patch(url, json={"status": "done"})
+    assert response_.status_code == 403  # no Origin
 
 
 def test_list_filters_and_paginates(
@@ -259,7 +261,8 @@ def test_reading_validation(seeded: None, client: TestClient, providers: FakePro
         assert response.status_code == 422, body
         assert response.headers["content-type"].startswith(PROBLEM_MEDIA_TYPE)
         assert "1.050abc" not in response.text  # values are never echoed
-    assert client.post(url, json={"gravity_sg": 1.05}).status_code == 403
+    response_ = client.post(url, json={"gravity_sg": 1.05})
+    assert response_.status_code == 403
     missing = client.post(
         f"{API}/batches/{uuid.uuid4()}/readings", json={"gravity_sg": 1.05}, headers=CSRF
     )
@@ -332,7 +335,8 @@ def test_delete_batch_removes_readings_and_tastings(
     keep = taste(client, beer_id=beer["id"])
     batch_id = uuid.UUID(batch["id"])
 
-    assert client.delete(f"{API}/batches/{batch['id']}", headers=CSRF).status_code == 204
+    response_ = client.delete(f"{API}/batches/{batch['id']}", headers=CSRF)
+    assert response_.status_code == 204
     assert client.get(f"{API}/batches/{batch['id']}").status_code == 404
     for model in (Reading, Tasting):
         count = db_connection.execute(

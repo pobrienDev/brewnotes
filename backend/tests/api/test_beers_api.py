@@ -18,7 +18,8 @@ from tests.helpers import API, login_as
 
 def test_beers_require_sign_in(seeded: None, client: TestClient) -> None:
     assert client.get(f"{API}/beers").status_code == 401
-    assert client.post(f"{API}/beers", json={"name": "x"}, headers=CSRF).status_code == 401
+    response_ = client.post(f"{API}/beers", json={"name": "x"}, headers=CSRF)
+    assert response_.status_code == 401
 
 
 def test_create_list_search(seeded: None, client: TestClient, providers: FakeProviders) -> None:
@@ -62,8 +63,10 @@ def test_validation(seeded: None, client: TestClient, providers: FakeProviders) 
         {"loc": ["body", "style"], "msg": "unknown style", "type": "value_error"}
     ]
     for bad in [{"name": ""}, {"name": "x", "abv": 101}, {"name": "x", "brewery_name": ""}, {}]:
-        assert client.post(f"{API}/beers", json=bad, headers=CSRF).status_code == 422, bad
-    assert client.post(f"{API}/beers", json={"name": "x"}).status_code == 403
+        response_ = client.post(f"{API}/beers", json=bad, headers=CSRF)
+        assert response_.status_code == 422, bad
+    response_ = client.post(f"{API}/beers", json={"name": "x"})
+    assert response_.status_code == 403
 
 
 def test_update_and_delete(seeded: None, client: TestClient, providers: FakeProviders) -> None:
@@ -85,10 +88,13 @@ def test_update_and_delete(seeded: None, client: TestClient, providers: FakeProv
     )
     assert cleared.status_code == 200
     assert cleared.json()["style"] is None and cleared.json()["abv"] is None
-    assert client.patch(url, json={"name": None}, headers=CSRF).status_code == 422
-    assert client.patch(url, json={"style": "nope"}, headers=CSRF).status_code == 422
+    response_ = client.patch(url, json={"name": None}, headers=CSRF)
+    assert response_.status_code == 422
+    response_ = client.patch(url, json={"style": "nope"}, headers=CSRF)
+    assert response_.status_code == 422
 
-    assert client.delete(url, headers=CSRF).status_code == 204
+    response_ = client.delete(url, headers=CSRF)
+    assert response_.status_code == 204
     assert client.get(url).status_code == 404
     assert client.get(f"{API}/tastings").json()["items"] == []  # cascaded
     assert client.get(f"{API}/beers/{uuid.uuid4()}").status_code == 404
