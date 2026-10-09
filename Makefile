@@ -1,4 +1,4 @@
-.PHONY: db db-down install migrate migration seed dev dev-backend dev-frontend test test-backend test-frontend lint lint-backend lint-frontend types check openapi
+.PHONY: db db-down install migrate migration seed dev dev-backend dev-frontend dev-fake-login test test-backend test-frontend e2e lint lint-backend lint-frontend types check openapi
 
 BACKEND := cd backend && uv run
 FRONTEND := cd frontend && npm
@@ -35,6 +35,9 @@ dev-backend:
 dev-frontend:
 	$(FRONTEND) run dev
 
+dev-fake-login: ## Backend with a fake GitHub sign-in (no OAuth app needed); pairs with dev-frontend
+	$(BACKEND) uvicorn tests.e2e.harness:app --reload --port 8000
+
 ## Tests
 test: test-backend test-frontend
 
@@ -43,6 +46,9 @@ test-backend:
 
 test-frontend:
 	$(FRONTEND) test -- --run
+
+e2e:           ## Browser smoke tests; needs dev-fake-login and dev-frontend running (E2E_BASE_URL overrides)
+	$(FRONTEND) exec playwright test
 
 ## Lint and type checks
 lint: lint-backend lint-frontend

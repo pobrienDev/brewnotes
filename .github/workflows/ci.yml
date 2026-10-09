@@ -113,6 +113,77 @@ jobs:
       - name: Fail if the committed files are stale
         run: git diff --exit-code -- frontend/openapi.json frontend/src/api/schema.d.ts
 
+  e2e:
+    name: End to end (Playwright smoke tests)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: brewnotes
+          POSTGRES_PASSWORD: brewnotes
+          POSTGRES_DB: brewnotes_e2e
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U brewnotes -d brewnotes_e2e"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    env:
+      # The harness (backend/tests/e2e/harness.py) runs the real app in development mode so
+      # cookies work over plain http, with a fake GitHub standing in for the OAuth app.
+      APP_ENV: development
+      DATABASE_URL: postgresql+psycopg://brewnotes:brewnotes@localhost:5432/brewnotes_e2e
+      SECRET_KEY: ci-only-value-not-a-secret-0123456789abcdef
+      PUBLIC_BASE_URL: http://localhost:8000
+      ALLOWED_HOSTS: localhost,127.0.0.1
+      STATIC_DIR: ${{ github.workspace }}/frontend/dist
+      E2E_BASE_URL: http://localhost:8000
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+          cache-dependency-glob: backend/uv.lock
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: cd backend && uv sync --all-groups --locked
+      - run: cd frontend && npm ci
+      - run: cd frontend && npx playwright install --with-deps chromium
+      - run: cd frontend && npm run build
+      - name: Migrate and seed
+        run: |
+          cd backend
+          uv run alembic upgrade head
+          uv run python -m app.cli seed
+      - name: Start the app with the fake sign-in
+        run: |
+          cd backend
+          nohup uv run uvicorn tests.e2e.harness:app --port 8000 > /tmp/harness.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -fsS http://localhost:8000/api/v1/health/ready && break
+            sleep 1
+          done
+      - run: cd frontend && npx playwright test
+      - name: Server log
+        if: failure()
+        run: cat /tmp/harness.log
+      - name: Playwright report
+        if: failure()
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6.0.0
+        with:
+          name: playwright-report
+          path: |
+            frontend/playwright-report
+            frontend/test-results
+          retention-days: 7
+
   image:
     name: Docker image serves frontend, deep links and health
     runs-on: ubuntu-latest
