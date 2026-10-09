@@ -46,31 +46,28 @@ export function FermentationChart({ readings, system }: { readings: ReadingOut[]
     },
     plugins: { legend: { position: 'bottom' } },
   }
-  const data = {
-    datasets: [
-      {
-        label: 'Gravity',
-        data: series.gravity,
-        yAxisID: 'y',
-        borderColor: '#b45309',
-        backgroundColor: '#b45309',
-        spanGaps: true,
-        pointRadius: readings.length > 60 ? 0 : 3,
-        tension: 0.2,
-      },
-      {
-        label: `Temperature (${series.temperatureUnit})`,
-        data: series.temperature,
-        yAxisID: 'y1',
-        borderColor: '#0369a1',
-        backgroundColor: '#0369a1',
-        spanGaps: true,
-        pointRadius: readings.length > 60 ? 0 : 3,
-        tension: 0.2,
-        hidden: !hasTemp,
-      },
-    ],
+  const gravity = {
+    label: 'Gravity',
+    data: series.gravity,
+    yAxisID: 'y',
+    borderColor: '#b45309',
+    backgroundColor: '#b45309',
+    spanGaps: true,
+    pointRadius: readings.length > 60 ? 0 : 3,
+    tension: 0.2,
   }
+  const temp = {
+    label: `Temperature (${series.temperatureUnit})`,
+    data: series.temperature,
+    yAxisID: 'y1',
+    borderColor: '#0369a1',
+    backgroundColor: '#0369a1',
+    spanGaps: true,
+    pointRadius: readings.length > 60 ? 0 : 3,
+    tension: 0.2,
+  }
+  // No temperature series at all (gravity-only logs) means no second axis or legend entry.
+  const data = { datasets: hasTemp ? [gravity, temp] : [gravity] }
   return (
     <div className="h-72 w-full">
       <Line
