@@ -47,6 +47,11 @@ def all_with_ranges(db: Session) -> Sequence[Style]:
     return db.scalars(_base().where(Style.ranges.any()).order_by(Style.sort_order)).all()
 
 
+def list_all(db: Session) -> Sequence[Style]:
+    """Every style in guideline order, ranges and parent loaded."""
+    return db.scalars(_base().order_by(Style.sort_order)).all()
+
+
 def exists(db: Session, slug: str) -> bool:
     return db.scalar(select(Style.id).where(Style.slug == slug)) is not None
 

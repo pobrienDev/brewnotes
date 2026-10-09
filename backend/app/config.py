@@ -80,6 +80,8 @@ class Settings(BaseSettings):
     map_max_results: int = 500
     # Origin the browser loads map tiles from (allowed in the CSP); empty disables tiles.
     map_tile_host: str = "https://api.maptiler.com"
+    # Phase 4: with fewer style-rated tastings than this, ask the cold-start questions.
+    recommendation_min_tastings: int = 5
 
     @field_validator("allowed_hosts", mode="before")
     @classmethod
