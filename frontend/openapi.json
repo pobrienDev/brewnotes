@@ -436,6 +436,16 @@
             ],
             "title": "Average Rating"
           },
+          "brewery": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BreweryRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "brewery_name": {
             "anyOf": [
               {
@@ -492,6 +502,7 @@
           "style",
           "abv",
           "notes",
+          "brewery",
           "tastings_count",
           "average_rating",
           "created_at",
@@ -515,6 +526,18 @@
               }
             ],
             "title": "Abv"
+          },
+          "brewery_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brewery Id"
           },
           "brewery_name": {
             "anyOf": [
@@ -586,6 +609,19 @@
             ],
             "title": "Abv"
           },
+          "brewery_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A brewery from the map",
+            "title": "Brewery Id"
+          },
           "brewery_name": {
             "anyOf": [
               {
@@ -629,6 +665,396 @@
           "name"
         ],
         "title": "BeerWrite",
+        "type": "object"
+      },
+      "BreweryDetail": {
+        "additionalProperties": false,
+        "properties": {
+          "address_1": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address 1"
+          },
+          "address_2": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address 2"
+          },
+          "address_3": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address 3"
+          },
+          "brewery_type": {
+            "title": "Brewery Type",
+            "type": "string"
+          },
+          "city": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "City"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "latitude": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
+          },
+          "longitude": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "obdb_id": {
+            "title": "Obdb Id",
+            "type": "string"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "postal_code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Postal Code"
+          },
+          "removed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Set when it vanished from the upstream data",
+            "title": "Removed At"
+          },
+          "state_province": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "State Province"
+          },
+          "synced_at": {
+            "format": "date-time",
+            "title": "Synced At",
+            "type": "string"
+          },
+          "website_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Website Url"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "city",
+          "state_province",
+          "country",
+          "obdb_id",
+          "brewery_type",
+          "latitude",
+          "longitude",
+          "removed_at",
+          "address_1",
+          "address_2",
+          "address_3",
+          "postal_code",
+          "phone",
+          "website_url",
+          "synced_at"
+        ],
+        "title": "BreweryDetail",
+        "type": "object"
+      },
+      "BreweryMapResult": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BrewerySummary"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer"
+          },
+          "truncated": {
+            "description": "True when more breweries fit the area than returned",
+            "title": "Truncated",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "items",
+          "truncated",
+          "limit"
+        ],
+        "title": "BreweryMapResult",
+        "type": "object"
+      },
+      "BreweryRef": {
+        "additionalProperties": false,
+        "description": "Enough to name a brewery next to a beer or tasting.",
+        "properties": {
+          "city": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "City"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "state_province": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "State Province"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "city",
+          "state_province",
+          "country"
+        ],
+        "title": "BreweryRef",
+        "type": "object"
+      },
+      "BrewerySummary": {
+        "additionalProperties": false,
+        "properties": {
+          "brewery_type": {
+            "title": "Brewery Type",
+            "type": "string"
+          },
+          "city": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "City"
+          },
+          "country": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "latitude": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latitude"
+          },
+          "longitude": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Longitude"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "obdb_id": {
+            "title": "Obdb Id",
+            "type": "string"
+          },
+          "removed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Set when it vanished from the upstream data",
+            "title": "Removed At"
+          },
+          "state_province": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "State Province"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "city",
+          "state_province",
+          "country",
+          "obdb_id",
+          "brewery_type",
+          "latitude",
+          "longitude",
+          "removed_at"
+        ],
+        "title": "BrewerySummary",
+        "type": "object"
+      },
+      "BreweryTypeCount": {
+        "additionalProperties": false,
+        "properties": {
+          "brewery_type": {
+            "title": "Brewery Type",
+            "type": "string"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "brewery_type",
+          "count"
+        ],
+        "title": "BreweryTypeCount",
         "type": "object"
       },
       "CalcResult": {
@@ -1450,6 +1876,36 @@
           "next_cursor"
         ],
         "title": "Page[BeerOut]",
+        "type": "object"
+      },
+      "Page_BrewerySummary_": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BrewerySummary"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pass as ?cursor= to fetch the next page; null on the last page",
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "Page[BrewerySummary]",
         "type": "object"
       },
       "Page_FermentableOut_": {
@@ -3337,6 +3793,19 @@
             ],
             "title": "Beer Id"
           },
+          "brewery_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Where it was tasted",
+            "title": "Brewery Id"
+          },
           "flavor": {
             "default": "",
             "maxLength": 2000,
@@ -3418,6 +3887,16 @@
               }
             ]
           },
+          "brewery": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BreweryRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "created_at": {
             "format": "date-time",
             "title": "Created At",
@@ -3466,6 +3945,7 @@
           "id",
           "batch",
           "beer",
+          "brewery",
           "rating",
           "tasted_at",
           "created_at",
@@ -3501,6 +3981,18 @@
               }
             ],
             "title": "Aroma"
+          },
+          "brewery_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brewery Id"
           },
           "flavor": {
             "anyOf": [
@@ -4967,6 +5459,281 @@
         "summary": "Update a beer",
         "tags": [
           "beers"
+        ]
+      }
+    },
+    "/api/v1/breweries": {
+      "get": {
+        "operationId": "map_breweries_api_v1_breweries_get",
+        "parameters": [
+          {
+            "description": "Visible area as west,south,east,north (min lon, min lat, max lon, max lat)",
+            "in": "query",
+            "name": "bbox",
+            "required": true,
+            "schema": {
+              "description": "Visible area as west,south,east,north (min lon, min lat, max lon, max lat)",
+              "maxLength": 120,
+              "title": "Bbox",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Only these brewery types (repeat the parameter); default all but closed",
+            "in": "query",
+            "name": "type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only these brewery types (repeat the parameter); default all but closed",
+              "title": "Type"
+            }
+          },
+          {
+            "description": "Also return breweries marked closed",
+            "in": "query",
+            "name": "include_closed",
+            "required": false,
+            "schema": {
+              "default": false,
+              "description": "Also return breweries marked closed",
+              "title": "Include Closed",
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BreweryMapResult"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Breweries inside a map area (at most map_max_results; the map clusters them)",
+        "tags": [
+          "breweries"
+        ]
+      }
+    },
+    "/api/v1/breweries/search": {
+      "get": {
+        "operationId": "search_breweries_api_v1_breweries_search_get",
+        "parameters": [
+          {
+            "description": "Name or city",
+            "in": "query",
+            "name": "q",
+            "required": true,
+            "schema": {
+              "description": "Name or city",
+              "maxLength": 100,
+              "minLength": 1,
+              "title": "Q",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Opaque cursor from a previous page",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 400,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Opaque cursor from a previous page",
+              "title": "Cursor"
+            }
+          },
+          {
+            "description": "Page size",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "description": "Page size",
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_BrewerySummary_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Search breweries by name or city",
+        "tags": [
+          "breweries"
+        ]
+      }
+    },
+    "/api/v1/breweries/types": {
+      "get": {
+        "operationId": "brewery_types_api_v1_breweries_types_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/BreweryTypeCount"
+                  },
+                  "title": "Response Brewery Types Api V1 Breweries Types Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Brewery types with how many breweries each has",
+        "tags": [
+          "breweries"
+        ]
+      }
+    },
+    "/api/v1/breweries/{brewery_id}": {
+      "get": {
+        "operationId": "read_brewery_api_v1_breweries__brewery_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "brewery_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Brewery Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BreweryDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "A brewery",
+        "tags": [
+          "breweries"
         ]
       }
     },
