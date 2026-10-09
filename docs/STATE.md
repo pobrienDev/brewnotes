@@ -48,8 +48,8 @@ visible area": the bbox query uses the (latitude, longitude) index and is capped
 "A user with 10 or more tastings gets sensible, explained style suggestions" is the unit test
 `test_ten_tastings_give_sensible_explained_suggestions` against the real BJCP data plus the
 API test with eleven styled tastings. Only the real-provider sign-in itself is unverified in a
-browser until OAuth apps are registered in `.env`; map tiles need a MapTiler key in
-`frontend/.env.local`.
+browser until OAuth apps are registered in `.env`; map tiles need a MapTiler key
+(`VITE_MAP_TILE_KEY` in `.env` or `frontend/.env.local`).
 
 ## What exists (API)
 

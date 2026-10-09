@@ -11,7 +11,7 @@ import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from 're
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Link } from 'react-router'
 
-import { type Bounds, type BrewerySummary, type MapView, MAP_TILE_KEY, clampBounds, formatPlace, tileConfig, typeLabel } from '../lib/map'
+import { type Bounds, type BrewerySummary, MAP_TILE_KEY, MAX_ZOOM, MIN_ZOOM, type MapView, clampBounds, formatPlace, tileConfig, typeLabel } from '../lib/map'
 
 // Bundlers lose Leaflet's default icon paths. Leaflet derives them in _getIconUrl from the
 // stylesheet's image path, ignoring the options, so drop that method and point at the images.
@@ -63,10 +63,11 @@ export function BreweryMap({
   const tiles = tileConfig(MAP_TILE_KEY)
   return (
     <div className={`relative ${className}`}>
-      {/* maxZoom on the map itself: the cluster plugin needs it even when there is no tile layer. */}
-      <MapContainer center={initialView.center} zoom={initialView.zoom} maxZoom={19} className="h-full w-full rounded border border-stone-300" scrollWheelZoom>
+      {/* Zoom limits on the map itself: the cluster plugin needs maxZoom even without tiles, and
+          minZoom keeps the tile zoom (map zoom - 1 for 512px tiles) at or above 0. */}
+      <MapContainer center={initialView.center} zoom={initialView.zoom} minZoom={MIN_ZOOM} maxZoom={MAX_ZOOM} className="h-full w-full rounded border border-stone-300" scrollWheelZoom>
         {tiles && (
-          <TileLayer url={tiles.url} attribution={tiles.attribution} tileSize={tiles.tileSize} zoomOffset={tiles.zoomOffset} maxZoom={tiles.maxZoom} />
+          <TileLayer url={tiles.url} attribution={tiles.attribution} tileSize={tiles.tileSize} zoomOffset={tiles.zoomOffset} minZoom={MIN_ZOOM} maxZoom={tiles.maxZoom} />
         )}
         {onViewChange && <ViewWatcher onChange={onViewChange} />}
         <FlyTo target={flyTo ?? null} />
@@ -86,7 +87,13 @@ export function BreweryMap({
             ))}
         </MarkerClusterGroup>
       </MapContainer>
-      {!tiles && (
+      {tiles ? (
+        // Required by MapTiler's free plan: its logo on the map, linking to its site. Bottom-left
+        // is free (Leaflet puts zoom top-left and attribution bottom-right).
+        <a href={tiles.logoHref} target="_blank" rel="noopener" className="absolute bottom-2 left-2 z-[1000]">
+          <img src={tiles.logoUrl} alt="MapTiler" width={67} height={20} className="h-6 w-auto" />
+        </a>
+      ) : (
         <p role="status" className="pointer-events-none absolute left-2 top-2 z-[1000] rounded bg-white/90 px-2 py-1 text-xs text-stone-700 shadow">
           No map tiles: set VITE_MAP_TILE_KEY (a MapTiler key restricted to this site) to see the base map.
         </p>

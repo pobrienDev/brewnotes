@@ -27,6 +27,9 @@ describe('map helpers', () => {
     expect(tiles.attribution).toContain('MapTiler')
     expect(tiles.attribution).toContain('OpenStreetMap')
     expect(tiles.tileSize).toBe(512)
+    // The free plan's logo comes from the tile host, which the content security policy allows.
+    expect(tiles.logoUrl).toBe('https://api.maptiler.com/resources/logo.svg')
+    expect(tiles.logoHref).toBe('https://www.maptiler.com/')
   })
   it('measures distance with the haversine formula', () => {
     const portland = { lat: 45.5152, lng: -122.6784 }
