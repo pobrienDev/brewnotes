@@ -3,10 +3,10 @@ from __future__ import annotations
 import uuid
 from typing import ClassVar, Literal
 
-from pydantic import Field, ValidationInfo, computed_field, field_validator, model_validator
+from pydantic import Field, computed_field, model_validator
 
 from app.models.catalog import MAX_NAME
-from app.schemas.base import Schema
+from app.schemas.base import PartialUpdate, Schema
 
 FermentableType = Literal["grain", "extract", "sugar", "adjunct"]
 AdditionName = Literal["mash", "steep", "boil", "fermenter"]
@@ -47,20 +47,6 @@ class YeastOut(CatalogItemOut):
 # -- writing custom ingredients ----------------------------------------------------------------
 
 
-class _PartialUpdate(Schema):
-    """Partial updates: omit a field to keep it. Only fields listed in `nullable` may be set
-    to null (to clear an optional value); any other explicit null is rejected."""
-
-    nullable: ClassVar[frozenset[str]] = frozenset()
-
-    @field_validator("*", mode="before")
-    @classmethod
-    def _reject_explicit_null(cls, value: object, info: ValidationInfo) -> object:
-        if value is None and info.field_name not in cls.nullable:
-            raise ValueError("may not be null; omit the field to leave it unchanged")
-        return value
-
-
 class FermentableWrite(Schema):
     name: str = Field(min_length=1, max_length=MAX_NAME)
     type: FermentableType
@@ -69,7 +55,7 @@ class FermentableWrite(Schema):
     default_addition: AdditionName
 
 
-class FermentableUpdate(_PartialUpdate):
+class FermentableUpdate(PartialUpdate):
     name: str | None = Field(default=None, min_length=1, max_length=MAX_NAME)
     type: FermentableType | None = None
     ppg: float | None = Field(default=None, ge=0, le=50)
@@ -83,7 +69,7 @@ class HopWrite(Schema):
     origin: str | None = Field(default=None, max_length=100)
 
 
-class HopUpdate(_PartialUpdate):
+class HopUpdate(PartialUpdate):
     nullable: ClassVar[frozenset[str]] = frozenset({"origin"})
 
     name: str | None = Field(default=None, min_length=1, max_length=MAX_NAME)
@@ -105,7 +91,7 @@ class YeastWrite(Schema):
         return self
 
 
-class YeastUpdate(_PartialUpdate):
+class YeastUpdate(PartialUpdate):
     nullable: ClassVar[frozenset[str]] = frozenset({"product_code"})
 
     name: str | None = Field(default=None, min_length=1, max_length=MAX_NAME)
