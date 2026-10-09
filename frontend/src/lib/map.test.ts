@@ -1,10 +1,24 @@
 import { describe, expect, it } from 'vitest'
 
-import { bboxString, distanceKm, formatAddress, formatDistance, formatPlace, tileConfig, typeLabel } from './map'
+import { bboxString, clampBounds, distanceKm, formatAddress, formatDistance, formatPlace, tileConfig, typeLabel } from './map'
 
 describe('map helpers', () => {
   it('formats the bbox parameter the API expects', () => {
     expect(bboxString({ west: -122.75, south: 45.45, east: -122.55, north: 45.6 })).toBe('-122.7500,45.4500,-122.5500,45.6000')
+  })
+  it('clamps what Leaflet reports to coordinates the API accepts', () => {
+    const normal = { west: -122.75, south: 45.45, east: -122.55, north: 45.6 }
+    expect(clampBounds(normal)).toEqual(normal)
+    // Zoomed out past one world (what a wide pane shows at zoom 4): the whole world.
+    expect(clampBounds({ west: -375.4688, south: -89.9866, east: 331.875, north: 88.6181 })).toEqual({
+      west: -180, south: -89.9866, east: 180, north: 88.6181,
+    })
+    expect(clampBounds({ west: -180, south: -85, east: 180, north: 85 })).toEqual({ west: -180, south: -85, east: 180, north: 85 })
+    // Across the antimeridian: wrapped, so west > east tells the API the box crosses it.
+    expect(clampBounds({ west: 170, south: -50, east: 190, north: -30 })).toEqual({ west: 170, south: -50, east: -170, north: -30 })
+    expect(clampBounds({ west: -190, south: -50, east: -170, north: -30 })).toEqual({ west: 170, south: -50, east: -170, north: -30 })
+    // Latitudes never leave ±90.
+    expect(clampBounds({ west: 0, south: -95, east: 10, north: 95 })).toEqual({ west: 0, south: -90, east: 10, north: 90 })
   })
   it('builds keyed MapTiler tiles with attribution, or nothing without a key', () => {
     expect(tileConfig(undefined)).toBeNull()
