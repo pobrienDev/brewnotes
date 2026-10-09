@@ -97,10 +97,8 @@ def test_validation(seeded: None, client: TestClient, providers: FakeProviders) 
         "msg": "unknown beer",
         "type": "value_error",
     }
-    assert (
-        client.post(f"{API}/tastings", json={"rating": 4.0, "beer_id": beer["id"]}).status_code
-        == 403
-    )
+    no_origin = client.post(f"{API}/tastings", json={"rating": 4.0, "beer_id": beer["id"]})
+    assert no_origin.status_code == 403
 
 
 def test_update_and_delete(seeded: None, client: TestClient, providers: FakeProviders) -> None:
