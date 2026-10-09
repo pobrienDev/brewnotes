@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime
 from http import HTTPStatus
 from typing import Any
 
@@ -28,7 +27,7 @@ from app.models import (
 )
 from app.repositories import catalog_repo, recipe_repo, style_repo
 from app.schemas.calc import RecipeStatsOut, StyleMatchOut
-from app.schemas.pagination import Page, decode_cursor, encode_cursor
+from app.schemas.pagination import Page, decode_time_cursor, encode_cursor
 from app.schemas.recipe import RecipeInput
 from app.schemas.recipes import (
     RecipeFermentableOut,
@@ -129,15 +128,7 @@ def to_summary(recipe: Recipe) -> RecipeSummary:
 
 
 def list_recipes(db: Session, user: User, *, cursor: str | None, limit: int) -> Page[RecipeSummary]:
-    after: tuple[datetime, uuid.UUID] | None = None
-    if cursor:
-        raw_ts, raw_id = decode_cursor(cursor, 2)
-        try:
-            after = (datetime.fromisoformat(str(raw_ts)), uuid.UUID(str(raw_id)))
-        except ValueError:
-            raise HTTPException(
-                HTTPStatus.UNPROCESSABLE_CONTENT, detail="Invalid cursor."
-            ) from None
+    after = decode_time_cursor(cursor) if cursor else None
     rows = recipe_repo.list_for_user(db, user.id, after=after, limit=limit)
     has_more = len(rows) > limit
     rows = rows[:limit]

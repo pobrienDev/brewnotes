@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import base64
 import json
+import uuid
+from datetime import datetime
 from http import HTTPStatus
 from typing import Annotated, Any
 
@@ -42,3 +44,21 @@ def decode_cursor(cursor: str, expected_length: int) -> list[Any]:
     if not isinstance(values, list) or len(values) != expected_length:
         raise HTTPException(HTTPStatus.UNPROCESSABLE_CONTENT, detail="Invalid cursor.")
     return values
+
+
+def decode_time_cursor(cursor: str) -> tuple[datetime, uuid.UUID]:
+    """A (timestamp, id) keyset cursor as produced by `encode_cursor(ts.isoformat(), id)`."""
+    raw_ts, raw_id = decode_cursor(cursor, 2)
+    try:
+        return datetime.fromisoformat(str(raw_ts)), uuid.UUID(str(raw_id))
+    except ValueError:
+        raise HTTPException(HTTPStatus.UNPROCESSABLE_CONTENT, detail="Invalid cursor.") from None
+
+
+def decode_name_cursor(cursor: str) -> tuple[str, uuid.UUID]:
+    """A (name, id) keyset cursor for alphabetical lists."""
+    raw_name, raw_id = decode_cursor(cursor, 2)
+    try:
+        return str(raw_name), uuid.UUID(str(raw_id))
+    except ValueError:
+        raise HTTPException(HTTPStatus.UNPROCESSABLE_CONTENT, detail="Invalid cursor.") from None
