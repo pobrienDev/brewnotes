@@ -13,15 +13,20 @@ export function HomePage() {
         <h1 className="text-3xl font-bold">Design it. Brew it. Taste it.</h1>
         <p className="max-w-prose text-stone-700">
           Build a recipe and watch gravity, alcohol, bitterness and colour update as you type, see which
-          BJCP styles it fits and what is out of range, and scale it to any batch size. No account needed
-          for the calculator; sign in with GitHub or Google to save recipes.
+          BJCP styles it fits and what is out of range, and scale it to any batch size. Then brew it:
+          log gravity and temperature readings, watch the fermentation chart, and rate the result next
+          to the commercial beers you have tried. No account needed for the calculator; sign in with
+          GitHub or Google to save recipes and keep a brewing log.
         </p>
       </div>
       <div className="flex flex-wrap gap-3">
         <Link to="/recipes/new" className="rounded bg-amber-600 px-4 py-2 text-white hover:bg-amber-700">Open the calculator</Link>
         <Link to="/styles" className="rounded border border-stone-300 px-4 py-2 hover:bg-stone-100">Browse styles</Link>
         {me.data ? (
-          <Link to="/recipes" className="rounded border border-stone-300 px-4 py-2 hover:bg-stone-100">My recipes</Link>
+          <>
+            <Link to="/recipes" className="rounded border border-stone-300 px-4 py-2 hover:bg-stone-100">My recipes</Link>
+            <Link to="/batches" className="rounded border border-stone-300 px-4 py-2 hover:bg-stone-100">Batches</Link>
+          </>
         ) : (
           <Link to="/sign-in" className="rounded border border-stone-300 px-4 py-2 hover:bg-stone-100">Sign in</Link>
         )}

@@ -252,15 +252,20 @@ export function RecipeEditorPage() {
         </form>
 
         {id && (
-          <button
-            type="button"
-            className="text-sm text-red-800 hover:underline"
-            onClick={() => {
-              if (window.confirm('Delete this recipe? This cannot be undone.')) remove.mutate()
-            }}
-          >
-            Delete recipe
-          </button>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link to={`/batches/new?recipe=${id}`} className="rounded border border-stone-300 px-3 py-1 text-sm hover:bg-stone-100">
+              Brew this recipe
+            </Link>
+            <button
+              type="button"
+              className="text-sm text-red-800 hover:underline"
+              onClick={() => {
+                if (window.confirm('Delete this recipe? Batches brewed from it keep their copy.')) remove.mutate()
+              }}
+            >
+              Delete recipe
+            </button>
+          </div>
         )}
       </div>
 

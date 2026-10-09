@@ -118,7 +118,7 @@ export function AccountPage() {
 
       <section className="space-y-2 rounded border border-red-200 p-3">
         <h2 className="font-semibold text-red-900">Delete account</h2>
-        <p className="text-sm text-stone-700">This removes your account, recipes and custom ingredients immediately. Type <strong>delete</strong> to confirm.</p>
+        <p className="text-sm text-stone-700">This removes your account, recipes, batches and readings, beers, tastings and custom ingredients immediately. Type <strong>delete</strong> to confirm.</p>
         <div className="flex gap-2">
           <input className="rounded border border-stone-300 px-2 py-1" value={confirmText} onChange={(e) => setConfirmText(e.target.value)} aria-label="Type delete to confirm" />
           <button type="button" className="rounded bg-red-700 px-3 py-1 text-sm text-white disabled:opacity-50" disabled={confirmText !== 'delete' || deleteAccount.isPending} onClick={() => deleteAccount.mutate()}>Delete my account</button>

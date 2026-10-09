@@ -26,6 +26,15 @@ export function Layout() {
               <NavLink to="/recipes" className={navClass} end>
                 My recipes
               </NavLink>
+              <NavLink to="/batches" className={navClass}>
+                Batches
+              </NavLink>
+              <NavLink to="/beers" className={navClass}>
+                Beers
+              </NavLink>
+              <NavLink to="/tastings" className={navClass}>
+                Tastings
+              </NavLink>
               <NavLink to="/ingredients" className={navClass}>
                 My ingredients
               </NavLink>
