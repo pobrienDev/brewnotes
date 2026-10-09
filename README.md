@@ -4,7 +4,7 @@ A craft beer app that follows a beer from recipe to glass: design it, brew it, t
 
 BrewNotes combines a brewing calculator, a brewing and tasting log, and beer discovery into one app built around a single object: a beer. The calculator and style browser work without signing in; saving anything requires an account via GitHub or Google.
 
-**Status:** Phases 1 to 3 complete in development (accounts, recipe designer, styles, catalog, batches with readings and a fermentation chart, private commercial beers, tastings, a brewery map from Open Brewery DB). Nothing is deployed yet.
+**Status:** Phases 1 to 4 complete in development (accounts, recipe designer, styles, catalog, batches with readings and a fermentation chart, private commercial beers, tastings, a brewery map from Open Brewery DB, style recommendations from your own ratings). Nothing is deployed yet.
 
 ## Stack
 
@@ -63,6 +63,14 @@ restrict it to your site's origin in MapTiler Cloud (API keys → Allowed HTTP o
 key the map still shows markers on a blank background. Another raster provider only needs a
 different URL template in `frontend/src/lib/map.ts` and its host in `MAP_TILE_HOST` for the
 content security policy.
+
+### Recommendations
+
+"For you" suggests styles you have not tried whose vital statistics (OG, FG, ABV, IBU, SRM)
+sit closest to the styles you rate well, each with its reason and how it differs ("stronger
+and darker"). Only your own tastings count: beers that carry a style and batches brewed to a
+target style. With fewer than five such tastings the page asks three quick questions instead.
+Nothing is shared between users and nothing about the questions is stored.
 
 ### Reference data
 

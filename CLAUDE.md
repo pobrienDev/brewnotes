@@ -63,6 +63,11 @@ they are the portable version of what matters; the full plan lives outside the r
   rows (a recipe to brew, a batch or beer to rate) are 422 "unknown …", not 404.
 - Batches freeze the recipe in `recipe_snapshot` (JSONB, `schema_version`); read it only through
   `app.schemas.snapshot.parse_snapshot`, and add a new version there rather than editing V1.
+- Recommendations (Phase 4) use only the app's own data (decision D7): `app/domain/recommend.py`
+  is pure and property-tested, `recommendation_service` only gathers ratings (beers with a
+  style, batches whose snapshot names a target style) and shapes the answer. The cold-start
+  answers are query parameters, never stored. Tune the constants there (SCALE, WEIGHTS, TAU)
+  against the "sensible suggestions" tests on the real BJCP data, not by hand-picking results.
 - Browser smoke tests: `backend/tests/e2e/harness.py` serves the real app with the API tests'
   fake GitHub behind "Continue with GitHub" (`make dev-fake-login` + `make dev-frontend`, then
   `make e2e`). CI runs them against the built frontend. Use it for any signed-in walk-through on
@@ -94,6 +99,9 @@ make sync-breweries                                               # load/refresh
 make dev-fake-login                                               # backend with fake GitHub sign-in (port 8000)
 make e2e                                                          # Playwright smoke tests against the dev stack
 ```
+
+Every numbered phase of the plan (0 to 4) is built as of Oct 9, 2026; see `docs/STATE.md` for
+what remains (optional devices, BeerXML, the first deployment).
 
 ## Environment quirks (Patrick's Mac, Oct 2026)
 
