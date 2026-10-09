@@ -21,6 +21,22 @@ export function bboxString(b: Bounds): string {
   return [b.west, b.south, b.east, b.north].map((v) => v.toFixed(4)).join(',')
 }
 
+const wrapLongitude = (lng: number) =>
+  lng >= -180 && lng <= 180 ? lng : ((((lng + 180) % 360) + 360) % 360) - 180
+
+/**
+ * Leaflet reports the bounds of whatever is on screen, which past the antimeridian or when
+ * zoomed out beyond one world run outside ±180. The API wants real coordinates: a view at
+ * least a world wide becomes the whole world, anything else is wrapped (west > east then
+ * means the box crosses the antimeridian, which the API understands).
+ */
+export function clampBounds(b: Bounds): Bounds {
+  const south = Math.max(-90, Math.min(90, b.south))
+  const north = Math.max(-90, Math.min(90, b.north))
+  if (b.east - b.west >= 360) return { west: -180, south, east: 180, north }
+  return { west: wrapLongitude(b.west), south, east: wrapLongitude(b.east), north }
+}
+
 export interface TileConfig {
   url: string
   attribution: string

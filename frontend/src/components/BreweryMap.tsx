@@ -11,7 +11,7 @@ import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from 're
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import { Link } from 'react-router'
 
-import { type Bounds, type BrewerySummary, type MapView, MAP_TILE_KEY, formatPlace, tileConfig, typeLabel } from '../lib/map'
+import { type Bounds, type BrewerySummary, type MapView, MAP_TILE_KEY, clampBounds, formatPlace, tileConfig, typeLabel } from '../lib/map'
 
 // Bundlers lose Leaflet's default icon paths. Leaflet derives them in _getIconUrl from the
 // stylesheet's image path, ignoring the options, so drop that method and point at the images.
@@ -20,7 +20,7 @@ L.Icon.Default.mergeOptions({ iconRetinaUrl: markerIcon2x, iconUrl: markerIcon, 
 
 function toBounds(map: L.Map): Bounds {
   const b = map.getBounds()
-  return { west: b.getWest(), south: b.getSouth(), east: b.getEast(), north: b.getNorth() }
+  return clampBounds({ west: b.getWest(), south: b.getSouth(), east: b.getEast(), north: b.getNorth() })
 }
 
 function toView(map: L.Map): MapView {
