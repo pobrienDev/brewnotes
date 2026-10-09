@@ -256,6 +256,16 @@ def test_beers_and_tastings_can_link_a_brewery(
     )
     assert relinked.json()["brewery"]["name"] == "Giesinger Bräu"
 
+    here = client.get(f"{API}/tastings", params={"brewery_id": str(synced["Giesinger Bräu"])})
+    assert here.json()["items"] == []
+    tasted_at_burnside = client.get(f"{API}/tastings", params={"brewery_id": burnside}).json()
+    assert tasted_at_burnside["items"] == []  # the tasting's brewery was cleared above
+    from_giesinger = client.get(
+        f"{API}/beers", params={"brewery_id": str(synced["Giesinger Bräu"])}
+    ).json()
+    assert [b["id"] for b in from_giesinger["items"]] == [beer["id"]]
+    assert client.get(f"{API}/beers", params={"brewery_id": burnside}).json()["items"] == []
+
     export = client.get(f"{API}/me/export").json()
     assert export["schema_version"] == 4
     assert export["beers"][0]["brewery_id"] == str(synced["Giesinger Bräu"])

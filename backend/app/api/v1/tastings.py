@@ -27,11 +27,18 @@ def list_tastings(
     user: Annotated[User, Depends(current_user)],
     batch_id: SubjectParam = None,
     beer_id: SubjectParam = None,
+    brewery_id: SubjectParam = None,
     cursor: CursorParam = None,
     limit: LimitParam = DEFAULT_LIMIT,
 ) -> Page[TastingOut]:
     return tasting_service.list_tastings(
-        db, user, batch_id=batch_id, beer_id=beer_id, cursor=cursor, limit=limit
+        db,
+        user,
+        batch_id=batch_id,
+        beer_id=beer_id,
+        brewery_id=brewery_id,
+        cursor=cursor,
+        limit=limit,
     )
 
 

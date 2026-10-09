@@ -58,10 +58,18 @@ def _with_stats(db: Session, user: User, beers: list[Beer]) -> list[BeerOut]:
 
 
 def list_beers(
-    db: Session, user: User, *, search: str | None, cursor: str | None, limit: int
+    db: Session,
+    user: User,
+    *,
+    search: str | None,
+    brewery_id: uuid.UUID | None = None,
+    cursor: str | None,
+    limit: int,
 ) -> Page[BeerOut]:
     after = decode_name_cursor(cursor) if cursor else None
-    rows = beer_repo.list_for_user(db, user.id, search=search, after=after, limit=limit)
+    rows = beer_repo.list_for_user(
+        db, user.id, search=search, brewery_id=brewery_id, after=after, limit=limit
+    )
     has_more = len(rows) > limit
     rows = rows[:limit]
     next_cursor = encode_cursor(rows[-1].name, rows[-1].id) if has_more and rows else None

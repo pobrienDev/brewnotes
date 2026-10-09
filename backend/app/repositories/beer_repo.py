@@ -23,6 +23,7 @@ def list_for_user(
     user_id: uuid.UUID,
     *,
     search: str | None,
+    brewery_id: uuid.UUID | None = None,
     after: tuple[str, uuid.UUID] | None,
     limit: int,
 ) -> list[Beer]:
@@ -31,6 +32,8 @@ def list_for_user(
     if search:
         pattern = f"%{search.strip()}%"
         query = query.where(or_(Beer.name.ilike(pattern), Beer.brewery_name.ilike(pattern)))
+    if brewery_id is not None:
+        query = query.where(Beer.brewery_id == brewery_id)
     if after is not None:
         query = query.where(tuple_(Beer.name, Beer.id) > tuple_(after[0], after[1]))
     return list(db.scalars(query))
