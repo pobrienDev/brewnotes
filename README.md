@@ -4,7 +4,7 @@ A craft beer app that follows a beer from recipe to glass: design it, brew it, t
 
 BrewNotes combines a brewing calculator, a brewing and tasting log, and beer discovery into one app built around a single object: a beer. The calculator and style browser work without signing in; saving anything requires an account via GitHub or Google.
 
-**Status:** Phase 1 complete in development (accounts, recipe designer, styles, catalog). Nothing is deployed yet.
+**Status:** Phases 1 and 2 complete in development (accounts, recipe designer, styles, catalog, batches with readings and a fermentation chart, private commercial beers, tastings). Nothing is deployed yet.
 
 ## Stack
 
@@ -44,6 +44,12 @@ production that is your real https origin. GitHub needs no scopes (public profil
 Google needs the `openid` and `profile` scopes, which the app requests itself. No email is
 requested or stored.
 
+### Signed-in screens without OAuth apps
+
+`make dev-fake-login` starts the backend with a fake GitHub standing in for the OAuth app
+(`backend/tests/e2e/harness.py`): "Continue with GitHub" signs you in as a test account
+immediately. Pair it with `make dev-frontend`. The browser smoke tests use the same harness.
+
 ### Reference data
 
 `backend/data/` holds the seed files. `styles_bjcp_2021.json` carries the codes, names and
@@ -66,6 +72,7 @@ make test      # backend and frontend tests
 make lint      # ruff, mypy, eslint, tsc
 make types     # export OpenAPI and regenerate frontend API types
 make check     # everything CI runs
+make e2e       # Playwright smoke tests; needs make dev-fake-login and make dev-frontend running
 ```
 
 ## Repository layout
