@@ -17,7 +17,8 @@ they are the portable version of what matters; the full plan lives outside the r
   (sync) + Alembic backend, React + TypeScript (Vite) frontend; security items in, enterprise
   operations deferred (plan Section 13).
 - Open decisions were confirmed at Phase 0 with the defaults: name BrewNotes, MIT, imperial
-  display with metric toggle, Tailwind, BeerXML as a stretch goal.
+  display with metric toggle, Tailwind, BeerXML as a stretch goal. Map tile provider (Phase 3):
+  MapTiler. Hosting provider: still open, decide before the first deploy.
 
 ## How we work
 
@@ -75,6 +76,13 @@ they are the portable version of what matters; the full plan lives outside the r
 reproduces the committed file byte for byte; run it only when the guideline numbers need
 re-checking. Ingredient files are hand-curated and edited directly.
 
+Breweries are not committed: `sync-breweries` downloads Open Brewery DB's `breweries.csv`
+(MIT; `BREWERY_DUMP_URL`) at run time, validates every row through `BreweryRow`, upserts by
+`obdb_id` and flags vanished rows with `removed_at`. The only committed brewery data is the
+ten-row fixture `backend/tests/data/breweries_sample.csv` (fictional addresses). Map tiles:
+MapTiler, chosen at Phase 3 for its origin-restricted keys and free tier; the key lives in
+`frontend/.env.local` (`VITE_MAP_TILE_KEY`) and never in the repo.
+
 ## Commands
 
 ```bash
@@ -82,6 +90,7 @@ make db && make install && make migrate && make seed && make dev   # local stack
 make check                                                        # everything CI runs
 cd backend && uv run pytest -q                                    # backend tests only
 cd backend && uv run python -m app.cli --help                     # seed, cleanup-sessions, export-openapi
+make sync-breweries                                               # load/refresh Open Brewery DB
 make dev-fake-login                                               # backend with fake GitHub sign-in (port 8000)
 make e2e                                                          # Playwright smoke tests against the dev stack
 ```
