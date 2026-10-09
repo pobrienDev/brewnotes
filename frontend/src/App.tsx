@@ -8,6 +8,7 @@ import { BatchPage } from './pages/BatchPage'
 import { BeersPage } from './pages/BeersPage'
 import { BreweryPage } from './pages/BreweryPage'
 import { DiscoverPage } from './pages/DiscoverPage'
+import { ForYouPage } from './pages/ForYouPage'
 import { HomePage } from './pages/HomePage'
 import { IngredientsPage } from './pages/IngredientsPage'
 import { NewBatchPage } from './pages/NewBatchPage'
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="tastings" element={<RequireAuth><TastingsPage /></RequireAuth>} />
         <Route path="tastings/new" element={<RequireAuth><TastingPage /></RequireAuth>} />
         <Route path="tastings/:id" element={<RequireAuth><TastingPage /></RequireAuth>} />
+        <Route path="for-you" element={<RequireAuth><ForYouPage /></RequireAuth>} />
         <Route path="account" element={<RequireAuth><AccountPage /></RequireAuth>} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
