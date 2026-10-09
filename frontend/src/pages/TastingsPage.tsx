@@ -35,6 +35,11 @@ export function TastingsPage() {
               <span>{t.batch ? 'Homebrew' : 'Commercial'}</span>
               {t.batch && <StatusBadge status={t.batch.status} />}
               <span>{formatDateTime(t.tasted_at)}</span>
+              {t.brewery && (
+                <span>
+                  at <Link to={`/breweries/${t.brewery.id}`} className="text-amber-800 hover:underline">{t.brewery.name}</Link>
+                </span>
+              )}
             </div>
             {(t.flavor || t.notes) && <p className="mt-1 line-clamp-2 text-sm text-stone-700">{t.flavor || t.notes}</p>}
           </li>

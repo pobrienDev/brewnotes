@@ -4,10 +4,13 @@ import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 
 import { api } from '../api/client'
 import type { components } from '../api/schema'
+import { BreweryPicker } from '../components/BreweryPicker'
 import { RatingInput } from '../components/RatingInput'
 import { useAllBatches } from '../hooks/useBatches'
 import { useAllBeers } from '../hooks/useBeers'
+import { useBrewery } from '../hooks/useBreweries'
 import { type TastingOut, useTasting } from '../hooks/useTastings'
+import type { BreweryRef } from '../lib/map'
 import { describeProblem } from '../lib/problem'
 import { type Rating, isRating } from '../lib/rating'
 import { fromLocalInputValue, toLocalInputValue } from '../lib/time'
@@ -57,13 +60,21 @@ function TastingForm({ tasting }: { tasting: TastingOut | null }) {
     notes: tasting?.notes ?? '',
   })
   const [tastedAt, setTastedAt] = useState(toLocalInputValue(tasting ? new Date(tasting.tasted_at) : new Date()))
+  // Where it was tasted: the existing tasting's brewery, or the one named in ?brewery=, until
+  // the user picks or clears one (undefined = untouched).
+  const preset = useBrewery(tasting ? undefined : (params.get('brewery') ?? undefined))
+  const [chosenBrewery, setChosenBrewery] = useState<BreweryRef | null | undefined>(undefined)
+  const presetRef: BreweryRef | null = preset.data
+    ? { id: preset.data.id, name: preset.data.name, city: preset.data.city, state_province: preset.data.state_province, country: preset.data.country }
+    : null
+  const brewery = chosenBrewery === undefined ? (tasting?.brewery ?? presetRef) : chosenBrewery
   const batches = useAllBatches()
   const beers = useAllBeers()
 
   const save = useMutation({
     mutationFn: async () => {
       if (rating === null) throw new Error('Choose a rating.')
-      const shared = { rating, ...notes, tasted_at: fromLocalInputValue(tastedAt) }
+      const shared = { rating, ...notes, tasted_at: fromLocalInputValue(tastedAt), brewery_id: brewery?.id ?? null }
       if (tasting) {
         const body: TastingUpdate = shared
         const { data, error, response } = await api.PATCH('/api/v1/tastings/{tasting_id}', { params: { path: { tasting_id: tasting.id } }, body })
@@ -144,6 +155,8 @@ function TastingForm({ tasting }: { tasting: TastingOut | null }) {
         )}
 
         <RatingInput value={rating} onChange={setRating} />
+
+        <BreweryPicker value={brewery} onChange={setChosenBrewery} label="Where (optional)" />
 
         <div className="grid gap-3 sm:grid-cols-2">
           {NOTE_FIELDS.map(([key, label, hint]) => (
