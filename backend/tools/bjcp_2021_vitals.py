@@ -19,6 +19,7 @@ import re
 import sys
 import time
 import urllib.request
+from html.parser import HTMLParser
 from pathlib import Path
 from typing import Any
 
@@ -67,10 +68,33 @@ def fetch(url: str) -> str:
         return str(response.read().decode("utf-8", "ignore"))
 
 
+class _TextExtractor(HTMLParser):
+    """Visible text of a page, with script and style contents dropped."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.parts: list[str] = []
+        self._skip_depth = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag in ("script", "style"):
+            self._skip_depth += 1
+        self.parts.append(" ")
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag in ("script", "style") and self._skip_depth:
+            self._skip_depth -= 1
+        self.parts.append(" ")
+
+    def handle_data(self, data: str) -> None:
+        if not self._skip_depth:
+            self.parts.append(data)
+
+
 def text_of(page: str) -> str:
-    stripped = re.sub(r"<script.*?</script>|<style.*?</style>", " ", page, flags=re.S)
-    stripped = re.sub(r"<[^>]+>", " ", stripped)
-    return html.unescape(re.sub(r"\s+", " ", stripped))
+    extractor = _TextExtractor()
+    extractor.feed(page)
+    return re.sub(r"\s+", " ", "".join(extractor.parts))
 
 
 def grab(metric: str, text: str) -> list[float] | None:
