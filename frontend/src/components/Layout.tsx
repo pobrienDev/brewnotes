@@ -38,6 +38,9 @@ export function Layout() {
               <NavLink to="/tastings" className={navClass}>
                 Tastings
               </NavLink>
+              <NavLink to="/for-you" className={navClass}>
+                For you
+              </NavLink>
               <NavLink to="/ingredients" className={navClass}>
                 My ingredients
               </NavLink>

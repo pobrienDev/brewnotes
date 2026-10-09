@@ -12,7 +12,10 @@ export function TastingsPage() {
     <section className="space-y-4">
       <header className="flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-2xl font-bold">Tastings</h1>
-        <Link to="/tastings/new" className="rounded bg-amber-600 px-3 py-1 text-white hover:bg-amber-700">New tasting</Link>
+        <span className="flex flex-wrap items-center gap-3">
+          <Link to="/for-you" className="text-sm text-amber-800 hover:underline">Styles to try</Link>
+          <Link to="/tastings/new" className="rounded bg-amber-600 px-3 py-1 text-white hover:bg-amber-700">New tasting</Link>
+        </span>
       </header>
       {tastings.isPending && <p className="text-stone-500">Loading…</p>}
       {tastings.isError && <p role="alert" className="text-red-800">{(tastings.error as Error).message}</p>}
