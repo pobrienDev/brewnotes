@@ -313,12 +313,8 @@ def test_delete_reading(seeded: None, client: TestClient, providers: FakeProvide
         f"{API}/batches/{other_batch['id']}/readings/{reading['id']}", headers=CSRF
     )
     assert wrong_parent.status_code == 404
-    assert (
-        client.delete(
-            f"{API}/batches/{batch['id']}/readings/{reading['id']}", headers=CSRF
-        ).status_code
-        == 204
-    )
+    deleted = client.delete(f"{API}/batches/{batch['id']}/readings/{reading['id']}", headers=CSRF)
+    assert deleted.status_code == 204
     assert client.get(f"{API}/batches/{batch['id']}/readings").json()["items"] == []
     again = client.delete(f"{API}/batches/{batch['id']}/readings/{reading['id']}", headers=CSRF)
     assert again.status_code == 404
