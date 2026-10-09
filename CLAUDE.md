@@ -58,6 +58,13 @@ they are the portable version of what matters; the full plan lives outside the r
   `frontend/openapi.json` and `frontend/src/api/schema.d.ts`; CI fails if stale). No brewing
   math in TypeScript; `dangerouslySetInnerHTML` is lint-banned.
 
+## Data provenance
+
+`backend/tools/bjcp_2021_vitals.py` rebuilds `backend/data/styles_bjcp_2021.json` from the BJCP
+2021 style pages (sequential fetch with a pause, cached locally) and keeps our summaries. It
+reproduces the committed file byte for byte; run it only when the guideline numbers need
+re-checking. Ingredient files are hand-curated and edited directly.
+
 ## Commands
 
 ```bash
@@ -73,8 +80,12 @@ cd backend && uv run python -m app.cli --help                     # seed, cleanu
   to build LLVM from source). Prefix `PATH="$HOME/.local/bin:$PATH"` in non-login shells.
 - Node is 22.14, so `react-router` stays on 7.x and `jsdom` on 29 until Node is upgraded;
   Dependabot ignores those majors on purpose.
-- Port 8000 is held by an unrelated long-running uvicorn process. Run the backend on another
-  port and point Vite at it with `VITE_API_PROXY_TARGET=http://localhost:8001`.
+- Ports 8000 (uvicorn) and 5173 (Vite) are held by month-old dev servers from another project
+  (dartmetrics); 5174 is Docker's. Run this backend on 8001 and Vite on 5180:
+  `frontend/.env.local` carries `VITE_API_PROXY_TARGET=http://localhost:8001` (gitignored), and
+  the Claude desktop app's dev-server config `.claude/launch.json` (gitignored, per machine)
+  starts both with `PUBLIC_BASE_URL=http://localhost:5180` so the CSRF origin check passes.
+  On another machine use the standard 8000/5173 and skip both files.
 - Authlib 1.8 runs on `httpx2` and validates ID tokens with `joserfc`; Starlette 1.7's
   TestClient also wants `httpx2`. Tests talk to the app over `https://testserver` so the
   `__Host-` cookies behave as in production.

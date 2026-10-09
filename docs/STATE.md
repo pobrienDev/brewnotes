@@ -2,6 +2,28 @@
 
 Updated at the end of every phase or sub-phase. Newest at the top of each section.
 
+## If you are starting a fresh session
+
+1. Read `CLAUDE.md`, then this file, then the memory notes if any.
+2. `git fetch` and check whether PR #9 (`phase-1c-recipes`) has been merged. If not, it is
+   waiting for the user's review; do not merge it yourself. If yes, `git checkout main && git
+   pull`, then branch `phase-2-batches`.
+3. Say the suggested effort for the step (Phase 2 schema and composite keys: xhigh; chart and
+   screens: high) and begin. Local stack: `make db && make migrate && make seed`, then the
+   backend on 8001 and Vite on 5180 on Patrick's Mac (see `CLAUDE.md` quirks).
+
+## Next up: Phase 2 (plan Section 11)
+
+Batches created from a recipe with a versioned JSONB `recipe_snapshot` (`schema_version`,
+read through a versioned Pydantic model) and a status workflow (planned, fermenting,
+conditioning, packaged, done); readings (`taken_at`, `gravity_sg`, `temp_c`, `source`) with a
+downsampled chart endpoint (`?points=`), apparent attenuation and current ABV; private
+commercial beers (brewery name as text) and tastings for either a batch or a beer (CHECK:
+exactly one) with rating in 0.5 steps and structured notes. Ownership via composite foreign
+keys as in recipes; extend the cross-user matrix to every new endpoint; quotas 1,000 batches,
+20,000 readings per batch, 5,000 tastings. Frontend: batch pages, readings entry, Chart.js
+fermentation chart, beers and tastings. Delete rules are in plan Section 6.
+
 ## Phase status
 
 | Phase | Scope (plan Section 11) | Status | Where |
