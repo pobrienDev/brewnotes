@@ -10,7 +10,7 @@ from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from sqlalchemy import Connection, func, select
 
-from app.domain.units import gal_to_l, lb_to_kg, oz_to_g
+from app.domain.units import lb_to_kg
 from app.errors import PROBLEM_MEDIA_TYPE
 from app.main import create_app
 from app.models import Recipe, RecipeFermentable, RecipeHop, RecipeYeast
@@ -18,70 +18,7 @@ from app.security.oauth import build_oauth
 from tests.conftest import CSRF, make_client, make_test_settings
 from tests.fakes import FakeProviders
 from tests.fixtures import APPENDIX_A_EXPECTED
-from tests.helpers import API, login_as
-
-
-def recipe_body(**overrides: Any) -> dict[str, Any]:
-    body: dict[str, Any] = {
-        "name": "Appendix A Pale Ale",
-        "notes": "First fixture recipe.",
-        "target_style": "american-pale-ale",
-        "batch_volume_l": gal_to_l(5.5),
-        "boil_time_min": 60,
-        "brewhouse_efficiency_pct": 72,
-        "fermentables": [
-            {
-                "name": "2-row pale malt",
-                "type": "grain",
-                "amount_kg": lb_to_kg(10),
-                "ppg": 37,
-                "color_lovibond": 2,
-                "addition": "mash",
-            },
-            {
-                "name": "Munich malt",
-                "type": "grain",
-                "amount_kg": lb_to_kg(0.5),
-                "ppg": 35,
-                "color_lovibond": 9,
-                "addition": "mash",
-            },
-            {
-                "name": "Crystal 40",
-                "type": "grain",
-                "amount_kg": lb_to_kg(1),
-                "ppg": 34,
-                "color_lovibond": 40,
-                "addition": "mash",
-            },
-        ],
-        "hops": [
-            {
-                "name": "Cascade",
-                "amount_g": oz_to_g(1),
-                "alpha_pct": 6.5,
-                "use": "boil",
-                "time_min": 60,
-            },
-            {
-                "name": "Cascade",
-                "amount_g": oz_to_g(1),
-                "alpha_pct": 6.5,
-                "use": "boil",
-                "time_min": 10,
-            },
-            {
-                "name": "Centennial",
-                "amount_g": oz_to_g(1),
-                "alpha_pct": 10,
-                "use": "boil",
-                "time_min": 5,
-            },
-        ],
-        "yeasts": [{"name": "US-05", "attenuation_pct": 75}],
-    }
-    body.update(overrides)
-    return body
+from tests.helpers import API, login_as, recipe_body
 
 
 def create(client: TestClient, **overrides: Any) -> dict[str, Any]:
@@ -410,7 +347,7 @@ def test_export_includes_recipes_and_custom_ingredients(
         f"{API}/catalog/hops", json={"name": "My Hop", "alpha_typical_pct": 9}, headers=CSRF
     )
     export = client.get(f"{API}/me/export").json()
-    assert export["schema_version"] == 2
+    assert export["schema_version"] == 3
     assert [r["id"] for r in export["recipes"]] == [created["id"]]
     assert export["recipes"][0]["fermentables"][0]["name"] == "2-row pale malt"
     assert export["recipes"][0]["target_style"] == "american-pale-ale"
