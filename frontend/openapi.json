@@ -1,6 +1,636 @@
 {
   "components": {
     "schemas": {
+      "BatchCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "brew_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brew Date"
+          },
+          "measured_fg": {
+            "anyOf": [
+              {
+                "maximum": 1.2,
+                "minimum": 0.98,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Measured Fg"
+          },
+          "measured_og": {
+            "anyOf": [
+              {
+                "maximum": 1.2,
+                "minimum": 0.98,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Measured Og"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Defaults to the recipe name",
+            "title": "Name"
+          },
+          "notes": {
+            "default": "",
+            "maxLength": 10000,
+            "title": "Notes",
+            "type": "string"
+          },
+          "recipe_id": {
+            "description": "The saved recipe to brew; it is snapshotted",
+            "format": "uuid",
+            "title": "Recipe Id",
+            "type": "string"
+          },
+          "status": {
+            "default": "planned",
+            "enum": [
+              "planned",
+              "fermenting",
+              "conditioning",
+              "packaged",
+              "done"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "volume_l": {
+            "anyOf": [
+              {
+                "maximum": 2000.0,
+                "minimum": 0.5,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Defaults to the recipe's batch volume",
+            "title": "Volume L"
+          }
+        },
+        "required": [
+          "recipe_id"
+        ],
+        "title": "BatchCreate",
+        "type": "object"
+      },
+      "BatchOut": {
+        "additionalProperties": false,
+        "properties": {
+          "brew_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brew Date"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "expected": {
+            "$ref": "#/components/schemas/RecipeStatsOut",
+            "description": "Calculator output for the snapshot"
+          },
+          "fermentation": {
+            "$ref": "#/components/schemas/FermentationOut"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "measured_fg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Measured Fg"
+          },
+          "measured_og": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Measured Og"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "title": "Notes",
+            "type": "string"
+          },
+          "recipe": {
+            "$ref": "#/components/schemas/RecipeSnapshotV1",
+            "description": "The recipe as it was when the batch was made"
+          },
+          "recipe_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Null once the recipe has been deleted",
+            "title": "Recipe Id"
+          },
+          "status": {
+            "enum": [
+              "planned",
+              "fermenting",
+              "conditioning",
+              "packaged",
+              "done"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "volume_l": {
+            "title": "Volume L",
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "recipe_id",
+          "name",
+          "status",
+          "brew_date",
+          "volume_l",
+          "measured_og",
+          "measured_fg",
+          "notes",
+          "recipe",
+          "expected",
+          "fermentation",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "BatchOut",
+        "type": "object"
+      },
+      "BatchSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "brew_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brew Date"
+          },
+          "fermentation": {
+            "$ref": "#/components/schemas/FermentationOut"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "recipe_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recipe Id"
+          },
+          "recipe_name": {
+            "title": "Recipe Name",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "planned",
+              "fermenting",
+              "conditioning",
+              "packaged",
+              "done"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "target_style_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target Style Name"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "volume_l": {
+            "title": "Volume L",
+            "type": "number"
+          }
+        },
+        "required": [
+          "id",
+          "recipe_id",
+          "name",
+          "status",
+          "brew_date",
+          "volume_l",
+          "recipe_name",
+          "target_style_name",
+          "fermentation",
+          "updated_at"
+        ],
+        "title": "BatchSummary",
+        "type": "object"
+      },
+      "BatchUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "brew_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brew Date"
+          },
+          "measured_fg": {
+            "anyOf": [
+              {
+                "maximum": 1.2,
+                "minimum": 0.98,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Measured Fg"
+          },
+          "measured_og": {
+            "anyOf": [
+              {
+                "maximum": 1.2,
+                "minimum": 0.98,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Measured Og"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "maxLength": 10000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "planned",
+                  "fermenting",
+                  "conditioning",
+                  "packaged",
+                  "done"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "volume_l": {
+            "anyOf": [
+              {
+                "maximum": 2000.0,
+                "minimum": 0.5,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Volume L"
+          }
+        },
+        "title": "BatchUpdate",
+        "type": "object"
+      },
+      "BeerOut": {
+        "additionalProperties": false,
+        "properties": {
+          "abv": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Abv"
+          },
+          "average_rating": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Average Rating"
+          },
+          "brewery_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brewery Name"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "title": "Notes",
+            "type": "string"
+          },
+          "style": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StyleSummary"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "tastings_count": {
+            "title": "Tastings Count",
+            "type": "integer"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "brewery_name",
+          "style",
+          "abv",
+          "notes",
+          "tastings_count",
+          "average_rating",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "BeerOut",
+        "type": "object"
+      },
+      "BeerUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "abv": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Abv"
+          },
+          "brewery_name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brewery Name"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "maxLength": 10000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "style": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Style"
+          }
+        },
+        "title": "BeerUpdate",
+        "type": "object"
+      },
+      "BeerWrite": {
+        "additionalProperties": false,
+        "properties": {
+          "abv": {
+            "anyOf": [
+              {
+                "maximum": 100.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Abv"
+          },
+          "brewery_name": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brewery Name"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "maxLength": 10000,
+            "title": "Notes",
+            "type": "string"
+          },
+          "style": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Style slug",
+            "title": "Style"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "BeerWrite",
+        "type": "object"
+      },
       "CalcResult": {
         "additionalProperties": false,
         "properties": {
@@ -277,6 +907,119 @@
           "default_addition"
         ],
         "title": "FermentableWrite",
+        "type": "object"
+      },
+      "FermentationOut": {
+        "additionalProperties": false,
+        "description": "Where fermentation stands, from the brewer's measurements and the logged readings.",
+        "properties": {
+          "abv": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Abv"
+          },
+          "apparent_attenuation_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Apparent Attenuation Pct"
+          },
+          "current_sg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Sg"
+          },
+          "current_sg_source": {
+            "anyOf": [
+              {
+                "enum": [
+                  "measured",
+                  "estimated",
+                  "reading"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Current Sg Source"
+          },
+          "expected_attenuation_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Attenuation Pct"
+          },
+          "expected_fg": {
+            "title": "Expected Fg",
+            "type": "number"
+          },
+          "latest_reading_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Reading At"
+          },
+          "og": {
+            "title": "Og",
+            "type": "number"
+          },
+          "og_source": {
+            "enum": [
+              "measured",
+              "estimated",
+              "reading"
+            ],
+            "title": "Og Source",
+            "type": "string"
+          },
+          "readings_count": {
+            "title": "Readings Count",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "og",
+          "og_source",
+          "current_sg",
+          "current_sg_source",
+          "apparent_attenuation_pct",
+          "abv",
+          "expected_fg",
+          "expected_attenuation_pct",
+          "readings_count",
+          "latest_reading_at"
+        ],
+        "title": "FermentationOut",
         "type": "object"
       },
       "FieldError": {
@@ -649,6 +1392,66 @@
         "title": "MetricMatchOut",
         "type": "object"
       },
+      "Page_BatchSummary_": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BatchSummary"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pass as ?cursor= to fetch the next page; null on the last page",
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "Page[BatchSummary]",
+        "type": "object"
+      },
+      "Page_BeerOut_": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BeerOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pass as ?cursor= to fetch the next page; null on the last page",
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "Page[BeerOut]",
+        "type": "object"
+      },
       "Page_FermentableOut_": {
         "additionalProperties": false,
         "properties": {
@@ -709,6 +1512,36 @@
         "title": "Page[HopOut]",
         "type": "object"
       },
+      "Page_ReadingOut_": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ReadingOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pass as ?cursor= to fetch the next page; null on the last page",
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "Page[ReadingOut]",
+        "type": "object"
+      },
       "Page_RecipeSummary_": {
         "additionalProperties": false,
         "properties": {
@@ -767,6 +1600,36 @@
           "next_cursor"
         ],
         "title": "Page[StyleSummary]",
+        "type": "object"
+      },
+      "Page_TastingOut_": {
+        "additionalProperties": false,
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/TastingOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Pass as ?cursor= to fetch the next page; null on the last page",
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items",
+          "next_cursor"
+        ],
+        "title": "Page[TastingOut]",
         "type": "object"
       },
       "Page_YeastOut_": {
@@ -928,6 +1791,112 @@
           "label"
         ],
         "title": "RangeOut",
+        "type": "object"
+      },
+      "ReadingCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "gravity_sg": {
+            "anyOf": [
+              {
+                "maximum": 1.2,
+                "minimum": 0.98,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gravity Sg"
+          },
+          "taken_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "When the reading was taken; defaults to now",
+            "title": "Taken At"
+          },
+          "temp_c": {
+            "anyOf": [
+              {
+                "maximum": 110.0,
+                "minimum": -10.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Temp C"
+          }
+        },
+        "title": "ReadingCreate",
+        "type": "object"
+      },
+      "ReadingOut": {
+        "additionalProperties": false,
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "gravity_sg": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gravity Sg"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "source": {
+            "enum": [
+              "manual",
+              "device"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "taken_at": {
+            "format": "date-time",
+            "title": "Taken At",
+            "type": "string"
+          },
+          "temp_c": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Temp C"
+          }
+        },
+        "required": [
+          "id",
+          "taken_at",
+          "gravity_sg",
+          "temp_c",
+          "source",
+          "created_at"
+        ],
+        "title": "ReadingOut",
         "type": "object"
       },
       "RecipeFermentableInput": {
@@ -1454,6 +2423,130 @@
           "calc_notes"
         ],
         "title": "RecipeOut",
+        "type": "object"
+      },
+      "RecipeSnapshotV1": {
+        "additionalProperties": false,
+        "properties": {
+          "batch_volume_l": {
+            "title": "Batch Volume L",
+            "type": "number"
+          },
+          "boil_time_min": {
+            "title": "Boil Time Min",
+            "type": "number"
+          },
+          "brewhouse_efficiency_pct": {
+            "title": "Brewhouse Efficiency Pct",
+            "type": "number"
+          },
+          "fermentables": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeFermentableInput"
+            },
+            "title": "Fermentables",
+            "type": "array"
+          },
+          "hops": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeHopInput"
+            },
+            "title": "Hops",
+            "type": "array"
+          },
+          "name": {
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "pre_boil_volume_l": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pre Boil Volume L"
+          },
+          "recipe_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The recipe this was taken from; it may since have been deleted",
+            "title": "Recipe Id"
+          },
+          "schema_version": {
+            "const": 1,
+            "default": 1,
+            "title": "Schema Version",
+            "type": "integer"
+          },
+          "steep_efficiency_pct": {
+            "title": "Steep Efficiency Pct",
+            "type": "number"
+          },
+          "taken_at": {
+            "format": "date-time",
+            "title": "Taken At",
+            "type": "string"
+          },
+          "target_style": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Style slug at brew time",
+            "title": "Target Style"
+          },
+          "target_style_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Style display name at brew time",
+            "title": "Target Style Name"
+          },
+          "yeasts": {
+            "items": {
+              "$ref": "#/components/schemas/RecipeYeastInput"
+            },
+            "title": "Yeasts",
+            "type": "array"
+          }
+        },
+        "required": [
+          "recipe_id",
+          "name",
+          "target_style",
+          "target_style_name",
+          "batch_volume_l",
+          "pre_boil_volume_l",
+          "boil_time_min",
+          "brewhouse_efficiency_pct",
+          "steep_efficiency_pct",
+          "fermentables",
+          "hops",
+          "yeasts",
+          "taken_at"
+        ],
+        "title": "RecipeSnapshotV1",
         "type": "object"
       },
       "RecipeStatsOut": {
@@ -2140,6 +3233,340 @@
         "title": "StyleSummary",
         "type": "object"
       },
+      "TastingBatchRef": {
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "planned",
+              "fermenting",
+              "conditioning",
+              "packaged",
+              "done"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "status"
+        ],
+        "title": "TastingBatchRef",
+        "type": "object"
+      },
+      "TastingBeerRef": {
+        "additionalProperties": false,
+        "properties": {
+          "brewery_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Brewery Name"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "brewery_name"
+        ],
+        "title": "TastingBeerRef",
+        "type": "object"
+      },
+      "TastingCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "appearance": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Appearance",
+            "type": "string"
+          },
+          "aroma": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Aroma",
+            "type": "string"
+          },
+          "batch_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "One of batch_id or beer_id",
+            "title": "Batch Id"
+          },
+          "beer_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Beer Id"
+          },
+          "flavor": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Flavor",
+            "type": "string"
+          },
+          "mouthfeel": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Mouthfeel",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "description": "Overall impression",
+            "maxLength": 10000,
+            "title": "Notes",
+            "type": "string"
+          },
+          "rating": {
+            "description": "0.5 to 5 in half steps",
+            "maximum": 5.0,
+            "minimum": 0.5,
+            "title": "Rating",
+            "type": "number"
+          },
+          "tasted_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Defaults to now",
+            "title": "Tasted At"
+          }
+        },
+        "required": [
+          "rating"
+        ],
+        "title": "TastingCreate",
+        "type": "object"
+      },
+      "TastingOut": {
+        "additionalProperties": false,
+        "properties": {
+          "appearance": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Appearance",
+            "type": "string"
+          },
+          "aroma": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Aroma",
+            "type": "string"
+          },
+          "batch": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TastingBatchRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "beer": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TastingBeerRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "flavor": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Flavor",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "mouthfeel": {
+            "default": "",
+            "maxLength": 2000,
+            "title": "Mouthfeel",
+            "type": "string"
+          },
+          "notes": {
+            "default": "",
+            "description": "Overall impression",
+            "maxLength": 10000,
+            "title": "Notes",
+            "type": "string"
+          },
+          "rating": {
+            "title": "Rating",
+            "type": "number"
+          },
+          "tasted_at": {
+            "format": "date-time",
+            "title": "Tasted At",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "batch",
+          "beer",
+          "rating",
+          "tasted_at",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "TastingOut",
+        "type": "object"
+      },
+      "TastingUpdate": {
+        "additionalProperties": false,
+        "description": "The subject (batch or beer) is fixed; everything else can change.",
+        "properties": {
+          "appearance": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Appearance"
+          },
+          "aroma": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Aroma"
+          },
+          "flavor": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Flavor"
+          },
+          "mouthfeel": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mouthfeel"
+          },
+          "notes": {
+            "anyOf": [
+              {
+                "maxLength": 10000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Notes"
+          },
+          "rating": {
+            "anyOf": [
+              {
+                "maximum": 5.0,
+                "minimum": 0.5,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rating"
+          },
+          "tasted_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tasted At"
+          }
+        },
+        "title": "TastingUpdate",
+        "type": "object"
+      },
       "UserOut": {
         "additionalProperties": false,
         "properties": {
@@ -2707,6 +4134,839 @@
         "summary": "Sign-in providers that are configured",
         "tags": [
           "auth"
+        ]
+      }
+    },
+    "/api/v1/batches": {
+      "get": {
+        "operationId": "list_batches_api_v1_batches_get",
+        "parameters": [
+          {
+            "description": "Only batches in this status",
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "planned",
+                    "fermenting",
+                    "conditioning",
+                    "packaged",
+                    "done"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only batches in this status",
+              "title": "Status"
+            }
+          },
+          {
+            "description": "Opaque cursor from a previous page",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 400,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Opaque cursor from a previous page",
+              "title": "Cursor"
+            }
+          },
+          {
+            "description": "Page size",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "description": "Page size",
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_BatchSummary_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "List my batches, most recently updated first",
+        "tags": [
+          "batches"
+        ]
+      },
+      "post": {
+        "operationId": "create_batch_api_v1_batches_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Brew a batch from one of my recipes (the recipe is snapshotted)",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}": {
+      "delete": {
+        "operationId": "delete_batch_api_v1_batches__batch_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Delete a batch with its readings and tastings",
+        "tags": [
+          "batches"
+        ]
+      },
+      "get": {
+        "operationId": "read_batch_api_v1_batches__batch_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "A batch with its snapshot, expected numbers and progress",
+        "tags": [
+          "batches"
+        ]
+      },
+      "patch": {
+        "operationId": "update_batch_api_v1_batches__batch_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Update a batch (status, dates, measured gravities, notes)",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/readings": {
+      "get": {
+        "operationId": "list_readings_api_v1_batches__batch_id__readings_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Opaque cursor from a previous page",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 400,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Opaque cursor from a previous page",
+              "title": "Cursor"
+            }
+          },
+          {
+            "description": "Page size",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "description": "Page size",
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          },
+          {
+            "description": "Downsample to at most this many readings (oldest first) for a chart. Without it the list is paginated, newest first.",
+            "in": "query",
+            "name": "points",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maximum": 1000,
+                  "minimum": 2,
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Downsample to at most this many readings (oldest first) for a chart. Without it the list is paginated, newest first.",
+              "title": "Points"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_ReadingOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Readings, newest first; or the whole series downsampled with ?points=",
+        "tags": [
+          "batches"
+        ]
+      },
+      "post": {
+        "operationId": "add_reading_api_v1_batches__batch_id__readings_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Batch Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReadingCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReadingOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Log a gravity and/or temperature reading",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/batches/{batch_id}/readings/{reading_id}": {
+      "delete": {
+        "operationId": "delete_reading_api_v1_batches__batch_id__readings__reading_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "batch_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Batch Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "reading_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Reading Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Remove a mistaken reading",
+        "tags": [
+          "batches"
+        ]
+      }
+    },
+    "/api/v1/beers": {
+      "get": {
+        "operationId": "list_beers_api_v1_beers_get",
+        "parameters": [
+          {
+            "description": "Match on the beer or brewery name",
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 100,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Match on the beer or brewery name",
+              "title": "Q"
+            }
+          },
+          {
+            "description": "Opaque cursor from a previous page",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 400,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Opaque cursor from a previous page",
+              "title": "Cursor"
+            }
+          },
+          {
+            "description": "Page size",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "description": "Page size",
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_BeerOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "List my beers alphabetically",
+        "tags": [
+          "beers"
+        ]
+      },
+      "post": {
+        "operationId": "create_beer_api_v1_beers_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BeerWrite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BeerOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Add a commercial beer",
+        "tags": [
+          "beers"
+        ]
+      }
+    },
+    "/api/v1/beers/{beer_id}": {
+      "delete": {
+        "operationId": "delete_beer_api_v1_beers__beer_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "beer_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Beer Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Delete a beer and its tastings",
+        "tags": [
+          "beers"
+        ]
+      },
+      "get": {
+        "operationId": "read_beer_api_v1_beers__beer_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "beer_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Beer Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BeerOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "A beer with its tasting count and average rating",
+        "tags": [
+          "beers"
+        ]
+      },
+      "patch": {
+        "operationId": "update_beer_api_v1_beers__beer_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "beer_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Beer Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BeerUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BeerOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Update a beer",
+        "tags": [
+          "beers"
         ]
       }
     },
@@ -4135,6 +6395,327 @@
         "summary": "Style with ranges and variants",
         "tags": [
           "styles"
+        ]
+      }
+    },
+    "/api/v1/tastings": {
+      "get": {
+        "operationId": "list_tastings_api_v1_tastings_get",
+        "parameters": [
+          {
+            "description": "Only tastings of this subject",
+            "in": "query",
+            "name": "batch_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only tastings of this subject",
+              "title": "Batch Id"
+            }
+          },
+          {
+            "description": "Only tastings of this subject",
+            "in": "query",
+            "name": "beer_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Only tastings of this subject",
+              "title": "Beer Id"
+            }
+          },
+          {
+            "description": "Opaque cursor from a previous page",
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 400,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Opaque cursor from a previous page",
+              "title": "Cursor"
+            }
+          },
+          {
+            "description": "Page size",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "description": "Page size",
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Page_TastingOut_"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "List my tastings, most recent first",
+        "tags": [
+          "tastings"
+        ]
+      },
+      "post": {
+        "operationId": "create_tasting_api_v1_tastings_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TastingCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TastingOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Rate one of my batches or beers",
+        "tags": [
+          "tastings"
+        ]
+      }
+    },
+    "/api/v1/tastings/{tasting_id}": {
+      "delete": {
+        "operationId": "delete_tasting_api_v1_tastings__tasting_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tasting_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Tasting Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Delete a tasting",
+        "tags": [
+          "tastings"
+        ]
+      },
+      "get": {
+        "operationId": "read_tasting_api_v1_tastings__tasting_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tasting_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Tasting Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TastingOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "A tasting",
+        "tags": [
+          "tastings"
+        ]
+      },
+      "patch": {
+        "operationId": "update_tasting_api_v1_tastings__tasting_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "tasting_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Tasting Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TastingUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TastingOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "4XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Client error (problem details)"
+          },
+          "5XX": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Server error (problem details)"
+          }
+        },
+        "summary": "Update a tasting",
+        "tags": [
+          "tastings"
         ]
       }
     }

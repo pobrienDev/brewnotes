@@ -106,6 +106,115 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/batches": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List my batches, most recently updated first */
+        get: operations["list_batches_api_v1_batches_get"];
+        put?: never;
+        /** Brew a batch from one of my recipes (the recipe is snapshotted) */
+        post: operations["create_batch_api_v1_batches_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/batches/{batch_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A batch with its snapshot, expected numbers and progress */
+        get: operations["read_batch_api_v1_batches__batch_id__get"];
+        put?: never;
+        post?: never;
+        /** Delete a batch with its readings and tastings */
+        delete: operations["delete_batch_api_v1_batches__batch_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update a batch (status, dates, measured gravities, notes) */
+        patch: operations["update_batch_api_v1_batches__batch_id__patch"];
+        trace?: never;
+    };
+    "/api/v1/batches/{batch_id}/readings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Readings, newest first; or the whole series downsampled with ?points= */
+        get: operations["list_readings_api_v1_batches__batch_id__readings_get"];
+        put?: never;
+        /** Log a gravity and/or temperature reading */
+        post: operations["add_reading_api_v1_batches__batch_id__readings_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/batches/{batch_id}/readings/{reading_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove a mistaken reading */
+        delete: operations["delete_reading_api_v1_batches__batch_id__readings__reading_id__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/beers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List my beers alphabetically */
+        get: operations["list_beers_api_v1_beers_get"];
+        put?: never;
+        /** Add a commercial beer */
+        post: operations["create_beer_api_v1_beers_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/beers/{beer_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A beer with its tasting count and average rating */
+        get: operations["read_beer_api_v1_beers__beer_id__get"];
+        put?: never;
+        post?: never;
+        /** Delete a beer and its tastings */
+        delete: operations["delete_beer_api_v1_beers__beer_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update a beer */
+        patch: operations["update_beer_api_v1_beers__beer_id__patch"];
+        trace?: never;
+    };
     "/api/v1/calc": {
         parameters: {
             query?: never;
@@ -420,10 +529,239 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/tastings": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List my tastings, most recent first */
+        get: operations["list_tastings_api_v1_tastings_get"];
+        put?: never;
+        /** Rate one of my batches or beers */
+        post: operations["create_tasting_api_v1_tastings_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/tastings/{tasting_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** A tasting */
+        get: operations["read_tasting_api_v1_tastings__tasting_id__get"];
+        put?: never;
+        post?: never;
+        /** Delete a tasting */
+        delete: operations["delete_tasting_api_v1_tastings__tasting_id__delete"];
+        options?: never;
+        head?: never;
+        /** Update a tasting */
+        patch: operations["update_tasting_api_v1_tastings__tasting_id__patch"];
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** BatchCreate */
+        BatchCreate: {
+            /** Brew Date */
+            brew_date?: string | null;
+            /** Measured Fg */
+            measured_fg?: number | null;
+            /** Measured Og */
+            measured_og?: number | null;
+            /**
+             * Name
+             * @description Defaults to the recipe name
+             */
+            name?: string | null;
+            /**
+             * Notes
+             * @default
+             */
+            notes: string;
+            /**
+             * Recipe Id
+             * Format: uuid
+             * @description The saved recipe to brew; it is snapshotted
+             */
+            recipe_id: string;
+            /**
+             * Status
+             * @default planned
+             * @enum {string}
+             */
+            status: "planned" | "fermenting" | "conditioning" | "packaged" | "done";
+            /**
+             * Volume L
+             * @description Defaults to the recipe's batch volume
+             */
+            volume_l?: number | null;
+        };
+        /** BatchOut */
+        BatchOut: {
+            /** Brew Date */
+            brew_date: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** @description Calculator output for the snapshot */
+            expected: components["schemas"]["RecipeStatsOut"];
+            fermentation: components["schemas"]["FermentationOut"];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Measured Fg */
+            measured_fg: number | null;
+            /** Measured Og */
+            measured_og: number | null;
+            /** Name */
+            name: string;
+            /** Notes */
+            notes: string;
+            /** @description The recipe as it was when the batch was made */
+            recipe: components["schemas"]["RecipeSnapshotV1"];
+            /**
+             * Recipe Id
+             * @description Null once the recipe has been deleted
+             */
+            recipe_id: string | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "planned" | "fermenting" | "conditioning" | "packaged" | "done";
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Volume L */
+            volume_l: number;
+        };
+        /** BatchSummary */
+        BatchSummary: {
+            /** Brew Date */
+            brew_date: string | null;
+            fermentation: components["schemas"]["FermentationOut"];
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Recipe Id */
+            recipe_id: string | null;
+            /** Recipe Name */
+            recipe_name: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "planned" | "fermenting" | "conditioning" | "packaged" | "done";
+            /** Target Style Name */
+            target_style_name: string | null;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+            /** Volume L */
+            volume_l: number;
+        };
+        /** BatchUpdate */
+        BatchUpdate: {
+            /** Brew Date */
+            brew_date?: string | null;
+            /** Measured Fg */
+            measured_fg?: number | null;
+            /** Measured Og */
+            measured_og?: number | null;
+            /** Name */
+            name?: string | null;
+            /** Notes */
+            notes?: string | null;
+            /** Status */
+            status?: ("planned" | "fermenting" | "conditioning" | "packaged" | "done") | null;
+            /** Volume L */
+            volume_l?: number | null;
+        };
+        /** BeerOut */
+        BeerOut: {
+            /** Abv */
+            abv: number | null;
+            /** Average Rating */
+            average_rating: number | null;
+            /** Brewery Name */
+            brewery_name: string | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /** Notes */
+            notes: string;
+            style: components["schemas"]["StyleSummary"] | null;
+            /** Tastings Count */
+            tastings_count: number;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /** BeerUpdate */
+        BeerUpdate: {
+            /** Abv */
+            abv?: number | null;
+            /** Brewery Name */
+            brewery_name?: string | null;
+            /** Name */
+            name?: string | null;
+            /** Notes */
+            notes?: string | null;
+            /** Style */
+            style?: string | null;
+        };
+        /** BeerWrite */
+        BeerWrite: {
+            /** Abv */
+            abv?: number | null;
+            /** Brewery Name */
+            brewery_name?: string | null;
+            /** Name */
+            name: string;
+            /**
+             * Notes
+             * @default
+             */
+            notes: string;
+            /**
+             * Style
+             * @description Style slug
+             */
+            style?: string | null;
+        };
         /** CalcResult */
         CalcResult: {
             /**
@@ -516,6 +854,35 @@ export interface components {
              * @enum {string}
              */
             type: "grain" | "extract" | "sugar" | "adjunct";
+        };
+        /**
+         * FermentationOut
+         * @description Where fermentation stands, from the brewer's measurements and the logged readings.
+         */
+        FermentationOut: {
+            /** Abv */
+            abv: number | null;
+            /** Apparent Attenuation Pct */
+            apparent_attenuation_pct: number | null;
+            /** Current Sg */
+            current_sg: number | null;
+            /** Current Sg Source */
+            current_sg_source: ("measured" | "estimated" | "reading") | null;
+            /** Expected Attenuation Pct */
+            expected_attenuation_pct: number | null;
+            /** Expected Fg */
+            expected_fg: number;
+            /** Latest Reading At */
+            latest_reading_at: string | null;
+            /** Og */
+            og: number;
+            /**
+             * Og Source
+             * @enum {string}
+             */
+            og_source: "measured" | "estimated" | "reading";
+            /** Readings Count */
+            readings_count: number;
         };
         /** FieldError */
         FieldError: {
@@ -655,6 +1022,26 @@ export interface components {
             /** Value */
             value: number;
         };
+        /** Page[BatchSummary] */
+        Page_BatchSummary_: {
+            /** Items */
+            items: components["schemas"]["BatchSummary"][];
+            /**
+             * Next Cursor
+             * @description Pass as ?cursor= to fetch the next page; null on the last page
+             */
+            next_cursor: string | null;
+        };
+        /** Page[BeerOut] */
+        Page_BeerOut_: {
+            /** Items */
+            items: components["schemas"]["BeerOut"][];
+            /**
+             * Next Cursor
+             * @description Pass as ?cursor= to fetch the next page; null on the last page
+             */
+            next_cursor: string | null;
+        };
         /** Page[FermentableOut] */
         Page_FermentableOut_: {
             /** Items */
@@ -675,6 +1062,16 @@ export interface components {
              */
             next_cursor: string | null;
         };
+        /** Page[ReadingOut] */
+        Page_ReadingOut_: {
+            /** Items */
+            items: components["schemas"]["ReadingOut"][];
+            /**
+             * Next Cursor
+             * @description Pass as ?cursor= to fetch the next page; null on the last page
+             */
+            next_cursor: string | null;
+        };
         /** Page[RecipeSummary] */
         Page_RecipeSummary_: {
             /** Items */
@@ -689,6 +1086,16 @@ export interface components {
         Page_StyleSummary_: {
             /** Items */
             items: components["schemas"]["StyleSummary"][];
+            /**
+             * Next Cursor
+             * @description Pass as ?cursor= to fetch the next page; null on the last page
+             */
+            next_cursor: string | null;
+        };
+        /** Page[TastingOut] */
+        Page_TastingOut_: {
+            /** Items */
+            items: components["schemas"]["TastingOut"][];
             /**
              * Next Cursor
              * @description Pass as ?cursor= to fetch the next page; null on the last page
@@ -746,6 +1153,45 @@ export interface components {
             max: number;
             /** Min */
             min: number;
+        };
+        /** ReadingCreate */
+        ReadingCreate: {
+            /** Gravity Sg */
+            gravity_sg?: number | null;
+            /**
+             * Taken At
+             * @description When the reading was taken; defaults to now
+             */
+            taken_at?: string | null;
+            /** Temp C */
+            temp_c?: number | null;
+        };
+        /** ReadingOut */
+        ReadingOut: {
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Gravity Sg */
+            gravity_sg: number | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Source
+             * @enum {string}
+             */
+            source: "manual" | "device";
+            /**
+             * Taken At
+             * Format: date-time
+             */
+            taken_at: string;
+            /** Temp C */
+            temp_c: number | null;
         };
         /** RecipeFermentableInput */
         RecipeFermentableInput: {
@@ -928,6 +1374,53 @@ export interface components {
             updated_at: string;
             /** Yeasts */
             yeasts: components["schemas"]["RecipeYeastOut"][];
+        };
+        /** RecipeSnapshotV1 */
+        RecipeSnapshotV1: {
+            /** Batch Volume L */
+            batch_volume_l: number;
+            /** Boil Time Min */
+            boil_time_min: number;
+            /** Brewhouse Efficiency Pct */
+            brewhouse_efficiency_pct: number;
+            /** Fermentables */
+            fermentables: components["schemas"]["RecipeFermentableInput"][];
+            /** Hops */
+            hops: components["schemas"]["RecipeHopInput"][];
+            /** Name */
+            name: string;
+            /** Pre Boil Volume L */
+            pre_boil_volume_l: number | null;
+            /**
+             * Recipe Id
+             * @description The recipe this was taken from; it may since have been deleted
+             */
+            recipe_id: string | null;
+            /**
+             * Schema Version
+             * @default 1
+             * @constant
+             */
+            schema_version: 1;
+            /** Steep Efficiency Pct */
+            steep_efficiency_pct: number;
+            /**
+             * Taken At
+             * Format: date-time
+             */
+            taken_at: string;
+            /**
+             * Target Style
+             * @description Style slug at brew time
+             */
+            target_style: string | null;
+            /**
+             * Target Style Name
+             * @description Style display name at brew time
+             */
+            target_style_name: string | null;
+            /** Yeasts */
+            yeasts: components["schemas"]["RecipeYeastInput"][];
         };
         /** RecipeStatsOut */
         RecipeStatsOut: {
@@ -1160,6 +1653,152 @@ export interface components {
             ranges: components["schemas"]["StyleRangeOut"][];
             /** Slug */
             slug: string;
+        };
+        /** TastingBatchRef */
+        TastingBatchRef: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "planned" | "fermenting" | "conditioning" | "packaged" | "done";
+        };
+        /** TastingBeerRef */
+        TastingBeerRef: {
+            /** Brewery Name */
+            brewery_name: string | null;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Name */
+            name: string;
+        };
+        /** TastingCreate */
+        TastingCreate: {
+            /**
+             * Appearance
+             * @default
+             */
+            appearance: string;
+            /**
+             * Aroma
+             * @default
+             */
+            aroma: string;
+            /**
+             * Batch Id
+             * @description One of batch_id or beer_id
+             */
+            batch_id?: string | null;
+            /** Beer Id */
+            beer_id?: string | null;
+            /**
+             * Flavor
+             * @default
+             */
+            flavor: string;
+            /**
+             * Mouthfeel
+             * @default
+             */
+            mouthfeel: string;
+            /**
+             * Notes
+             * @description Overall impression
+             * @default
+             */
+            notes: string;
+            /**
+             * Rating
+             * @description 0.5 to 5 in half steps
+             */
+            rating: number;
+            /**
+             * Tasted At
+             * @description Defaults to now
+             */
+            tasted_at?: string | null;
+        };
+        /** TastingOut */
+        TastingOut: {
+            /**
+             * Appearance
+             * @default
+             */
+            appearance: string;
+            /**
+             * Aroma
+             * @default
+             */
+            aroma: string;
+            batch: components["schemas"]["TastingBatchRef"] | null;
+            beer: components["schemas"]["TastingBeerRef"] | null;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Flavor
+             * @default
+             */
+            flavor: string;
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /**
+             * Mouthfeel
+             * @default
+             */
+            mouthfeel: string;
+            /**
+             * Notes
+             * @description Overall impression
+             * @default
+             */
+            notes: string;
+            /** Rating */
+            rating: number;
+            /**
+             * Tasted At
+             * Format: date-time
+             */
+            tasted_at: string;
+            /**
+             * Updated At
+             * Format: date-time
+             */
+            updated_at: string;
+        };
+        /**
+         * TastingUpdate
+         * @description The subject (batch or beer) is fixed; everything else can change.
+         */
+        TastingUpdate: {
+            /** Appearance */
+            appearance?: string | null;
+            /** Aroma */
+            aroma?: string | null;
+            /** Flavor */
+            flavor?: string | null;
+            /** Mouthfeel */
+            mouthfeel?: string | null;
+            /** Notes */
+            notes?: string | null;
+            /** Rating */
+            rating?: number | null;
+            /** Tasted At */
+            tasted_at?: string | null;
         };
         /** UserOut */
         UserOut: {
@@ -1468,6 +2107,554 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ProvidersOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    list_batches_api_v1_batches_get: {
+        parameters: {
+            query?: {
+                /** @description Only batches in this status */
+                status?: ("planned" | "fermenting" | "conditioning" | "packaged" | "done") | null;
+                /** @description Opaque cursor from a previous page */
+                cursor?: string | null;
+                /** @description Page size */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_BatchSummary_"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    create_batch_api_v1_batches_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BatchCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BatchOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    read_batch_api_v1_batches__batch_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                batch_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BatchOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_batch_api_v1_batches__batch_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                batch_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    update_batch_api_v1_batches__batch_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                batch_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BatchUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BatchOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    list_readings_api_v1_batches__batch_id__readings_get: {
+        parameters: {
+            query?: {
+                /** @description Opaque cursor from a previous page */
+                cursor?: string | null;
+                /** @description Page size */
+                limit?: number;
+                /** @description Downsample to at most this many readings (oldest first) for a chart. Without it the list is paginated, newest first. */
+                points?: number | null;
+            };
+            header?: never;
+            path: {
+                batch_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_ReadingOut_"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    add_reading_api_v1_batches__batch_id__readings_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                batch_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReadingCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReadingOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_reading_api_v1_batches__batch_id__readings__reading_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                batch_id: string;
+                reading_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    list_beers_api_v1_beers_get: {
+        parameters: {
+            query?: {
+                /** @description Match on the beer or brewery name */
+                q?: string | null;
+                /** @description Opaque cursor from a previous page */
+                cursor?: string | null;
+                /** @description Page size */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_BeerOut_"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    create_beer_api_v1_beers_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BeerWrite"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BeerOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    read_beer_api_v1_beers__beer_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                beer_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BeerOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_beer_api_v1_beers__beer_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                beer_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    update_beer_api_v1_beers__beer_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                beer_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BeerUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BeerOut"];
                 };
             };
             /** @description Client error (problem details) */
@@ -2533,6 +3720,217 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StyleDetail"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    list_tastings_api_v1_tastings_get: {
+        parameters: {
+            query?: {
+                /** @description Only tastings of this subject */
+                batch_id?: string | null;
+                /** @description Only tastings of this subject */
+                beer_id?: string | null;
+                /** @description Opaque cursor from a previous page */
+                cursor?: string | null;
+                /** @description Page size */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Page_TastingOut_"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    create_tasting_api_v1_tastings_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TastingCreate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TastingOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    read_tasting_api_v1_tastings__tasting_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tasting_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TastingOut"];
+                };
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    delete_tasting_api_v1_tastings__tasting_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tasting_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Client error (problem details) */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description Server error (problem details) */
+            "5XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    update_tasting_api_v1_tastings__tasting_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tasting_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TastingUpdate"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TastingOut"];
                 };
             };
             /** @description Client error (problem details) */
